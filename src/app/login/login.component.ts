@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { ApiserviceService } from '../services/apiservice.service';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +11,10 @@ export class LoginComponent implements OnInit {
 
 
   loginForm : FormGroup;
-  validUsers : {username : string , password : string}[];
+  validUsers : {};
+  isLoading : Boolean;
+
+  constructor(private apiService : ApiserviceService) {}
 
   ngOnInit(): void {
 
@@ -19,15 +23,19 @@ export class LoginComponent implements OnInit {
       'password' : new FormControl(null)
     });
 
-    this.validUsers = [{'username' : 'nkharbanda' , 'password' : 'nitish123'},{'username' : 'ritkharbanda' , 'password' : 'ritesh007'}];
+    this.isLoading = true;
+    
+    this.fetchAdmins();
   
   }
   onSubmit()
   {
     let adminIndex = this.isAdminRegistered(this.loginForm.value.username);
+    let arr : {username : string , password : string}[];
+    arr = Object.values(this.validUsers);
     if(adminIndex!=-1)
     {
-      if(this.validUsers[adminIndex].password != this.loginForm.value.password)
+      if(arr[adminIndex].password != this.loginForm.value.password)
       {
         alert('invalid password');
         return;
@@ -42,9 +50,11 @@ export class LoginComponent implements OnInit {
 
   isAdminRegistered(adminName:string) : number
   {
-    for(let i=0;i<this.validUsers.length;i++)
+    let arr : {username : string , password : string}[];
+    arr = Object.values(this.validUsers);
+    for(let i=0;i<arr.length;i++)
     {
-      if(this.validUsers[i].username == adminName)
+      if(arr[i].username == adminName)
       {
         return i;
       }
@@ -55,6 +65,15 @@ export class LoginComponent implements OnInit {
   loginSuccessfull() : void 
   {
     console.log("Logged in");
+  }
+
+  fetchAdmins()
+  {
+    this.apiService.getAdmins().subscribe((admins)=>{
+      console.log(admins);
+      this.validUsers = admins;
+      this.isLoading = false;
+    });
   }
 
 }
