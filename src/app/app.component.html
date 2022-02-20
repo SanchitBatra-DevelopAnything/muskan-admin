@@ -1,1 +1,2 @@
-<app-login></app-login>
+<app-login *ngIf = "!isLoggedIn" (isLoggedIn) = "onAdminLogin($event)"></app-login>
+<app-container *ngIf = "isLoggedIn"></app-container>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ApiserviceService } from '../services/apiservice.service';
 
@@ -14,6 +14,7 @@ export class LoginComponent implements OnInit {
   validUsers : {};
   isLoading : Boolean;
   internetProblem : Boolean;
+  @Output() isLoggedIn = new EventEmitter<Boolean>();
 
   constructor(private apiService : ApiserviceService) {}
 
@@ -66,7 +67,10 @@ export class LoginComponent implements OnInit {
 
   loginSuccessfull() : void 
   {
-    console.log("Logged in");
+    sessionStorage.setItem('user' , this.loginForm.value.username);
+    sessionStorage.setItem('loggedIn' , "true");
+
+    this.isLoggedIn.emit(true);
   }
 
   fetchAdmins()

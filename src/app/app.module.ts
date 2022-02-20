@@ -11,6 +11,7 @@ import { SubcategoryListComponent } from './subcategory-list/subcategory-list.co
 import { HeaderComponent } from './header/header.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
+import { ContainerComponent } from './container/container.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { SignupComponent } from './signup/signup.component';
     SubcategoryListComponent,
     HeaderComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    ContainerComponent
   ],
   imports: [
     BrowserModule,
