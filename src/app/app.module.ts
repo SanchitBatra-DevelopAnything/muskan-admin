@@ -3,6 +3,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
+import { AngularFireModule } from "@angular/fire/compat";
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 
 import { AppComponent } from './app.component';
 import { CategoryListComponent } from './category-list/category-list.component';
@@ -19,6 +22,7 @@ import { ItemComponent } from './item/item.component';
 import { SubcategoryItemComponent } from './subcategory-item/subcategory-item.component';
 import { AddItemFormComponent } from './add-item-form/add-item-form.component';
 import { CategoryFormComponent } from './category-form/category-form.component';
+import { environment } from 'src/environments/environment';
 
 
 const appRoutes : Routes = [
@@ -48,7 +52,10 @@ const appRoutes : Routes = [
     BrowserModule,
     ReactiveFormsModule,
     HttpClientModule,
-    RouterModule.forRoot(appRoutes)
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireStorageModule,
+    AngularFireDatabaseModule,
+    RouterModule.forRoot(appRoutes),
   ],
   providers: [],
   bootstrap: [AppComponent]
