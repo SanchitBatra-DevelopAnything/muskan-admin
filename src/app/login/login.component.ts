@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit {
   loginForm : FormGroup;
   validUsers : {};
   isLoading : Boolean;
+  internetProblem : Boolean;
 
   constructor(private apiService : ApiserviceService) {}
 
@@ -24,6 +25,7 @@ export class LoginComponent implements OnInit {
     });
 
     this.isLoading = true;
+    this.internetProblem = false;
     
     this.fetchAdmins();
   
@@ -72,8 +74,12 @@ export class LoginComponent implements OnInit {
     this.apiService.getAdmins().subscribe((admins)=>{
       console.log(admins);
       this.validUsers = admins;
+      this.internetProblem = false;
       this.isLoading = false;
-    });
+    }) , (err)=>{
+      this.isLoading = false;
+      this.internetProblem = true;
+    };
   }
 
 }

@@ -5,3 +5,8 @@
 .btn-bold-text{
     font-weight: bold;
 }
+
+.red {
+    text-align: center;
+    color : red;
+}

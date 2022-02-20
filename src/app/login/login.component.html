@@ -21,8 +21,8 @@
             formControlName = "password">
         </div>
 
-        <button type = "submit" class = "btn btn-success btn-bold-text" [disabled]="isLoading">LOGIN</button>
-
+        <button type = "submit" class = "btn btn-success btn-bold-text" [disabled]="isLoading && !internetProblem">LOGIN</button>
+        <p  class = "red" *ngIf="!isLoading && internetProblem">Internet Issues Detected. Not able to login now.</p>
         </form>
 
     </div>
