@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { finalize, pipe } from 'rxjs';
 
 @Component({
   selector: 'app-category-form',
@@ -10,18 +12,20 @@ export class CategoryFormComponent implements OnInit {
 
   categoryForm : FormGroup;
   imgSrc:string;
-  selectedImage : any = null;
+  selectedImage : any;
+  isSubmitted:Boolean;
 
-  constructor() { }
+  constructor(private storage : AngularFireStorage) { }
 
   ngOnInit(): void {
 
     this.categoryForm = new FormGroup({
-      'categoryName' : new FormControl(''), 
-      'imageUrl' : new FormControl('')
+      'categoryName' : new FormControl('',Validators.required), 
+      'imageUrl' : new FormControl('' , Validators.required)
     });
 
-    this.imgSrc = "../../assets/default.png";
+    this.resetForm();
+
   }
 
   showPreview(event : any)
@@ -40,6 +44,37 @@ export class CategoryFormComponent implements OnInit {
       this.imgSrc = "../../assets/default.png";
       this.selectedImage = null;
     }
+  }
+
+  onSubmit(formValue)
+  {
+    this.isSubmitted = true;
+    if(this.categoryForm.valid)
+    {
+      var filePath = `categories/${this.selectedImage.name}_${new Date().getTime()}`;
+      var fileRef = this.storage.ref(filePath);
+      this.storage.upload(filePath,this.selectedImage).snapshotChanges().pipe(
+        finalize(()=>{
+          //RETRIEVING THE UPLOADED IMAGE URL.
+          fileRef.getDownloadURL().subscribe((url)=>{
+            formValue['imageUrl']=url;
+            this.resetForm();
+          });
+        })
+      ).subscribe();
+    }
+  }
+
+  resetForm()
+  {
+    this.categoryForm.reset();
+    this.categoryForm.setValue({
+      categoryName : '',
+      imageUrl : ''
+    });
+    this.imgSrc = "../../assets/default.png";
+    this.isSubmitted = false;
+    this.selectedImage = null;
   }
 
 }
