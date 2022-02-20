@@ -18,12 +18,14 @@ import { CategoryItemComponent } from './category-item/category-item.component';
 import { ItemComponent } from './item/item.component';
 import { SubcategoryItemComponent } from './subcategory-item/subcategory-item.component';
 import { AddItemFormComponent } from './add-item-form/add-item-form.component';
+import { CategoryFormComponent } from './category-form/category-form.component';
 
 
 const appRoutes : Routes = [
   {path : 'notifications' , component : NotificationsComponent},
   {path : 'dailyReport' , component : DailyreportComponent},
-  {path : 'categories' , component : CategoryListComponent}
+  {path : 'categories' , component : CategoryListComponent},
+  {path : 'category/upload' , component : CategoryFormComponent}
 ];
 
 @NgModule({
@@ -39,7 +41,8 @@ const appRoutes : Routes = [
     CategoryItemComponent,
     ItemComponent,
     SubcategoryItemComponent,
-    AddItemFormComponent
+    AddItemFormComponent,
+    CategoryFormComponent
   ],
   imports: [
     BrowserModule,
