@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { finalize, pipe } from 'rxjs';
+import { ImageService } from '../services/image.service';
 
 @Component({
   selector: 'app-category-form',
@@ -15,7 +16,7 @@ export class CategoryFormComponent implements OnInit {
   selectedImage : any;
   isSubmitted:Boolean;
 
-  constructor(private storage : AngularFireStorage) { }
+  constructor(private storage : AngularFireStorage , private imageService : ImageService) { }
 
   ngOnInit(): void {
 
@@ -58,6 +59,7 @@ export class CategoryFormComponent implements OnInit {
           //RETRIEVING THE UPLOADED IMAGE URL.
           fileRef.getDownloadURL().subscribe((url)=>{
             formValue['imageUrl']=url;
+            this.imageService.insertCategories(formValue);
             this.resetForm();
           });
         })
