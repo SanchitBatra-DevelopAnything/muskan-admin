@@ -1,4 +1,5 @@
-<div class="thumbnail" style = "width:25rem">
+<div *ngIf = "isSubmitted" class = "loader"></div>
+<div *ngIf = "!isSubmitted" class="thumbnail" style = "width:25rem">
     <div class = "card-body">
       <form [formGroup] = "categoryForm" (ngSubmit) = "onSubmit(categoryForm.value)">
           <div class="text-center">
@@ -19,7 +20,7 @@
             placeholder = "Category Name">
         </div>
         <div class = "form-group">
-            <button type = "submit" class = "btn btn-success float-right">Add</button>
+            <button type = "submit" class = "btn btn-success float-right" [disabled] = "categoryForm.invalid">Add</button>
         </div>
       </form>  
     </div>
