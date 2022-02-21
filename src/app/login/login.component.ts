@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
   validUsers : {};
   isLoading : Boolean;
   internetProblem : Boolean;
-  @Output() isLoggedIn = new EventEmitter<Boolean>();
+  // @Output() isLoggedIn = new EventEmitter<Boolean>();
 
   constructor(private apiService : ApiserviceService , private router: Router) {}
 
@@ -71,7 +71,7 @@ export class LoginComponent implements OnInit {
     sessionStorage.setItem('user' , this.loginForm.value.username);
     sessionStorage.setItem('loggedIn' , "true");
 
-    this.isLoggedIn.emit(true);
+    // this.isLoggedIn.emit(true);
     this.router.navigate(['/categories']);
   }
 

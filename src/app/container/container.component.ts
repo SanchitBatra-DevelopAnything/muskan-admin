@@ -11,7 +11,7 @@ export class ContainerComponent implements OnInit {
   constructor(private imageService : ImageService) { }
 
   ngOnInit(): void {
-    this.imageService.getCategories();
+    this.imageService.getCategories(); // to initialize categories node in DB.
   }
 
 }
