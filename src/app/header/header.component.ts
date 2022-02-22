@@ -18,7 +18,13 @@ export class HeaderComponent implements OnInit,OnDestroy {
   constructor(private UtilityService : UtilityServiceService) { 
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void { 
+    //in case the app reloads.
+    if(sessionStorage.getItem('loggedIn'))
+    {
+      this.loggedIn = true;
+    } 
+    //change of login when user actually logs in.
     this.logInSub = this.UtilityService.loggedInStatusUpdated.subscribe((loggedIn : boolean)=>{
       this.loggedIn = loggedIn;
     });
