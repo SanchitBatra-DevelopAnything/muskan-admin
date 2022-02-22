@@ -1,20 +1,16 @@
 <div class="loader" *ngIf = "isLoading"></div>
-<!-- <div class="row">
-    <div class="col-md-8 offset-md-2">
-        <blockquote class="blockquote">
-            <p class="mb0 h3 display-4">Categories</p>
-            <p *ngIf = "fetchError" class = "fetch-error">Bad Internet :( </p>
 
-            <div class="col-xs-4">
-                <div class="container" *ngFor = "let category of categoryList">
-                    <app-category-item [category] = category></app-category-item>
-                </div>
-            </div>
+<div class="row">
+    <div class="col col-xs-4">
 
-            <button class = "btn btn-lg btn-primary"routerLink = "/category/upload">Add a category.</button>
-        </blockquote>
     </div>
-</div> -->
+    <div class="col col-xs-4">
+        <button class = "btn btn-lg btn-primary"routerLink = "/category/upload">Add a category.</button>
+    </div>
+    <div class="col col-xs-4">
+
+    </div>
+</div>
 
 <div class="row">
     <div class="col">
@@ -28,17 +24,5 @@
 <div class="row">
     <div class="col col-xs-4" *ngFor = "let category of categoryList">
         <app-category-item [category] = category></app-category-item>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col col-xs-4">
-
-    </div>
-    <div class="col col-xs-4">
-        <button class = "btn btn-lg btn-primary"routerLink = "/category/upload">Add a category.</button>
-    </div>
-    <div class="col col-xs-4">
-
     </div>
 </div>
