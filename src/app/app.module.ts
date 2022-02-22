@@ -26,13 +26,14 @@ import { environment } from 'src/environments/environment';
 import { UtilityServiceService } from './services/utility-service.service';
 import { ApiserviceService } from './services/apiservice.service';
 import { ImageService } from './services/image.service';
+import { AuthGuardService } from './services/guard/auth-guard.service';
 
 
 const appRoutes : Routes = [
-  {path : 'notifications' , component : NotificationsComponent},
-  {path : 'dailyReport' , component : DailyreportComponent},
-  {path : 'categories' , component : CategoryListComponent},
-  {path : 'category/upload' , component : CategoryFormComponent},
+  {path : 'notifications' , component : NotificationsComponent , canActivate : [AuthGuardService]},
+  {path : 'dailyReport' , component : DailyreportComponent  , canActivate : [AuthGuardService]},
+  {path : 'categories' , component : CategoryListComponent , canActivate : [AuthGuardService]},
+  {path : 'category/upload' , component : CategoryFormComponent , canActivate : [AuthGuardService]},
   {path: '' , component:LoginComponent , pathMatch:"full"}
 ];
 
