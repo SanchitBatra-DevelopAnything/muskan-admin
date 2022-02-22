@@ -9,7 +9,7 @@
                 <li routerLinkActive = "active"><a routerLink = "/dailyReport">Today's Report</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li routerLinkActive = "active"><a routerLink = "/notifications">Notifications</a></li>
+                <li routerLinkActive = "active"><a routerLink = "/notifications">Notifications ({{totalNotifications}})</a></li>
                 <li *ngIf = "loggedIn"><a routerLink = "/" (click) = "onLogout()">Logout</a></li>
             </ul>
         </div>

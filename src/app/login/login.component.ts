@@ -80,7 +80,6 @@ export class LoginComponent implements OnInit {
   fetchAdmins()
   {
     this.apiService.getAdmins().subscribe((admins)=>{
-      console.log(admins);
       this.validUsers = admins;
       this.internetProblem = false;
       this.isLoading = false;

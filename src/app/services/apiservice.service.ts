@@ -12,4 +12,9 @@ export class ApiserviceService {
   public getAdmins() : Observable<any> {
     return this.http.get('https://muskan-admin-app-default-rtdb.firebaseio.com/admins.json');
   }
+
+  public getNotificationCount():Observable<any>
+  {
+    return this.http.get('https://muskan-admin-app-default-rtdb.firebaseio.com/notifications.json?shallow=true');
+  }
 }

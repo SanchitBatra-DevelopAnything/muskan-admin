@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { UtilityServiceService } from '../services/utility-service.service';
 
@@ -11,6 +11,8 @@ export class HeaderComponent implements OnInit,OnDestroy {
 
   loggedIn:boolean = false;
   private logInSub : Subscription;
+  @Input()
+  totalNotifications : number;
 
 
   constructor(private UtilityService : UtilityServiceService) { 
