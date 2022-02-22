@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
-import { EventEmitter } from '@angular/core';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UtilityServiceService {
 
-  loggedInStatusUpdated : EventEmitter<Boolean>;
+  loggedInStatusUpdated : Subject<boolean>;
 
   constructor() { 
-    this.loggedInStatusUpdated = new EventEmitter<Boolean>();
+    this.loggedInStatusUpdated = new Subject<boolean>();
   }
 
 }

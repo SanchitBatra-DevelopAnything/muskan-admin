@@ -71,7 +71,7 @@ export class LoginComponent implements OnInit {
   {
     sessionStorage.setItem('user' , this.loginForm.value.username);
     sessionStorage.setItem('loggedIn' , "true");
-    this.UtilityService.loggedInStatusUpdated.emit(true); //inform header for the same.
+    this.UtilityService.loggedInStatusUpdated.next(true); //inform header for the same.
 
     // this.isLoggedIn.emit(true);
     this.router.navigate(['/categories']);

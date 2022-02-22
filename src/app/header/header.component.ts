@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { UtilityServiceService } from '../services/utility-service.service';
 
 @Component({
@@ -6,15 +7,17 @@ import { UtilityServiceService } from '../services/utility-service.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit,OnDestroy {
 
   loggedIn:boolean = false;
+  private logInSub : Subscription;
+
 
   constructor(private UtilityService : UtilityServiceService) { 
   }
 
   ngOnInit(): void {
-    this.UtilityService.loggedInStatusUpdated.subscribe((loggedIn : boolean)=>{
+    this.logInSub = this.UtilityService.loggedInStatusUpdated.subscribe((loggedIn : boolean)=>{
       this.loggedIn = loggedIn;
     });
   }
@@ -23,6 +26,10 @@ export class HeaderComponent implements OnInit {
   {
     sessionStorage.clear();
     this.loggedIn = false;
+  }
+
+  ngOnDestroy(){
+    this.logInSub.unsubscribe();
   }
 
 }

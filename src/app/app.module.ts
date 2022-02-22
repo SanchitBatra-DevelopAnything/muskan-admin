@@ -61,7 +61,7 @@ const appRoutes : Routes = [
     AngularFireDatabaseModule,
     RouterModule.forRoot(appRoutes,{useHash: true}),
   ],
-  providers: [UtilityServiceService , ApiserviceService , ImageService],
+  providers: [], //the classes for services already have provided in root.
   bootstrap: [AppComponent]
 })
 export class AppModule { }
