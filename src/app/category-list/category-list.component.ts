@@ -16,13 +16,15 @@ export class CategoryListComponent implements OnInit {
   constructor(private apiService : ApiserviceService) { }
 
   ngOnInit(): void {
-    this.isLoading = false;
+    this.isLoading = true;
     this.fetchError = false;
     this.apiService.getCategories().subscribe((allCategories)=>{
       this.categoryList = Object.values(allCategories);
       this.fetchError = false;
+      this.isLoading = false;
     }) , (err)=>{
       this.fetchError = true;
+      this.isLoading = false;
     };
   }
 
