@@ -10,7 +10,7 @@ export class ImageService {
 
   constructor(private Firebase : AngularFireDatabase) { }
 
-  getCategories()
+  initializeCategoriesWithImages()
   {
     this.categories = this.Firebase.list('Categories'); //node name of db here.
   }

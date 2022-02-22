@@ -8,10 +8,10 @@ import { ImageService } from '../services/image.service';
 })
 export class ContainerComponent implements OnInit {
 
-  constructor(private imageService : ImageService) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.imageService.getCategories(); // to initialize categories node in DB.
+    
   }
 
 }

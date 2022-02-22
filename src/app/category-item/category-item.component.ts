@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-category-item',
@@ -6,6 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./category-item.component.css']
 })
 export class CategoryItemComponent implements OnInit {
+
+  @Input()
+  category : {categoryName : string , imageUrl : string};
 
   constructor() { }
 

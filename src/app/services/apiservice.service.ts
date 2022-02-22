@@ -17,4 +17,9 @@ export class ApiserviceService {
   {
     return this.http.get('https://muskan-admin-app-default-rtdb.firebaseio.com/notifications.json?shallow=true');
   }
+
+  public getCategories():Observable<any>
+  {
+    return this.http.get('https://muskan-admin-app-default-rtdb.firebaseio.com/Categories.json');
+  }
 }
