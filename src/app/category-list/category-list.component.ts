@@ -9,16 +9,11 @@ import { ImageService } from '../services/image.service';
 export class CategoryListComponent implements OnInit {
 
   categoryList : any[];
+  rowIndexArray: any[];
 
   constructor(private imageService : ImageService) { }
 
   ngOnInit(): void {
-
-    this.imageService.categories.snapshotChanges().subscribe((list)=>{
-      this.categoryList = list.map((item)=>{
-          return item.payload.val(); //return the category json.
-      })
-    })
 
   }
 

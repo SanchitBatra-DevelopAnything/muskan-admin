@@ -2,6 +2,7 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiserviceService } from '../services/apiservice.service';
+import { UtilityServiceService } from '../services/utility-service.service';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,7 @@ export class LoginComponent implements OnInit {
   internetProblem : Boolean;
   // @Output() isLoggedIn = new EventEmitter<Boolean>();
 
-  constructor(private apiService : ApiserviceService , private router: Router) {}
+  constructor(private apiService : ApiserviceService , private router: Router , private UtilityService:UtilityServiceService) {}
 
   ngOnInit(): void {
 
@@ -70,6 +71,7 @@ export class LoginComponent implements OnInit {
   {
     sessionStorage.setItem('user' , this.loginForm.value.username);
     sessionStorage.setItem('loggedIn' , "true");
+    this.UtilityService.loggedInStatusUpdated.emit(true); //inform header for the same.
 
     // this.isLoggedIn.emit(true);
     this.router.navigate(['/categories']);

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UtilityServiceService } from '../services/utility-service.service';
 
 @Component({
   selector: 'app-header',
@@ -7,9 +8,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  loggedIn:boolean = false;
+
+  constructor(private UtilityService : UtilityServiceService) { 
+  }
 
   ngOnInit(): void {
+    this.UtilityService.loggedInStatusUpdated.subscribe((loggedIn : boolean)=>{
+      this.loggedIn = loggedIn;
+    });
+  }
+
+  onLogout()
+  {
+    sessionStorage.clear();
+    this.loggedIn = false;
   }
 
 }

@@ -23,6 +23,9 @@ import { SubcategoryItemComponent } from './subcategory-item/subcategory-item.co
 import { AddItemFormComponent } from './add-item-form/add-item-form.component';
 import { CategoryFormComponent } from './category-form/category-form.component';
 import { environment } from 'src/environments/environment';
+import { UtilityServiceService } from './services/utility-service.service';
+import { ApiserviceService } from './services/apiservice.service';
+import { ImageService } from './services/image.service';
 
 
 const appRoutes : Routes = [
@@ -58,7 +61,7 @@ const appRoutes : Routes = [
     AngularFireDatabaseModule,
     RouterModule.forRoot(appRoutes,{useHash: true}),
   ],
-  providers: [],
+  providers: [UtilityServiceService , ApiserviceService , ImageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
