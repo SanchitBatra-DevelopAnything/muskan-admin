@@ -15,7 +15,7 @@ export class ApiserviceService {
 
   public getNotificationCount():Observable<any>
   {
-    return this.http.get('https://muskan-admin-app-default-rtdb.firebaseio.com/notifications.json?shallow=true');
+    return this.http.get('https://muskan-admin-app-default-rtdb.firebaseio.com/retailerNotifications.json?shallow=true');
   }
 
   public getCategories():Observable<any>
@@ -26,5 +26,10 @@ export class ApiserviceService {
   public deleteCategory(key:string) : Observable<any>
   {
     return this.http.delete('https://muskan-admin-app-default-rtdb.firebaseio.com/Categories/'+key+".json");
+  }
+
+  public getRetailerNotifications() : Observable<any>
+  {
+    return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/retailerNotifications.json");
   }
 }

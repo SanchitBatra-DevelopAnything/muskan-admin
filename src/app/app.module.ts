@@ -51,7 +51,8 @@ const appRoutes : Routes = [
     ItemComponent,
     SubcategoryItemComponent,
     AddItemFormComponent,
-    CategoryFormComponent
+    CategoryFormComponent,
+    NotificationsComponent
   ],
   imports: [
     BrowserModule,
