@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiserviceService } from '../services/apiservice.service';
-import { ImageService } from '../services/image.service';
 
 @Component({
   selector: 'app-category-list',
@@ -11,6 +10,7 @@ export class CategoryListComponent implements OnInit {
 
   isLoading : boolean;
   categoryList : any[];
+  categoryKeys : any[];
   fetchError : boolean;
 
   constructor(private apiService : ApiserviceService) { }
@@ -20,6 +20,7 @@ export class CategoryListComponent implements OnInit {
     this.fetchError = false;
     this.apiService.getCategories().subscribe((allCategories)=>{
       this.categoryList = Object.values(allCategories);
+      this.categoryKeys = Object.keys(allCategories);
       this.fetchError = false;
       this.isLoading = false;
     }) , (err)=>{

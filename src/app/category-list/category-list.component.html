@@ -22,7 +22,8 @@
 </div>
 
 <div class="row">
-    <div class="col col-xs-4" *ngFor = "let category of categoryList">
-        <app-category-item [category] = category></app-category-item>
+    <div class="col col-xs-4" *ngFor = "let category of categoryList ; let i = index">
+        <app-category-item [category] = category
+        [categoryKeyInDb] = "categoryKeys[i]"></app-category-item>
     </div>
 </div>

@@ -8,11 +8,20 @@ import { Component, Input, OnInit } from '@angular/core';
 export class CategoryItemComponent implements OnInit {
 
   @Input()
-  category : {categoryName : string , imageUrl : string};
+  category : any;
+
+  @Input()
+  categoryKeyInDb:string;
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  onDeleteCategory()
+  {
+    console.log("key = ",this.categoryKeyInDb);
+    console.log("value = ", this.category);
   }
 
 }
