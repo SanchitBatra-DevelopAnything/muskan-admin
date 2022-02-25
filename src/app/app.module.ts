@@ -27,6 +27,7 @@ import { UtilityServiceService } from './services/utility-service.service';
 import { ApiserviceService } from './services/apiservice.service';
 import { ImageService } from './services/image.service';
 import { AuthGuardService } from './services/guard/auth-guard.service';
+import { RetailerNotificationComponent } from './retailer-notification/retailer-notification.component';
 
 
 const appRoutes : Routes = [
@@ -52,7 +53,8 @@ const appRoutes : Routes = [
     SubcategoryItemComponent,
     AddItemFormComponent,
     CategoryFormComponent,
-    NotificationsComponent
+    NotificationsComponent,
+    RetailerNotificationComponent
   ],
   imports: [
     BrowserModule,

@@ -4,5 +4,10 @@
     <h3>Retailer Notifications</h3>
     <hr>
     <div class = "loader" *ngIf = "isLoading"></div>
-    <p *ngIf = "!isLoading"> nOTIS WILL BE LOADED HERE.</p>
+    <div *ngIf = "!isLoading">
+        <div *ngFor = "let notification of retailerNotifications; let i = index">
+            <app-retailer-notification [notificationKey] = "notificationKeys[i]" [notificationData] = "notification"></app-retailer-notification>
+        </div>
+    </div>
+    
 </div>
