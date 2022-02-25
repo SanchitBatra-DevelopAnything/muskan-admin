@@ -22,4 +22,9 @@ export class ApiserviceService {
   {
     return this.http.get('https://muskan-admin-app-default-rtdb.firebaseio.com/Categories.json');
   }
+
+  public deleteCategory(key:string) : Observable<any>
+  {
+    return this.http.delete('https://muskan-admin-app-default-rtdb.firebaseio.com/Categories/'+key+".json");
+  }
 }

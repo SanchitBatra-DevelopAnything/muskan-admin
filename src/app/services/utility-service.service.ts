@@ -7,9 +7,11 @@ import { Subject } from 'rxjs';
 export class UtilityServiceService {
 
   loggedInStatusUpdated : Subject<boolean>;
+  categoryDeleted:Subject<string>;
 
   constructor() { 
     this.loggedInStatusUpdated = new Subject<boolean>();
+    this.categoryDeleted = new Subject<string>();
   }
 
 }

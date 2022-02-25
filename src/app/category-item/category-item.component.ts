@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ApiserviceService } from '../services/apiservice.service';
+import { UtilityServiceService } from '../services/utility-service.service';
 
 @Component({
   selector: 'app-category-item',
@@ -13,15 +15,26 @@ export class CategoryItemComponent implements OnInit {
   @Input()
   categoryKeyInDb:string;
 
-  constructor() { }
+  constructor(private utilityService : UtilityServiceService , private apiService : ApiserviceService) { }
 
   ngOnInit(): void {
   }
 
   onDeleteCategory()
   {
-    console.log("key = ",this.categoryKeyInDb);
-    console.log("value = ", this.category);
+    this.apiService.deleteCategory(this.categoryKeyInDb).subscribe((_)=>{
+      this.utilityService.categoryDeleted.next(this.categoryKeyInDb);
+    });
+  }
+
+  onAddItem()
+  {
+
+  }
+
+  onAddSubcategory()
+  {
+
   }
 
 }
