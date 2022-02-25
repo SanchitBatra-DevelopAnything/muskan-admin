@@ -15,15 +15,20 @@ export class CategoryItemComponent implements OnInit {
   @Input()
   categoryKeyInDb:string;
 
+  isDeleting : boolean;
+
   constructor(private utilityService : UtilityServiceService , private apiService : ApiserviceService) { }
 
   ngOnInit(): void {
+    this.isDeleting = false;
   }
 
   onDeleteCategory()
   {
+    this.isDeleting = true;
     this.apiService.deleteCategory(this.categoryKeyInDb).subscribe((_)=>{
       this.utilityService.categoryDeleted.next(this.categoryKeyInDb);
+      this.isDeleting = false;
     });
   }
 
