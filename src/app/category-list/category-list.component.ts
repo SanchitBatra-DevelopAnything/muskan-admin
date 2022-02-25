@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { ApiserviceService } from '../services/apiservice.service';
 import { UtilityServiceService } from '../services/utility-service.service';
 
@@ -7,17 +8,19 @@ import { UtilityServiceService } from '../services/utility-service.service';
   templateUrl: './category-list.component.html',
   styleUrls: ['./category-list.component.css']
 })
-export class CategoryListComponent implements OnInit {
+export class CategoryListComponent implements OnInit , OnDestroy{
 
   isLoading : boolean;
   categoryList : any[];
   categoryKeys : any[];
   fetchError : boolean;
 
+  deleteSubscription : Subscription;
+
   constructor(private apiService : ApiserviceService , private utilityService:UtilityServiceService) { }
 
   ngOnInit(): void {
-    this.utilityService.categoryDeleted.subscribe((deletedKey:string)=>{
+    this.deleteSubscription = this.utilityService.categoryDeleted.subscribe((deletedKey:string)=>{
       this.loadCategories();
     });
     this.loadCategories();
@@ -36,6 +39,12 @@ export class CategoryListComponent implements OnInit {
       this.fetchError = true;
       this.isLoading = false;
     };
+  }
+
+
+  ngOnDestroy()
+  {
+    this.deleteSubscription.unsubscribe();
   }
 
 }
