@@ -27,14 +27,24 @@ export class RetailerNotificationComponent implements OnInit {
   deleteNotification()
   {
     this.isDeleting = true;
-    setTimeout(() => {
+    // setTimeout(() => {
+    //   this.isDeleting = false;
+    // }, (2000));
+
+    this.apiService.deleteRetailerNotification(this.notificationKey).subscribe((_)=>{
       this.isDeleting = false;
-    }, (2000));
+    } , (err)=>{
+      console.log(err);
+    });
+
   }
 
   approveNotification()
   {
-
+    this.isApproving = true;
+    setTimeout(()=>{
+      this.isApproving = false;
+    },(2000));
   }
 
 }
