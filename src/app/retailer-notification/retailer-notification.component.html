@@ -4,8 +4,13 @@
         <h4>Retailer Name : {{notificationData.retailerName}}</h4>
     
     
-        <button class = "btn btn-success spaced">Approve</button>
+        <button class = "btn btn-success spaced" (click) = "approveNotification()">Approve</button>
 
-        <button class = "btn btn-danger spaced">Reject</button>
+        <button *ngIf = "!isDeleting" class = "btn btn-danger spaced" (click) = "deleteNotification()">Reject</button>
+        <button *ngIf = "isDeleting" class = "btn btn-danger spaced">
+            <div class="loader loader-button">
+
+            </div>
+        </button>
     
 </div>
