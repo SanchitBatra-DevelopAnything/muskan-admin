@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ApiserviceService } from '../services/apiservice.service';
+import { UtilityServiceService } from '../services/utility-service.service';
 
 @Component({
   selector: 'app-retailer-notification',
@@ -17,7 +18,7 @@ export class RetailerNotificationComponent implements OnInit {
   @Input()
   notificationData : {retailerName : string , shopAddress : string};
 
-  constructor(private apiService : ApiserviceService) { }
+  constructor(private apiService : ApiserviceService,private utilityService : UtilityServiceService) { }
 
   ngOnInit(): void {
     this.isDeleting = false;
@@ -32,9 +33,8 @@ export class RetailerNotificationComponent implements OnInit {
     // }, (2000));
 
     this.apiService.deleteRetailerNotification(this.notificationKey).subscribe((_)=>{
+      this.utilityService.retailerNotificationDeleted.next('Deleted');
       this.isDeleting = false;
-    } , (err)=>{
-      console.log(err);
     });
 
   }
