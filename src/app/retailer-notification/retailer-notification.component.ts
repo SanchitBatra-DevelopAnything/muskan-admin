@@ -28,9 +28,6 @@ export class RetailerNotificationComponent implements OnInit {
   deleteNotification()
   {
     this.isDeleting = true;
-    // setTimeout(() => {
-    //   this.isDeleting = false;
-    // }, (2000));
 
     this.apiService.deleteRetailerNotification(this.notificationKey).subscribe((_)=>{
       this.utilityService.retailerNotificationDeleted.next('Deleted');
@@ -42,9 +39,10 @@ export class RetailerNotificationComponent implements OnInit {
   approveNotification()
   {
     this.isApproving = true;
-    setTimeout(()=>{
+    this.apiService.approveRetailerNotification(this.notificationKey , this.notificationData).subscribe((_)=>{
       this.isApproving = false;
-    },(2000));
+      this.deleteNotification();
+    });
   }
 
 }
