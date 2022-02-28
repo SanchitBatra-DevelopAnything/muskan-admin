@@ -14,11 +14,13 @@ export class NotificationsComponent implements OnInit {
   notificationKeys : any[];
   isLoading:boolean;
   retailerNotificationDeletedSub : Subscription;
+  noMoreRetailerNotifications : boolean;
 
   constructor(private apiService : ApiserviceService , private utilityService : UtilityServiceService) { }
 
   ngOnInit(): void {
     this.isLoading = true;
+    this.noMoreRetailerNotifications = false;
     this.retailerNotificationDeletedSub = this.utilityService.retailerNotificationDeleted.subscribe((_)=>{
       this.getRetailerNotifications();
     });
@@ -28,6 +30,14 @@ export class NotificationsComponent implements OnInit {
   getRetailerNotifications()
   {
     this.apiService.getRetailerNotifications().subscribe((notis)=>{
+      if(notis === null)
+      {
+        this.noMoreRetailerNotifications = true;
+        this.isLoading = false;
+        this.retailerNotifications = [];
+        this.notificationKeys = [];
+        return;
+      }
       this.retailerNotifications = Object.values(notis);
       this.notificationKeys = Object.keys(notis);
       this.isLoading = false;

@@ -8,6 +8,9 @@
         <div *ngFor = "let notification of retailerNotifications; let i = index">
             <app-retailer-notification [notificationKey] = "notificationKeys[i]" [notificationData] = "notification"></app-retailer-notification>
         </div>
+        <div *ngIf = "noMoreRetailerNotifications">
+            <h4>No Pending Retailer Notifications.</h4>
+        </div>
     </div>
     
 </div>

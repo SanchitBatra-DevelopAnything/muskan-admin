@@ -36,6 +36,11 @@ export class AppComponent implements OnInit {
   getRetailerNotificationCount()
   {
     this.apiService.getNotificationCount().subscribe((shallowObject)=>{
+      if(shallowObject === null)
+      {
+        this.totalNotifications = 0;
+        return;
+      }
       this.totalNotifications = Object.keys(shallowObject).length;
     });
   }
