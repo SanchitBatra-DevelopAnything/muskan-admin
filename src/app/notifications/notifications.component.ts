@@ -21,6 +21,7 @@ export class NotificationsComponent implements OnInit {
   ngOnInit(): void {
     this.isLoading = true;
     this.noMoreRetailerNotifications = false;
+    this.utilityService.refreshRetailerNotificationCount.next('refresh');
     this.retailerNotificationDeletedSub = this.utilityService.retailerNotificationDeleted.subscribe((_)=>{
       this.getRetailerNotifications();
     });
