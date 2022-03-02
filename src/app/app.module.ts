@@ -25,6 +25,7 @@ import { CategoryFormComponent } from './category-form/category-form.component';
 import { environment } from 'src/environments/environment';
 import { AuthGuardService } from './services/guard/auth-guard.service';
 import { RetailerNotificationComponent } from './retailer-notification/retailer-notification.component';
+import { ManageWindowComponent } from './manage-window/manage-window.component';
 
 
 const appRoutes : Routes = [
@@ -32,6 +33,7 @@ const appRoutes : Routes = [
   {path : 'dailyReport' , component : DailyreportComponent  , canActivate : [AuthGuardService]},
   {path : 'categories' , component : CategoryListComponent , canActivate : [AuthGuardService]},
   {path : 'category/upload' , component : CategoryFormComponent , canActivate : [AuthGuardService]},
+  {path : 'manage' , component : ManageWindowComponent , canActivate : [AuthGuardService]},
   {path: '' , component:LoginComponent , pathMatch:"full"}
 ];
 
@@ -51,7 +53,8 @@ const appRoutes : Routes = [
     AddItemFormComponent,
     CategoryFormComponent,
     NotificationsComponent,
-    RetailerNotificationComponent
+    RetailerNotificationComponent,
+    ManageWindowComponent
   ],
   imports: [
     BrowserModule,
