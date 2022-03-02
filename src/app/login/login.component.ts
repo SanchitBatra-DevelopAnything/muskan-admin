@@ -18,7 +18,12 @@ export class LoginComponent implements OnInit {
   internetProblem : Boolean;
   // @Output() isLoggedIn = new EventEmitter<Boolean>();
 
-  constructor(private apiService : ApiserviceService , private router: Router , private UtilityService:UtilityServiceService) {}
+  constructor(private apiService : ApiserviceService , private router: Router , private UtilityService:UtilityServiceService) {
+    if(sessionStorage.getItem('user')!==null)
+    {
+      this.router.navigate(['/categories']);
+    }
+  }
 
   ngOnInit(): void {
 

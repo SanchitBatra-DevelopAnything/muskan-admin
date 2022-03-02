@@ -23,9 +23,6 @@ import { SubcategoryItemComponent } from './subcategory-item/subcategory-item.co
 import { AddItemFormComponent } from './add-item-form/add-item-form.component';
 import { CategoryFormComponent } from './category-form/category-form.component';
 import { environment } from 'src/environments/environment';
-import { UtilityServiceService } from './services/utility-service.service';
-import { ApiserviceService } from './services/apiservice.service';
-import { ImageService } from './services/image.service';
 import { AuthGuardService } from './services/guard/auth-guard.service';
 import { RetailerNotificationComponent } from './retailer-notification/retailer-notification.component';
 
