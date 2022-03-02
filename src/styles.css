@@ -24,3 +24,7 @@
       height : 50px;
       width : 50px;
   }
+
+  .inline-heading {
+      display: inline-block;
+  }
