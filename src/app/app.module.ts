@@ -7,6 +7,8 @@ import { AngularFireModule } from "@angular/fire/compat";
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { CategoryListComponent } from './category-list/category-list.component';
@@ -68,6 +70,8 @@ const appRoutes : Routes = [
     AngularFireStorageModule,
     AngularFireDatabaseModule,
     NgSelectModule,
+    ToastrModule.forRoot(),
+    BrowserAnimationsModule,
     RouterModule.forRoot(appRoutes,{useHash: true}),
   ],
   providers: [], //the classes for services already have provided in root.
