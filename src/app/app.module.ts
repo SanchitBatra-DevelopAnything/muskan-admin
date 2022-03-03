@@ -6,6 +6,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AngularFireModule } from "@angular/fire/compat";
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 import { AppComponent } from './app.component';
 import { CategoryListComponent } from './category-list/category-list.component';
@@ -26,6 +27,7 @@ import { environment } from 'src/environments/environment';
 import { AuthGuardService } from './services/guard/auth-guard.service';
 import { RetailerNotificationComponent } from './retailer-notification/retailer-notification.component';
 import { ManageWindowComponent } from './manage-window/manage-window.component';
+import { AddShopFormComponent } from './add-shop-form/add-shop-form.component';
 
 
 const appRoutes : Routes = [
@@ -34,6 +36,7 @@ const appRoutes : Routes = [
   {path : 'categories' , component : CategoryListComponent , canActivate : [AuthGuardService]},
   {path : 'category/upload' , component : CategoryFormComponent , canActivate : [AuthGuardService]},
   {path : 'manage' , component : ManageWindowComponent , canActivate : [AuthGuardService]},
+  {path : 'shop/upload' , component : AddShopFormComponent , canActivate : [AuthGuardService]},
   {path: '' , component:LoginComponent , pathMatch:"full"}
 ];
 
@@ -54,7 +57,8 @@ const appRoutes : Routes = [
     CategoryFormComponent,
     NotificationsComponent,
     RetailerNotificationComponent,
-    ManageWindowComponent
+    ManageWindowComponent,
+    AddShopFormComponent
   ],
   imports: [
     BrowserModule,
@@ -63,6 +67,7 @@ const appRoutes : Routes = [
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireStorageModule,
     AngularFireDatabaseModule,
+    NgSelectModule,
     RouterModule.forRoot(appRoutes,{useHash: true}),
   ],
   providers: [], //the classes for services already have provided in root.
