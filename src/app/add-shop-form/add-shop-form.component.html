@@ -20,8 +20,14 @@
                 ngDefaultControl>
                 </ng-select>
             </div>
+
     
-            <button type = "submit" class = "btn btn-success btn-bold-text">Add A Shop</button>
+            <button type = "submit" class = "btn btn-success btn-bold-text" *ngIf = "!isInsertingShop" [disabled] = "addShopForm.pending|| addShopForm.invalid">Add A Shop</button>
+            <button *ngIf = "isInsertingShop" class = "btn btn-success">
+                <div class="loader loader-button">
+    
+                </div>
+            </button>
         </form>
     </div>
     

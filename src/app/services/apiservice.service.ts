@@ -42,4 +42,9 @@ export class ApiserviceService {
   {
     return this.http.post('https://muskan-admin-app-default-rtdb.firebaseio.com/Retailers.json' , notificationData);
   }
+
+  public addShop(shop:{shopName : string , areaName : string}) : Observable<any>
+  {
+    return this.http.post('https://muskan-admin-app-default-rtdb.firebaseio.com/Shops.json' , shop);
+  }
 }
