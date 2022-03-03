@@ -39,7 +39,14 @@ export class AddShopFormComponent implements OnInit {
         positionClass : 'toast-bottom-right'
       });
       this.addShopForm.reset();
-    });
+    }) , (err)=>{
+      this.isInsertingShop = false;
+      this.toastr.error('Error Occured , Try again later!' , 'Bad Internet :(' , {
+        timeOut:4000,
+        positionClass: 'toast-bottom-right',
+        closeButton: true
+      });
+    };
   }
 
 }
