@@ -2,6 +2,13 @@
     <h3 class = "inline-heading">Shops</h3>
         <button class = "btn btn-success spaced-button" (click) = "openShopUpload()">Add a new Shop</button> 
     <hr>
+
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item" style ="height:50px;" *ngFor = "let shop of shops">{{shop.shopName}} , {{shop.areaName}}
+            <button class = "btn btn-danger" style = "float:right;">Delete</button>
+        </li>
+      </ul>
+
     <h3>Retailers</h3>
     <p>New retailers will be added through the retailers app. Please see the <a routerLink = "/notifications">notifications</a>  to add new retailers into the system.</p>
     <hr>
