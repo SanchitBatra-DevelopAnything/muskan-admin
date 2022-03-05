@@ -57,4 +57,14 @@ export class ApiserviceService {
   {
     return this.http.delete('https://muskan-admin-app-default-rtdb.firebaseio.com/Shops/'+shopKey+".json");
   }
+
+  public getRetailers() : Observable<any>
+  {
+    return this.http.get('https://muskan-admin-app-default-rtdb.firebaseio.com/Retailers.json')
+  }
+
+  public deleteRetailer(retailerKey : string) : Observable<any>
+  {
+    return this.http.delete('https://muskan-admin-app-default-rtdb.firebaseio.com/Retailers/' + retailerKey + ".json");
+  }
 }
