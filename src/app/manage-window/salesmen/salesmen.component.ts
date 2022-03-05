@@ -40,10 +40,10 @@ export class SalesmenComponent implements OnInit {
 
   openSalesmanUpload()
   {
-    this.router.navigate(['/shop/upload']);
+    this.router.navigate(['/salesman/upload']);
   }
 
-  deleteShop(index)
+  deleteSalesman(index)
   {
     this.isLoading = true;
     this.apiService.deleteSalesman(this.salesmenKeys[index]).subscribe((_)=>{

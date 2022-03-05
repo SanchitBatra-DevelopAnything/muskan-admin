@@ -1,1 +1,34 @@
-<p>Salesman form here!</p>
+<div class="container" style = "text-align:center;">
+    <div class = "jumbotron">
+        <h3>Add Your Salesmen Here!!</h3>
+        
+
+        <form [formGroup] = "salesmanForm" (ngSubmit) = "onSubmit()"> 
+            <div class="form-group">
+    
+                    <label for = "salesmanName">Salesman Name</label>
+                    <input type = "text"
+                    id="salesmanName"
+                    class = "form-control"
+                    formControlName="salesmanName">
+            </div>
+    
+            <!-- <div class="form-group">
+                <label for = "areaName">Area</label>
+                <ng-select [items] = "areas" bindLabel = "area" bindValue = "area" [closeOnSelect] = "true"
+                formControlName = "areaName"
+                ngDefaultControl>
+                </ng-select>
+            </div> -->
+
+    
+            <button type = "submit" class = "btn btn-success btn-bold-text" *ngIf = "!isInsertingSalesman" [disabled] = "salesmanForm.pending|| salesmanForm.invalid">Add Salesman</button>
+            <button *ngIf = "isInsertingSalesman" class = "btn btn-success">
+                <div class="loader loader-button">
+    
+                </div>
+            </button>
+        </form>
+    </div>
+    
+</div>
