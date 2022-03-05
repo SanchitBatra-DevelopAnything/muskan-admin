@@ -33,6 +33,7 @@ import { AddShopFormComponent } from './add-shop-form/add-shop-form.component';
 import { ShopsComponent } from './manage-window/shops/shops.component';
 import { RetailersComponent } from './manage-window/retailers/retailers.component';
 import { SalesmenComponent } from './manage-window/salesmen/salesmen.component';
+import { AddSalesmanFormComponent } from './add-salesman-form/add-salesman-form.component';
 
 
 const appRoutes : Routes = [
@@ -41,10 +42,11 @@ const appRoutes : Routes = [
   {path : 'categories' , component : CategoryListComponent , canActivate : [AuthGuardService]},
   {path : 'category/upload' , component : CategoryFormComponent , canActivate : [AuthGuardService]},
   {path : 'manage' , component : ManageWindowComponent , canActivate : [AuthGuardService] , children:[
-    {path : 'shops', component : ShopsComponent },
-    {path : 'retailers' , component : RetailersComponent} , 
-    {path : 'salesmen' , component : SalesmenComponent}
+    {path : 'shops', component : ShopsComponent  , canActivate : [AuthGuardService]},
+    {path : 'retailers' , component : RetailersComponent , canActivate : [AuthGuardService]} , 
+    {path : 'salesmen' , component : SalesmenComponent , canActivate : [AuthGuardService]}
   ] ,},
+  {path : 'salesman/upload' , component : AddSalesmanFormComponent , canActivate : [AuthGuardService]},
   {path : 'shop/upload' , component : AddShopFormComponent , canActivate : [AuthGuardService]},
   {path: '' , component:LoginComponent , pathMatch:"full"}
 ];
@@ -70,7 +72,8 @@ const appRoutes : Routes = [
     AddShopFormComponent,
     ShopsComponent,
     RetailersComponent,
-    SalesmenComponent
+    SalesmenComponent,
+    AddSalesmanFormComponent
   ],
   imports: [
     BrowserModule,
