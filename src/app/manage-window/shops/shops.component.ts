@@ -45,8 +45,9 @@ export class ShopsComponent implements OnInit {
 
   deleteShop(index)
   {
+    this.isLoading = true;
     this.apiService.deleteShop(this.shopKeys[index]).subscribe((_)=>{
-      this.toastr.success('Shop Deleted Successfully , Loading shops now', 'Notification!' , {
+      this.toastr.success('Shop Deleted Successfully', 'Notification!' , {
         timeOut : 4000 ,
         closeButton : true , 
         positionClass : 'toast-bottom-right'
