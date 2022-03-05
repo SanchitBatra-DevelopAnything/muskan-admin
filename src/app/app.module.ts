@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -30,6 +30,9 @@ import { AuthGuardService } from './services/guard/auth-guard.service';
 import { RetailerNotificationComponent } from './retailer-notification/retailer-notification.component';
 import { ManageWindowComponent } from './manage-window/manage-window.component';
 import { AddShopFormComponent } from './add-shop-form/add-shop-form.component';
+import { ShopsComponent } from './manage-window/shops/shops.component';
+import { RetailersComponent } from './manage-window/retailers/retailers.component';
+import { SalesmenComponent } from './manage-window/salesmen/salesmen.component';
 
 
 const appRoutes : Routes = [
@@ -37,7 +40,11 @@ const appRoutes : Routes = [
   {path : 'dailyReport' , component : DailyreportComponent  , canActivate : [AuthGuardService]},
   {path : 'categories' , component : CategoryListComponent , canActivate : [AuthGuardService]},
   {path : 'category/upload' , component : CategoryFormComponent , canActivate : [AuthGuardService]},
-  {path : 'manage' , component : ManageWindowComponent , canActivate : [AuthGuardService]},
+  {path : 'manage' , component : ManageWindowComponent , canActivate : [AuthGuardService] , children:[
+    {path : 'shops', component : ShopsComponent },
+    {path : 'retailers' , component : RetailersComponent} , 
+    {path : 'salesmen' , component : SalesmenComponent}
+  ]},
   {path : 'shop/upload' , component : AddShopFormComponent , canActivate : [AuthGuardService]},
   {path: '' , component:LoginComponent , pathMatch:"full"}
 ];
