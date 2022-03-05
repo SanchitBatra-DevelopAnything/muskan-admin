@@ -44,7 +44,7 @@ const appRoutes : Routes = [
     {path : 'shops', component : ShopsComponent },
     {path : 'retailers' , component : RetailersComponent} , 
     {path : 'salesmen' , component : SalesmenComponent}
-  ]},
+  ] ,},
   {path : 'shop/upload' , component : AddShopFormComponent , canActivate : [AuthGuardService]},
   {path: '' , component:LoginComponent , pathMatch:"full"}
 ];

@@ -2,10 +2,15 @@
     <div class="row">
         <div class="col-xs-12">
             <ul class="nav nav-tabs">
-                <li role = "presentation" class = "active"><a href = "#">Shops</a></li>
-                <li role = "presentation"><a href = "#">Retailers</a></li>
-                <li role = "presentation"><a href = "#">Salesmen</a></li>
+                <li role = "presentation" routerLinkActive = "active"><a routerLink = "/manage/shops">Shops</a></li>
+                <li role = "presentation" routerLinkActive = "active"><a routerLink = "/manage/retailers">Retailers</a></li>
+                <li role = "presentation" routerLinkActive = "active"><a routerLink = "/manage/salesmen">Salesmen</a></li>
             </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <router-outlet></router-outlet>
         </div>
     </div>
 </div>
