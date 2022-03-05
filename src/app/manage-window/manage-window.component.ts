@@ -9,31 +9,11 @@ import { ApiserviceService } from '../services/apiservice.service';
 })
 export class ManageWindowComponent implements OnInit {
 
-  shops:any[];
-  shopKeys : any[];
 
-  constructor(private router : Router , private apiService:ApiserviceService) { }
+  constructor(private router : Router) { }
 
   ngOnInit(): void {
-    this.getShops();
-  }
-
-  openShopUpload(){
-    this.router.navigate(['/shop/upload']);
-  }
-
-  getShops()
-  {
-    this.apiService.getShops().subscribe((shops)=>{
-      if(shops == null)
-      {
-        this.shops = [];
-        this.shopKeys = [];
-        return;
-      }
-      this.shops = Object.values(shops);
-      this.shopKeys = Object.keys(shops);
-    });
+    this.router.navigate(['/manage/shops']);
   }
 
 }

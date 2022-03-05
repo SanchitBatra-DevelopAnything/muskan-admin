@@ -1,1 +1,13 @@
-<p>shops works!</p>
+<div class = "loader" *ngIf = "isLoading"></div>
+<div class="container" *ngIf = "!isLoading">
+    <h3 class = "inline-heading">Shops</h3>
+        <button class = "btn btn-success spaced-button" (click) = "openShopUpload()">Add a new Shop</button> 
+    <hr>
+
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item" style ="height:50px;" *ngFor = "let shop of shopsData; let i = index;">{{shop.shopName}} , {{shop.areaName}}
+            <button class = "btn btn-danger" style = "float:right;" (click) = "deleteShop(i)" *ngIf = "!isDeleting">Delete</button>
+            <button class = "btn btn-danger button--loading" style = "float:right;" (click) = "deleteShop(i)" *ngIf = "isDeleting"></button>
+        </li>
+      </ul>
+</div>

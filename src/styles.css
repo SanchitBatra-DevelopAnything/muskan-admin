@@ -223,3 +223,7 @@
       width: 25em;
     }
   }
+
+  .spaced-button {
+    margin-left : 10px;
+}
