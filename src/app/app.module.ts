@@ -69,7 +69,8 @@ const appRoutes : Routes = [
     ManageWindowComponent,
     AddShopFormComponent,
     ShopsComponent,
-    RetailersComponent
+    RetailersComponent,
+    SalesmenComponent
   ],
   imports: [
     BrowserModule,
