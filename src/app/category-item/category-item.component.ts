@@ -35,7 +35,7 @@ export class CategoryItemComponent implements OnInit {
 
   onAddItem()
   {
-
+    this.router.navigate(['item/upload/'+this.categoryKeyInDb + "/" + this.category.categoryName]);
   }
 
   onAddSubcategory()
