@@ -4,7 +4,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { finalize } from 'rxjs';
 import { ApiserviceService } from '../services/apiservice.service';
-import { ImageService } from '../services/image.service';
 
 @Component({
   selector: 'app-add-item-form',
@@ -19,6 +18,7 @@ export class AddItemFormComponent implements OnInit {
   isSubmitted:Boolean;
   parentCategoryData : {categoryKey : string , categoryName : string};
   availableSubcategories : any;
+  availableSubcategoriesKeys : any;
   selectedSubcategoryKey : string;
 
   constructor(private storage : AngularFireStorage , private apiService: ApiserviceService,private route : ActivatedRoute) { }
@@ -100,7 +100,14 @@ export class AddItemFormComponent implements OnInit {
   {
     this.apiService.getSubcategoriesOfCategory(this.parentCategoryData.categoryKey).subscribe((subcategories)=>{
       this.availableSubcategories = Object.values(subcategories);
+      this.availableSubcategoriesKeys = Object.keys(subcategories);
     });
+  }
+
+  subcategoryChanged(selectedSubcategory:any)
+  {
+    let selectedIndex = this.availableSubcategories.indexOf(selectedSubcategory);
+    this.selectedSubcategoryKey = this.availableSubcategoriesKeys[selectedIndex];
   }
 
 }
