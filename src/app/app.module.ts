@@ -49,7 +49,7 @@ const appRoutes : Routes = [
   ] ,},
   {path : 'salesman/upload' , component : AddSalesmanFormComponent , canActivate : [AuthGuardService]},
   {path : 'shop/upload' , component : AddShopFormComponent , canActivate : [AuthGuardService]},
-  {path : 'subcategory/upload/:categoryKey' , component : SubcategoryAddFormComponent , canActivate : [AuthGuardService]},
+  {path : 'subcategory/upload/:categoryKey/:categoryName' , component : SubcategoryAddFormComponent , canActivate : [AuthGuardService]},
   {path: '' , component:LoginComponent , pathMatch:"full"}
 ];
 

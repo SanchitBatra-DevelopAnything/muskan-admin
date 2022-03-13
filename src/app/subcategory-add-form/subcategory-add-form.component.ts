@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { ApiserviceService } from '../services/apiservice.service';
 
 @Component({
   selector: 'app-subcategory-add-form',
@@ -10,17 +13,35 @@ export class SubcategoryAddFormComponent implements OnInit {
 
   subcategoryForm : FormGroup;
   isInsertingSubcategory : boolean;
+  parentCategoryData : {parentCategoryId : string, parentCategoryName: string};
 
-  constructor() { }
+  constructor(private route:ActivatedRoute , private apiService : ApiserviceService,private toastr : ToastrService) { }
 
   ngOnInit(): void {
+    this.parentCategoryData = {parentCategoryId : this.route.snapshot.params['categoryKey'] , parentCategoryName : this.route.snapshot.params['categoryName']};
     this.isInsertingSubcategory = false;
     this.subcategoryForm = new FormGroup({subcategoryName : new FormControl(null , [Validators.required])});
   }
 
   onSubmit()
   { 
-    console.log(this.subcategoryForm.value);
+    this.isInsertingSubcategory = true;
+    this.apiService.addSubcategory(this.subcategoryForm.value , this.parentCategoryData.parentCategoryId).subscribe((_)=>{
+      this.isInsertingSubcategory = false;
+      this.toastr.success('Subcategory Added Successfully!', 'Notification!' , {
+        timeOut : 4000 ,
+        closeButton : true , 
+        positionClass : 'toast-bottom-right'
+      });
+      this.subcategoryForm.reset();
+    }) , (err)=>{
+      this.isInsertingSubcategory = false;
+      this.toastr.error('Error Occured , Try again later!' , 'Bad Internet :(' , {
+        timeOut:4000,
+        positionClass: 'toast-bottom-right',
+        closeButton: true
+      });
+    };
   }
 
 }

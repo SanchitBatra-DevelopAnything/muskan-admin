@@ -82,4 +82,9 @@ export class ApiserviceService {
   {
     return this.http.delete("https://muskan-admin-app-default-rtdb.firebaseio.com/Salesmen/"+salesmanKey+".json");
   }
+
+  public addSubcategory(subcategory : {subcategoryName : string} , parentCategoryKey : string)
+  {
+    return this.http.post("https://muskan-admin-app-default-rtdb.firebaseio.com/Categories/"+parentCategoryKey+ "/Subcategories.json", subcategory);
+  }
 }

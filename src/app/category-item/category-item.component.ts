@@ -40,7 +40,7 @@ export class CategoryItemComponent implements OnInit {
 
   onAddSubcategory()
   {
-    this.router.navigate(['subcategory/upload/'+this.categoryKeyInDb]);
+    this.router.navigate(['subcategory/upload/'+this.categoryKeyInDb + "/" + this.category.categoryName]);
   }
 
 }

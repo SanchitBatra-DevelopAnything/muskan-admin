@@ -1,7 +1,7 @@
 <div class="container" style = "text-align:center;">
     <div class = "jumbotron">
         <h3>Add Your Subcategory Here!!</h3>
-        <p>For CAKES & PASTRIES</p>
+        <p>For {{parentCategoryData.parentCategoryName}}</p>
         
 
         <form [formGroup] = "subcategoryForm" (ngSubmit) = "onSubmit()"> 
