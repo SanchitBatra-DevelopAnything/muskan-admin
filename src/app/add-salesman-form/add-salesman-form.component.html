@@ -12,14 +12,6 @@
                     class = "form-control"
                     formControlName="salesmanName">
             </div>
-    
-            <!-- <div class="form-group">
-                <label for = "areaName">Area</label>
-                <ng-select [items] = "areas" bindLabel = "area" bindValue = "area" [closeOnSelect] = "true"
-                formControlName = "areaName"
-                ngDefaultControl>
-                </ng-select>
-            </div> -->
 
     
             <button type = "submit" class = "btn btn-success btn-bold-text" *ngIf = "!isInsertingSalesman" [disabled] = "salesmanForm.pending|| salesmanForm.invalid">Add Salesman</button>

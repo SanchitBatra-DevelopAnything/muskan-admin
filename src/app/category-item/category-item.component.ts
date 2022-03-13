@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ApiserviceService } from '../services/apiservice.service';
 import { UtilityServiceService } from '../services/utility-service.service';
 
@@ -17,7 +18,7 @@ export class CategoryItemComponent implements OnInit {
 
   isDeleting : boolean;
 
-  constructor(private utilityService : UtilityServiceService , private apiService : ApiserviceService) { }
+  constructor(private utilityService : UtilityServiceService , private apiService : ApiserviceService , private router:Router) { }
 
   ngOnInit(): void {
     this.isDeleting = false;
@@ -39,7 +40,7 @@ export class CategoryItemComponent implements OnInit {
 
   onAddSubcategory()
   {
-
+    this.router.navigate(['subcategory/upload/'+this.categoryKeyInDb]);
   }
 
 }

@@ -1,0 +1,27 @@
+<div class="container" style = "text-align:center;">
+    <div class = "jumbotron">
+        <h3>Add Your Subcategory Here!!</h3>
+        <p>For CAKES & PASTRIES</p>
+        
+
+        <form [formGroup] = "subcategoryForm" (ngSubmit) = "onSubmit()"> 
+            <div class="form-group">
+    
+                    <label for = "subcategoryName">Subcategory</label>
+                    <input type = "text"
+                    id="subcategoryName"
+                    class = "form-control"
+                    formControlName="subcategoryName">
+            </div>
+
+    
+            <button type = "submit" class = "btn btn-success btn-bold-text" *ngIf = "!isInsertingSubcategory" [disabled] = "subcategoryForm.pending|| subcategoryForm.invalid">Add Subcategory</button>
+            <button *ngIf = "isInsertingSubcategory" class = "btn btn-success">
+                <div class="loader loader-button">
+    
+                </div>
+            </button>
+        </form>
+    </div>
+    
+</div>

@@ -34,6 +34,7 @@ import { ShopsComponent } from './manage-window/shops/shops.component';
 import { RetailersComponent } from './manage-window/retailers/retailers.component';
 import { SalesmenComponent } from './manage-window/salesmen/salesmen.component';
 import { AddSalesmanFormComponent } from './add-salesman-form/add-salesman-form.component';
+import { SubcategoryAddFormComponent } from './subcategory-add-form/subcategory-add-form.component';
 
 
 const appRoutes : Routes = [
@@ -48,6 +49,7 @@ const appRoutes : Routes = [
   ] ,},
   {path : 'salesman/upload' , component : AddSalesmanFormComponent , canActivate : [AuthGuardService]},
   {path : 'shop/upload' , component : AddShopFormComponent , canActivate : [AuthGuardService]},
+  {path : 'subcategory/upload/:categoryKey' , component : SubcategoryAddFormComponent , canActivate : [AuthGuardService]},
   {path: '' , component:LoginComponent , pathMatch:"full"}
 ];
 
@@ -73,7 +75,8 @@ const appRoutes : Routes = [
     ShopsComponent,
     RetailersComponent,
     SalesmenComponent,
-    AddSalesmanFormComponent
+    AddSalesmanFormComponent,
+    SubcategoryAddFormComponent
   ],
   imports: [
     BrowserModule,
