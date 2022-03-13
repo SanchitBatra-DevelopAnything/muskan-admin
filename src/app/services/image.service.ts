@@ -15,6 +15,11 @@ export class ImageService {
     this.categories = this.Firebase.list('Categories'); //node name of db here.
   }
 
+  // initializeItemsWithImages()
+  // {
+
+  // }
+
   insertCategories(categories)
   {
     this.categories.push(categories);

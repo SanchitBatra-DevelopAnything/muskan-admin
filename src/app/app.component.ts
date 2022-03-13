@@ -23,6 +23,7 @@ export class AppComponent implements OnInit , OnDestroy {
   ngOnInit() {
     //this.isLoggedIn = false;
     this.imageService.initializeCategoriesWithImages(); //initialize the categories list.
+    // this.imageService.initializeItemsWithImages(); //initialize items under categories and subcategories.
     this.retailerNotificationDeletedSub = this.utilityService.retailerNotificationDeleted.subscribe((_)=>{
       this.getRetailerNotificationCount();
     });

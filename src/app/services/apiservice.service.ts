@@ -87,4 +87,21 @@ export class ApiserviceService {
   {
     return this.http.post("https://muskan-admin-app-default-rtdb.firebaseio.com/Categories/"+parentCategoryKey+ "/Subcategories.json", subcategory);
   }
+
+  public addItem(item : {itemName : string , imageUrl : string , subcategoryName : string} , parentCategoryKey : string , parentSubcategoryKey : string)
+  {
+    if(item.subcategoryName === "Direct Variety")
+    {
+      return this.http.post("https://muskan-admin-app-default-rtdb.firebaseio.com/Categories/"+parentCategoryKey+ "/Items.json",item);
+    }
+    else
+    {
+      return this.http.post("https://muskan-admin-app-default-rtdb.firebaseio.com/Categories/"+parentCategoryKey+ "/Subcategories/"+parentSubcategoryKey+"/Items.json" , item);
+    }
+  }
+
+  public getSubcategoriesOfCategory(categoryKey : string)
+  {
+    return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/Categories/"+categoryKey+"/Subcategories.json");
+  }
 }
