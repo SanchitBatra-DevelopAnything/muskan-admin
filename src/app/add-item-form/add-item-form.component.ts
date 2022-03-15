@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { finalize } from 'rxjs';
 import { ApiserviceService } from '../services/apiservice.service';
 
@@ -20,19 +21,21 @@ export class AddItemFormComponent implements OnInit {
   availableSubcategories : any;
   availableSubcategoriesKeys : any;
   selectedSubcategoryKey : string;
+  showSubcategoryDropdown : boolean;
 
-  constructor(private storage : AngularFireStorage , private apiService: ApiserviceService,private route : ActivatedRoute) { }
+  constructor(private storage : AngularFireStorage , private apiService: ApiserviceService,private route : ActivatedRoute , private toastr:ToastrService) { }
 
   ngOnInit(): void {
-
+    this.showSubcategoryDropdown = true;
     this.parentCategoryData = {categoryName : this.route.snapshot.params['categoryName'] , categoryKey : this.route.snapshot.params['categoryKey']};
     this.itemForm = new FormGroup({
       'itemName' : new FormControl('',[Validators.required]), 
       'imageUrl' : new FormControl('' , [Validators.required]),
-      'subcategoryName' : new FormControl(null,[Validators.required]),
+      'subcategoryName' : new FormControl('',[Validators.required]),
        'retailerPrice' : new FormControl('' , [Validators.required]),
        'wholesalePrice' : new FormControl('', [Validators.required]),
        'offer' : new FormControl('' , [Validators.required]),
+       'directVariety' : new FormControl('0',[Validators.required]),
     });
 
     this.resetForm();
@@ -72,6 +75,7 @@ export class AddItemFormComponent implements OnInit {
           fileRef.getDownloadURL().subscribe((url)=>{
             formValue['imageUrl']=url;
             this.apiService.addItem(formValue , this.parentCategoryData.categoryKey , this.selectedSubcategoryKey).subscribe((_)=>{
+              this.showToasterNotification();
               this.resetForm();
             });
           });
@@ -90,6 +94,7 @@ export class AddItemFormComponent implements OnInit {
       offer : '',
       retailerPrice : '',
       wholesalePrice: '',
+      directVariety : '0',
     });
     this.imgSrc = "../../assets/default.png";
     this.isSubmitted = false;
@@ -108,6 +113,34 @@ export class AddItemFormComponent implements OnInit {
   {
     let selectedIndex = this.availableSubcategories.indexOf(selectedSubcategory);
     this.selectedSubcategoryKey = this.availableSubcategoriesKeys[selectedIndex];
+  }
+
+  changeItemType(e)
+  {
+    console.log(e.target.value);
+    if(e.target.value === "1")
+    {
+      this.showSubcategoryDropdown = false;
+      this.itemForm.patchValue({
+        subcategoryName : 'Direct Variety'
+      });
+    }
+    else
+    {
+      this.showSubcategoryDropdown = true;
+      this.itemForm.patchValue({
+        subcategoryName : null
+      });
+    }
+  }
+
+  showToasterNotification()
+  {
+    this.toastr.success('Item Added Successfully!', 'Notification!' , {
+      timeOut : 4000 ,
+      closeButton : true , 
+      positionClass : 'toast-bottom-right'
+    });
   }
 
 }

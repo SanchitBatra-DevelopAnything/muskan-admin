@@ -32,6 +32,16 @@
             placeholder = "Wholesale Price">
         </div>
         <div class="form-group">
+            <label>
+                <input type="radio" value="1" formControlName="directVariety" (change) = "changeItemType($event)">
+                  <span>DIRECT VARIETY ITEM</span>
+              </label>
+              <label>
+                <input type="radio" value="0" formControlName="directVariety" (change) = "changeItemType($event)">
+                  <span>SUBCATEGORY ITEM</span>
+              </label>
+        </div>
+        <div class="form-group" *ngIf = "showSubcategoryDropdown">
             <label for = "SubcategoryName">Please select the type</label>
             <ng-select [items] = "availableSubcategories" bindLabel = "subcategoryName" bindValue = "subcategoryName" [closeOnSelect] = "true"
             formControlName = "subcategoryName"
