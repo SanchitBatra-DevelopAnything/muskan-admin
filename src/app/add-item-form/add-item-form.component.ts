@@ -32,8 +32,8 @@ export class AddItemFormComponent implements OnInit {
       'itemName' : new FormControl('',[Validators.required]), 
       'imageUrl' : new FormControl('' , [Validators.required]),
       'subcategoryName' : new FormControl('',[Validators.required]),
-       'retailerPrice' : new FormControl('' , [Validators.required]),
-       'wholesalePrice' : new FormControl('', [Validators.required]),
+       'shopPrice' : new FormControl('' , [Validators.required]),
+       'customerPrice' : new FormControl('', [Validators.required]),
        'offer' : new FormControl('' , [Validators.required]),
        'directVariety' : new FormControl('0',[Validators.required]),
     });
@@ -92,8 +92,8 @@ export class AddItemFormComponent implements OnInit {
       imageUrl : '',
       subcategoryName : '',
       offer : '',
-      retailerPrice : '',
-      wholesalePrice: '',
+      shopPrice : '',
+      customerPrice: '',
       directVariety : '0',
     });
     this.imgSrc = "../../assets/default.png";

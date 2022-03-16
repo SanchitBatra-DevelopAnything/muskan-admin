@@ -1,63 +1,76 @@
 <div *ngIf = "isSubmitted" class = "loader"></div>
-<div *ngIf = "!isSubmitted" class="thumbnail" style = "width:25rem; margin : auto;">
-    <div class = "card-body">
-      <form [formGroup] = "itemForm" (ngSubmit) = "onSubmit(itemForm.value)">
-          <div class="text-center">
-              <img [src] = "imgSrc" class = "img-holder">
-          </div>
-          <div class = "form-group">
-              <label>Select a file to upload</label>
-              <input type = "file"
-              class = "form-control"
-              formControlName = "imageUrl"
-              accept = "image/*"
-              (change) = "showPreview($event)">
-          </div>
-          <div class = "form-group">
-            <input type = "text"
-            class = "form-control"
-            formControlName = "itemName"
-            placeholder = "Item Name">
+<div class="container">
+    <div class="jumbotron">
+        <div style = "text-align: center;">
+            <h2>Add Items here!</h2>
+            <p>For Cakes & Pastries</p>
         </div>
-        <div class = "form-group">
-            <input type = "text"
-            class = "form-control"
-            formControlName = "retailerPrice"
-            placeholder = "Retailer Price">
+        <div *ngIf = "!isSubmitted">
+            <div class = "card-body">
+              <form [formGroup] = "itemForm" (ngSubmit) = "onSubmit(itemForm.value)">
+                  <div class="text-center">
+                      <img [src] = "imgSrc" class = "img-holder">
+                  </div>
+                  <div class = "form-group">
+                      <label>Select a file to upload</label>
+                      <input type = "file"
+                      class = "form-control"
+                      formControlName = "imageUrl"
+                      accept = "image/*"
+                      (change) = "showPreview($event)">
+                  </div>
+                  <div class = "form-group">
+                    <input type = "text"
+                    class = "form-control"
+                    formControlName = "itemName"
+                    placeholder = "Item Name">
+                </div>
+                <div class = "form-group">
+                    <input type = "text"
+                    class = "form-control"
+                    formControlName = "shopPrice"
+                    placeholder = "Shop Price">
+                </div>
+                <div class = "form-group">
+                    <input type = "text"
+                    class = "form-control"
+                    formControlName = "customerPrice"
+                    placeholder = "Customer Price">
+                </div>
+                <div class="form-group">
+                    <p>
+                    <label>
+                        <input type="radio" value="1" formControlName="directVariety" (change) = "changeItemType($event)">
+                          <span>DIRECT VARIETY ITEM</span>
+                      </label>
+                      </p>
+                        <p>
+                      <label>
+                        <input type="radio" value="0" formControlName="directVariety" (change) = "changeItemType($event)">
+                          <span>SUBCATEGORY ITEM</span>
+                      </label>
+                      </p>
+                </div>
+                <div class="form-group" *ngIf = "showSubcategoryDropdown">
+                    <label for = "SubcategoryName">Please select the type</label>
+                    <ng-select [items] = "availableSubcategories" bindLabel = "subcategoryName" bindValue = "subcategoryName" [closeOnSelect] = "true"
+                    formControlName = "subcategoryName"
+                    (change) = "subcategoryChanged($event)"
+                    ngDefaultControl>
+                    </ng-select>
+                </div>
+                <div class = "form-group">
+                    <input type = "text"
+                    class = "form-control"
+                    formControlName = "offer"
+                    placeholder = "Offer %">
+                </div>
+                <div class = "form-group">
+                    <button type = "submit" class = "btn btn-success btn-lg" [disabled] = "itemForm.invalid">Add</button>
+                </div>
+              </form>  
+            </div>
         </div>
-        <div class = "form-group">
-            <input type = "text"
-            class = "form-control"
-            formControlName = "wholesalePrice"
-            placeholder = "Wholesale Price">
-        </div>
-        <div class="form-group">
-            <label>
-                <input type="radio" value="1" formControlName="directVariety" (change) = "changeItemType($event)">
-                  <span>DIRECT VARIETY ITEM</span>
-              </label>
-              <label>
-                <input type="radio" value="0" formControlName="directVariety" (change) = "changeItemType($event)">
-                  <span>SUBCATEGORY ITEM</span>
-              </label>
-        </div>
-        <div class="form-group" *ngIf = "showSubcategoryDropdown">
-            <label for = "SubcategoryName">Please select the type</label>
-            <ng-select [items] = "availableSubcategories" bindLabel = "subcategoryName" bindValue = "subcategoryName" [closeOnSelect] = "true"
-            formControlName = "subcategoryName"
-            (change) = "subcategoryChanged($event)"
-            ngDefaultControl>
-            </ng-select>
-        </div>
-        <div class = "form-group">
-            <input type = "text"
-            class = "form-control"
-            formControlName = "offer"
-            placeholder = "Offer %">
-        </div>
-        <div class = "form-group">
-            <button type = "submit" class = "btn btn-success float-right" [disabled] = "itemForm.invalid">Add</button>
-        </div>
-      </form>  
+
     </div>
 </div>
