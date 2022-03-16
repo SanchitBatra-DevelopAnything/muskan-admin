@@ -1,27 +1,32 @@
 <div *ngIf = "isSubmitted" class = "loader"></div>
-<div *ngIf = "!isSubmitted" class="thumbnail" style = "width:25rem">
-    <div class = "card-body">
-      <form [formGroup] = "categoryForm" (ngSubmit) = "onSubmit(categoryForm.value)">
-          <div class="text-center">
-              <img [src] = "imgSrc" class = "img-holder">
-          </div>
-          <div class = "form-group">
-              <label>Select a file to upload</label>
-              <input type = "file"
-              class = "form-control"
-              formControlName = "imageUrl"
-              accept = "image/*"
-              (change) = "showPreview($event)">
-          </div>
-          <div class = "form-group">
-            <input type = "text"
-            class = "form-control"
-            formControlName = "categoryName"
-            placeholder = "Category Name">
+<div class="container">
+    <div class="jumbotron">
+        <h2 style =  "text-align: center;">Add category!</h2>
+        <div *ngIf = "!isSubmitted">
+            <div class = "card-body">
+              <form [formGroup] = "categoryForm" (ngSubmit) = "onSubmit(categoryForm.value)">
+                  <div class="text-center">
+                      <img [src] = "imgSrc" class = "img-holder">
+                  </div>
+                  <div class = "form-group">
+                      <label>Select a file to upload</label>
+                      <input type = "file"
+                      class = "form-control"
+                      formControlName = "imageUrl"
+                      accept = "image/*"
+                      (change) = "showPreview($event)">
+                  </div>
+                  <div class = "form-group">
+                    <input type = "text"
+                    class = "form-control"
+                    formControlName = "categoryName"
+                    placeholder = "Category Name">
+                </div>
+                <div class = "form-group">
+                    <button type = "submit" class = "btn btn-success btn-lg" [disabled] = "categoryForm.invalid">Add</button>
+                </div>
+              </form>  
+            </div>
         </div>
-        <div class = "form-group">
-            <button type = "submit" class = "btn btn-success float-right" [disabled] = "categoryForm.invalid">Add</button>
-        </div>
-      </form>  
     </div>
 </div>
