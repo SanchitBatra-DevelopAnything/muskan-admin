@@ -1,1 +1,18 @@
-<p>item-list works!</p>
+<div class="loader" *ngIf = "isLoading">
+
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <ul class="nav nav-tabs">
+                <li role = "presentation" routerLinkActive = "active"><a routerLink = "active">Direct Variety</a></li>
+                <li role = "presentation" routerLinkActive = "active" *ngFor = "let subcategory of subcategories"><a (click) = "loadItems()">{{subcategory.subcategoryName}}</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <p>Items will change here!</p>
+        </div>
+    </div>
+</div>

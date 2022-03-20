@@ -35,7 +35,6 @@ import { RetailersComponent } from './manage-window/retailers/retailers.componen
 import { SalesmenComponent } from './manage-window/salesmen/salesmen.component';
 import { AddSalesmanFormComponent } from './add-salesman-form/add-salesman-form.component';
 import { SubcategoryAddFormComponent } from './subcategory-add-form/subcategory-add-form.component';
-import { CategoryScreenComponent } from './category-screen/category-screen.component';
 
 
 const appRoutes : Routes = [
@@ -52,7 +51,7 @@ const appRoutes : Routes = [
   {path : 'shop/upload' , component : AddShopFormComponent , canActivate : [AuthGuardService]},
   {path : 'subcategory/upload/:categoryKey/:categoryName' , component : SubcategoryAddFormComponent , canActivate : [AuthGuardService]},
   {path : 'item/upload/:categoryKey/:categoryName' , component : AddItemFormComponent , canActivate: [AuthGuardService]},
-  {path : 'category/screen/:categoryKey/:categoryName' , component : CategoryScreenComponent , canActivate: [AuthGuardService]},
+  {path : 'itemsOf/:categoryKey/:categoryName' , component : ItemListComponent , canActivate: [AuthGuardService]},
   {path: '' , component:LoginComponent , pathMatch:"full"}
 ];
 
@@ -80,7 +79,6 @@ const appRoutes : Routes = [
     SalesmenComponent,
     AddSalesmanFormComponent,
     SubcategoryAddFormComponent,
-    CategoryScreenComponent
   ],
   imports: [
     BrowserModule,

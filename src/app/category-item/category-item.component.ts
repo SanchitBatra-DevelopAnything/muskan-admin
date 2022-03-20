@@ -45,7 +45,7 @@ export class CategoryItemComponent implements OnInit {
 
   openCategoryScreen(e)
   {
-    this.router.navigate(['/category/screen/' + this.categoryKeyInDb + "/" + this.category.categoryName]);
+    this.router.navigate(['/itemsOf/' + this.categoryKeyInDb + "/" + this.category.categoryName]);
   }
 
 }
