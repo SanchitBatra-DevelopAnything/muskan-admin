@@ -20,21 +20,23 @@ export class ItemListComponent implements OnInit {
 
   categoryKey : string;
   categoryName : string;
+  selectedSubcategory : string;
 
   constructor(private apiService : ApiserviceService , private route : ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.selectedSubcategory = "Direct Variety";
     this.isLoading = true;
     this.fetchError = false;
     this.categoryKey = this.route.snapshot.params['categoryKey'];
     this.categoryName = this.route.snapshot.params['categoryName'];
     this.loadSubcategories();
-    this.loadItems();
+    this.loadItems("Direct Variety");
   }
 
-  loadItems()
+  loadItems(Subcategory : string)
   {
-    
+    this.selectedSubcategory = Subcategory;
   }
 
   loadSubcategories()

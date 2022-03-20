@@ -5,8 +5,8 @@
     <div class="row">
         <div class="col-xs-12">
             <ul class="nav nav-tabs">
-                <li role = "presentation" routerLinkActive = "active"><a routerLink = "active">Direct Variety</a></li>
-                <li role = "presentation" routerLinkActive = "active" *ngFor = "let subcategory of subcategories"><a (click) = "loadItems()">{{subcategory.subcategoryName}}</a></li>
+                <li role = "presentation" [ngClass] = "selectedSubcategory === 'Direct Variety' ? 'active' : ''"><a (click) = "loadItems('Direct Variety')" class = "pointer">Direct Variety</a></li>
+                <li role = "presentation" *ngFor = "let subcategory of subcategories" [ngClass] = "selectedSubcategory === subcategory.subcategoryName ? 'active' : ''"><a (click) = "loadItems(subcategory.subcategoryName)" class = "pointer">{{subcategory.subcategoryName}}</a></li>
             </ul>
         </div>
     </div>
