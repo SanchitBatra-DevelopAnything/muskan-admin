@@ -16,7 +16,8 @@
     </div>
     <div class="row">
         <div class="col-xs-12">
-            <p *ngFor = "let item of ItemsList">{{item.itemName}}</p>
+            <app-item *ngFor = "let item of ItemsList; let i = index;" [item] = item 
+            [itemKeyInDb] = "ItemsKeys[i]"></app-item>
         </div>
     </div>
 </div>
