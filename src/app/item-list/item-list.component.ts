@@ -15,6 +15,8 @@ export class ItemListComponent implements OnInit {
   ItemsKeys : any[];
   fetchError : boolean;
 
+  noItems : boolean;
+
   subcategories:any[];
   subcategoryKeys : any[];
 
@@ -25,18 +27,34 @@ export class ItemListComponent implements OnInit {
   constructor(private apiService : ApiserviceService , private route : ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.noItems = false;
     this.selectedSubcategory = "Direct Variety";
     this.isLoading = true;
     this.fetchError = false;
     this.categoryKey = this.route.snapshot.params['categoryKey'];
     this.categoryName = this.route.snapshot.params['categoryName'];
     this.loadSubcategories();
-    this.loadItems("Direct Variety");
+    this.loadItems("Direct Variety" , "dv");
   }
 
-  loadItems(Subcategory : string)
+  loadItems(Subcategory : string , subcategoryKey : string)
   {
-    this.selectedSubcategory = Subcategory;
+    this.isLoading = true;
+    this.selectedSubcategory = Subcategory; //this is to change the active class on UI
+    this.apiService.getItems(subcategoryKey , this.categoryKey).subscribe((items)=>{
+      if(items == null)
+      {
+        this.ItemsList = [];
+        this.ItemsKeys = [];
+        this.isLoading = false;
+        this.noItems = true;
+        return;
+      }
+      this.ItemsKeys = Object.keys(items);
+      this.ItemsList = Object.values(items);
+      this.isLoading = false;
+      this.noItems = false;
+    })
   }
 
   loadSubcategories()
@@ -47,9 +65,10 @@ export class ItemListComponent implements OnInit {
         this.subcategories = [];
         this.subcategoryKeys = [];
         this.isLoading = false;
+        return;
       }
       this.subcategories = Object.values(subs);
-      this.subcategoryKeys = Object.values(subs);
+      this.subcategoryKeys = Object.keys(subs);
       this.isLoading = false;
     });
   }

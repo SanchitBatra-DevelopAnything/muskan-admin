@@ -1,18 +1,22 @@
-<div class="loader" *ngIf = "isLoading">
-
-</div>
 <div class="container">
     <div class="row">
         <div class="col-xs-12">
             <ul class="nav nav-tabs">
-                <li role = "presentation" [ngClass] = "selectedSubcategory === 'Direct Variety' ? 'active' : ''"><a (click) = "loadItems('Direct Variety')" class = "pointer">Direct Variety</a></li>
-                <li role = "presentation" *ngFor = "let subcategory of subcategories" [ngClass] = "selectedSubcategory === subcategory.subcategoryName ? 'active' : ''"><a (click) = "loadItems(subcategory.subcategoryName)" class = "pointer">{{subcategory.subcategoryName}}</a></li>
+                <li role = "presentation" [ngClass] = "selectedSubcategory === 'Direct Variety' ? 'active' : ''"><a (click) = "loadItems('Direct Variety' , 'dv')" class = "pointer">Direct Variety</a></li>
+                <li role = "presentation" *ngFor = "let subcategory of subcategories; let i = index;" [ngClass] = "selectedSubcategory === subcategory.subcategoryName ? 'active' : ''"><a (click) = "loadItems(subcategory.subcategoryName , subcategoryKeys[i])" class = "pointer">{{subcategory.subcategoryName}}</a></li>
             </ul>
         </div>
     </div>
+    <div class="loader" *ngIf = "isLoading">
+
+    </div>
+    <div *ngIf = "noItems && !isLoading">
+        <h4>No Items Here.</h4>
+        <p>Please add from the ADD ITEM button on <a routerLink = "/categories">CATEGORIES</a> screen.</p>
+    </div>
     <div class="row">
         <div class="col-xs-12">
-            <p>Items will change here!</p>
+            <p *ngFor = "let item of ItemsList">{{item.itemName}}</p>
         </div>
     </div>
 </div>

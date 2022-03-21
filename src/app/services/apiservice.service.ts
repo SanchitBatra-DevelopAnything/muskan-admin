@@ -104,4 +104,16 @@ export class ApiserviceService {
   {
     return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/Categories/"+categoryKey+"/Subcategories.json");
   }
+
+  public getItems(subcategoryKey : string , categoryKey : string)
+  {
+    if(subcategoryKey === 'dv')
+    {
+      return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/Categories/"+categoryKey+"/Items.json");
+    }
+    else
+    {
+      return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/Categories/"+categoryKey+ "/Subcategories/"+subcategoryKey+"/Items.json")
+    }
+  }
 }
