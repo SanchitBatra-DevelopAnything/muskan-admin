@@ -1,1 +1,16 @@
-<p>item works!</p>
+<div class="card bottom-spaced-box">
+    <a>
+    <img src = {{item.imageUrl}} class = "card-img-top img img-responsive">
+    </a>
+    <div class="card-body jumbotron">
+        <h5 class="card-title center-text">
+            {{item.itemName | uppercase}}
+        </h5>
+        <br>
+        <p>Offer : {{item.offer}} % </p>
+        <p>Shop Price : Rs.{{item.shopPrice}}</p>
+        <p>Customer Price : Rs. {{item.customerPrice}}</p>
+        <button class = "btn btn-success">Edit</button>
+        <button class = "btn btn-danger spaced-button">Delete</button>
+    </div>
+</div>

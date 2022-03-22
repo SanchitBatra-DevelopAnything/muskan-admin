@@ -15,9 +15,12 @@
         <p>Please add from the ADD ITEM button on <a routerLink = "/categories">CATEGORIES</a> screen.</p>
     </div>
     <div class="row">
-        <div class="col-xs-12">
-            <app-item *ngFor = "let item of ItemsList; let i = index;" [item] = item 
-            [itemKeyInDb] = "ItemsKeys[i]"></app-item>
+        <div class="col col-xs-4" *ngFor = "let item of ItemsList ; let i = index">
+            <app-item [item] = item
+            [ItemKeyInDb] = "ItemsKeys[i]"></app-item>
         </div>
     </div>
+    
 </div>
+
+

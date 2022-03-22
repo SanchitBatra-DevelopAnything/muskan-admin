@@ -39,6 +39,8 @@ export class ItemListComponent implements OnInit {
 
   loadItems(Subcategory : string , subcategoryKey : string)
   {
+    this.ItemsList = [];
+    this.ItemsKeys = [];
     this.isLoading = true;
     this.selectedSubcategory = Subcategory; //this is to change the active class on UI
     this.apiService.getItems(subcategoryKey , this.categoryKey).subscribe((items)=>{
