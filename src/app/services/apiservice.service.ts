@@ -116,4 +116,13 @@ export class ApiserviceService {
       return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/Categories/"+categoryKey+ "/Subcategories/"+subcategoryKey+"/Items.json")
     }
   }
+
+  public deleteItem(parentCategoryKey : string , parentSubcategoryKey : string , itemKey : string)
+  {
+    if(parentSubcategoryKey === "dv")
+    {
+      return this.http.delete("https://muskan-admin-app-default-rtdb.firebaseio.com/Categories/"+parentCategoryKey+ "/Items/" + itemKey+ ".json");
+    }
+    return this.http.delete("https://muskan-admin-app-default-rtdb.firebaseio.com/Categories/"+parentCategoryKey+ "/Subcategories/"+parentSubcategoryKey+"/Items/"+itemKey+".json");
+  }
 }

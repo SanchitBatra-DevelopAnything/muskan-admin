@@ -17,7 +17,10 @@
     </div>
     <div class="row">
         <div class="col col-xs-4" *ngFor = "let item of filteredItems ; let i = index">
-            <app-item [item] = item></app-item>
+            <app-item [item] = item
+            [parentSubcategoryKey] = "selectedSubcategoryKey"
+            [parentCategoryKey] = "categoryKey">
+            </app-item>
         </div>
     </div>
     

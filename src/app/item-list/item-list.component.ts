@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { ApiserviceService } from '../services/apiservice.service';
+import { UtilityServiceService } from '../services/utility-service.service';
 
 @Component({
   selector: 'app-item-list',
   templateUrl: './item-list.component.html',
   styleUrls: ['./item-list.component.css']
 })
-export class ItemListComponent implements OnInit {
+export class ItemListComponent implements OnInit , OnDestroy {
 
 
   isLoading : boolean;
@@ -26,17 +28,26 @@ export class ItemListComponent implements OnInit {
   categoryKey : string;
   categoryName : string;
   selectedSubcategory : string;
+  selectedSubcategoryKey:string;
 
-  constructor(private apiService : ApiserviceService , private route : ActivatedRoute) { }
+  deleteItemSub : Subscription;
+
+
+
+  constructor(private apiService : ApiserviceService , private route : ActivatedRoute , private utilityService : UtilityServiceService) { }
 
   ngOnInit(): void {
     this.noItems = false;
     this.selectedSubcategory = "Direct Variety";
+    this.selectedSubcategoryKey = "dv";
     this.isLoading = true;
     this.fetchError = false;
     this.categoryKey = this.route.snapshot.params['categoryKey'];
     this.categoryName = this.route.snapshot.params['categoryName'];
     this.loadSubcategories();
+    this.utilityService.itemDeleted.subscribe((_)=>{
+      this.loadItems(this.selectedSubcategory , this.selectedSubcategoryKey);
+    });
     this.loadItems("Direct Variety" , "dv");
   }
 
@@ -48,6 +59,8 @@ export class ItemListComponent implements OnInit {
     this.filteredItems = this.fullItemsObject;
     this.isLoading = true;
     this.selectedSubcategory = Subcategory; //this is to change the active class on UI
+    this.selectedSubcategoryKey = subcategoryKey;
+
     this.apiService.getItems(subcategoryKey , this.categoryKey).subscribe((items)=>{
       if(items == null)
       {
@@ -103,5 +116,10 @@ export class ItemListComponent implements OnInit {
       let str2 = this.searchInput.toUpperCase();
       return str1.includes(str2);
     });
+  }
+
+  ngOnDestroy()
+  {
+    this.deleteItemSub.unsubscribe();
   }
 }
