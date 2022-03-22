@@ -8,16 +8,22 @@ import { Component, Input, OnInit } from '@angular/core';
 export class ItemComponent implements OnInit {
 
   @Input()
-  item : any;
+  item : any; //comes with a key.
 
-  @Input()
-  itemKeyInDb: string;
+  isDeleting : boolean;
 
   constructor() { }
 
   ngOnInit(): void {
-    console.log("Forming item with");
-    console.log(this.item.itemName , this.item.offer + "%" , this.itemKeyInDb)
+    this.isDeleting = false;
+  }
+
+  deleteItem()
+  {
+    this.isDeleting = true;
+    setTimeout(()=>{
+      this.isDeleting = false;
+    },3000);
   }
 
 }

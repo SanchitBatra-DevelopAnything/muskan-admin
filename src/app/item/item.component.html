@@ -11,6 +11,11 @@
         <p>Shop Price : Rs.{{item.shopPrice}}</p>
         <p>Customer Price : Rs. {{item.customerPrice}}</p>
         <button class = "btn btn-success">Edit</button>
-        <button class = "btn btn-danger spaced-button">Delete</button>
+        <button class = "btn btn-danger spaced-button" (click) = "deleteItem()" *ngIf = "!isDeleting">Delete</button>
+        <button class = "btn btn-danger" *ngIf = "isDeleting">
+            <div class = "loader loader-button">
+
+            </div>
+        </button>
     </div>
 </div>

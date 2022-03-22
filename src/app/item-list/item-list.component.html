@@ -1,4 +1,5 @@
 <div class="container">
+    <input type = "text" placeholder=" Search" style = "float: right; width:50%;" [(ngModel)] = "searchInput" (input) = "searchItems()"> 
     <div class="row">
         <div class="col-xs-12">
             <ul class="nav nav-tabs">
@@ -15,9 +16,8 @@
         <p>Please add from the ADD ITEM button on <a routerLink = "/categories">CATEGORIES</a> screen.</p>
     </div>
     <div class="row">
-        <div class="col col-xs-4" *ngFor = "let item of ItemsList ; let i = index">
-            <app-item [item] = item
-            [ItemKeyInDb] = "ItemsKeys[i]"></app-item>
+        <div class="col col-xs-4" *ngFor = "let item of filteredItems ; let i = index">
+            <app-item [item] = item></app-item>
         </div>
     </div>
     

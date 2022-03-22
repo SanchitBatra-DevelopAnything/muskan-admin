@@ -12,8 +12,11 @@ export class ItemListComponent implements OnInit {
 
   isLoading : boolean;
   ItemsList : any[];
+  fullItemsObject: any[]; //items combined with keys for search easy.
+  filteredItems:any[];
   ItemsKeys : any[];
   fetchError : boolean;
+  searchInput:string;
 
   noItems : boolean;
 
@@ -41,6 +44,8 @@ export class ItemListComponent implements OnInit {
   {
     this.ItemsList = [];
     this.ItemsKeys = [];
+    this.fullItemsObject = [];
+    this.filteredItems = this.fullItemsObject;
     this.isLoading = true;
     this.selectedSubcategory = Subcategory; //this is to change the active class on UI
     this.apiService.getItems(subcategoryKey , this.categoryKey).subscribe((items)=>{
@@ -48,12 +53,16 @@ export class ItemListComponent implements OnInit {
       {
         this.ItemsList = [];
         this.ItemsKeys = [];
+        this.fullItemsObject = [];
+        this.filteredItems = this.fullItemsObject;
         this.isLoading = false;
         this.noItems = true;
         return;
       }
       this.ItemsKeys = Object.keys(items);
       this.ItemsList = Object.values(items);
+      this.fullItemsObject = this.combineItemKeys();
+      this.filteredItems = this.fullItemsObject;
       this.isLoading = false;
       this.noItems = false;
     })
@@ -75,4 +84,24 @@ export class ItemListComponent implements OnInit {
     });
   }
 
+  combineItemKeys()
+  {
+    let arr = [];
+    for(let i=0;i<this.ItemsList.length;i++)
+    {
+      let item = this.ItemsList[i];
+      item['key'] = this.ItemsKeys[i];
+      arr.push(item);
+    }
+    return arr;
+  }
+
+  searchItems()
+  {
+    this.filteredItems = this.fullItemsObject.filter(item=>{
+      let str1 = item.itemName.toUpperCase();
+      let str2 = this.searchInput.toUpperCase();
+      return str1.includes(str2);
+    });
+  }
 }
