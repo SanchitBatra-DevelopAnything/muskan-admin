@@ -45,7 +45,7 @@ export class ItemListComponent implements OnInit , OnDestroy {
     this.categoryKey = this.route.snapshot.params['categoryKey'];
     this.categoryName = this.route.snapshot.params['categoryName'];
     this.loadSubcategories();
-    this.utilityService.itemDeleted.subscribe((_)=>{
+   this.deleteItemSub =  this.utilityService.itemDeleted.subscribe((_)=>{
       this.loadItems(this.selectedSubcategory , this.selectedSubcategoryKey);
     });
     this.loadItems("Direct Variety" , "dv");
