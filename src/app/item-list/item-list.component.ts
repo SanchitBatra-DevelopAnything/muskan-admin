@@ -31,6 +31,7 @@ export class ItemListComponent implements OnInit , OnDestroy {
   selectedSubcategoryKey:string;
 
   deleteItemSub : Subscription;
+  updateItemSub: Subscription;
 
 
 
@@ -47,6 +48,9 @@ export class ItemListComponent implements OnInit , OnDestroy {
     this.loadSubcategories();
    this.deleteItemSub =  this.utilityService.itemDeleted.subscribe((_)=>{
       this.loadItems(this.selectedSubcategory , this.selectedSubcategoryKey);
+    });
+    this.updateItemSub = this.utilityService.itemUpdated.subscribe((_)=>{
+      this.loadItems(this.selectedSubcategory,this.selectedSubcategoryKey);
     });
     this.loadItems("Direct Variety" , "dv");
   }

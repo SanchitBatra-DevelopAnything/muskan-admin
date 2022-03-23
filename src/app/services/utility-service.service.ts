@@ -11,6 +11,7 @@ export class UtilityServiceService {
   retailerNotificationDeleted:Subject<string>;
   refreshRetailerNotificationCount:Subject<string>;
   itemDeleted:Subject<string>;
+  itemUpdated:Subject<string>;
 
   constructor() { 
     this.loggedInStatusUpdated = new Subject<boolean>();
@@ -18,6 +19,7 @@ export class UtilityServiceService {
     this.retailerNotificationDeleted = new Subject<string>();
     this.refreshRetailerNotificationCount = new Subject<string>();
     this.itemDeleted = new Subject<string>();
+    this.itemUpdated = new Subject<string>();
   }
 
 }

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -83,12 +83,12 @@ export class ApiserviceService {
     return this.http.delete("https://muskan-admin-app-default-rtdb.firebaseio.com/Salesmen/"+salesmanKey+".json");
   }
 
-  public addSubcategory(subcategory : {subcategoryName : string} , parentCategoryKey : string)
+  public addSubcategory(subcategory : {subcategoryName : string} , parentCategoryKey : string) : Observable<any>
   {
     return this.http.post("https://muskan-admin-app-default-rtdb.firebaseio.com/Categories/"+parentCategoryKey+ "/Subcategories.json", subcategory);
   }
 
-  public addItem(item : {itemName : string , imageUrl : string , subcategoryName : string , directVariety : string , offer: string , shopPrice : string , customerPrice : string} , parentCategoryKey : string , parentSubcategoryKey : string)
+  public addItem(item : {itemName : string , imageUrl : string , subcategoryName : string , directVariety : string , offer: string , shopPrice : string , customerPrice : string} , parentCategoryKey : string , parentSubcategoryKey : string) : Observable<any>
   {
     if(item.directVariety === "1")
     {
@@ -100,12 +100,12 @@ export class ApiserviceService {
     }
   }
 
-  public getSubcategoriesOfCategory(categoryKey : string)
+  public getSubcategoriesOfCategory(categoryKey : string) : Observable<any>
   {
     return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/Categories/"+categoryKey+"/Subcategories.json");
   }
 
-  public getItems(subcategoryKey : string , categoryKey : string)
+  public getItems(subcategoryKey : string , categoryKey : string) : Observable<any>
   {
     if(subcategoryKey === 'dv')
     {
@@ -117,12 +117,21 @@ export class ApiserviceService {
     }
   }
 
-  public deleteItem(parentCategoryKey : string , parentSubcategoryKey : string , itemKey : string)
+  public deleteItem(parentCategoryKey : string , parentSubcategoryKey : string , itemKey : string) : Observable<any>
   {
     if(parentSubcategoryKey === "dv")
     {
       return this.http.delete("https://muskan-admin-app-default-rtdb.firebaseio.com/Categories/"+parentCategoryKey+ "/Items/" + itemKey+ ".json");
     }
     return this.http.delete("https://muskan-admin-app-default-rtdb.firebaseio.com/Categories/"+parentCategoryKey+ "/Subcategories/"+parentSubcategoryKey+"/Items/"+itemKey+".json");
+  }
+
+  public editItem(itemKey : string , parentSubcategoryKey : string , parentCategoryKey : string , updatedItem : any) : Observable<any>
+  {
+    if(parentSubcategoryKey === "dv")
+    {
+      return this.http.put("https://muskan-admin-app-default-rtdb.firebaseio.com/Categories/"+parentCategoryKey+ "/Items/" + itemKey+ ".json" , updatedItem);
+    }
+    return this.http.put("https://muskan-admin-app-default-rtdb.firebaseio.com/Categories/"+parentCategoryKey+ "/Subcategories/"+parentSubcategoryKey+"/Items/"+itemKey+".json" , updatedItem);
   }
 }
