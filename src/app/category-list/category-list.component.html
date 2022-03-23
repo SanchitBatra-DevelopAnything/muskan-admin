@@ -1,21 +1,10 @@
 <div class="loader" *ngIf = "isLoading"></div>
 
 <div class="row">
-    <div class="col col-xs-4">
-
-    </div>
-    <div class="col col-xs-4">
-        <button class = "btn btn-lg btn-primary"routerLink = "/category/upload">Add a category.</button>
-    </div>
-    <div class="col col-xs-4">
-
-    </div>
-</div>
-
-<div class="row">
     <div class="col">
         <div class="container">
-            <h3>Categories</h3>
+            <h3 style = "display : inline;">Categories</h3> 
+            <button class = "btn btn-lg btn-primary"routerLink = "/category/upload" style = "display: inline; margin-left:25px; float:right;">Add a category.</button>
             <hr>
             <p *ngIf = "fetchError" class = "fetch-error">Bad Internet :(</p>
         </div>
