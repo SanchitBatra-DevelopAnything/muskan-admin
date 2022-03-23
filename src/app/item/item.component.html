@@ -3,14 +3,23 @@
     <img src = {{item.imageUrl}} class = "card-img-top img img-responsive">
     </a>
     <div class="card-body jumbotron">
-        <h5 class="card-title center-text">
-            {{item.itemName | uppercase}}
-        </h5>
-        <br>
-        <p>Offer : {{item.offer}} % </p>
-        <p>Shop Price : Rs.{{item.shopPrice}}</p>
-        <p>Customer Price : Rs. {{item.customerPrice}}</p>
-        <button class = "btn btn-success">Edit</button>
+        <div *ngIf = "!isEditMode">
+            <h5 class="card-title center-text">
+                {{item.itemName | uppercase}}
+            </h5>
+            <br>
+            <p>Offer : {{item.offer}} % </p>
+            <p style="display: inline-block;">Shop Price : Rs.{{item.shopPrice}}</p>
+            <p style = "display: inline-block;">Customer Price : Rs. {{item.customerPrice}}</p>    
+        </div>
+        <div *ngIf = "isEditMode">
+            <p>Item Name : <input type = "text" placeholder = "item name"></p>
+            <p>Offer % : <input type = "number" placeholder = "Offer"></p>
+            <p>Shop Price : <input type = "number" placeholder = "shop price"></p>
+            <p>Customer Price : <input type = "number" placeholder = "customer price"></p>
+        </div>
+        <button class = "btn btn-primary" (click) = "editItem()" *ngIf = "!isEditMode">Edit</button>
+        <button class = "btn btn-primary" (click) = "editItem()" *ngIf = "isEditMode">Save</button>
         <button class = "btn btn-danger spaced-button" (click) = "deleteItem()" *ngIf = "!isDeleting">Delete</button>
         <button class = "btn btn-danger" *ngIf = "isDeleting">
             <div class = "loader loader-button">

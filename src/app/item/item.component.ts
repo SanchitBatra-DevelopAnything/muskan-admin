@@ -20,11 +20,13 @@ export class ItemComponent implements OnInit {
 
   isDeleting : boolean;
 
+  isEditMode:boolean;
+
   constructor(private apiService : ApiserviceService , private utilityService : UtilityServiceService) { }
 
   ngOnInit(): void {
     this.isDeleting = false;
-    console.log("FORMING ITEM ", this.parentSubcategoryKey , this.parentCategoryKey);
+    this.isEditMode = false;
   }
 
   deleteItem()
@@ -34,6 +36,11 @@ export class ItemComponent implements OnInit {
       this.utilityService.itemDeleted.next(this.item.key);
       this.isDeleting = false;
     });
+  }
+
+  editItem()
+  {
+    this.isEditMode = true;
   }
 
 }
