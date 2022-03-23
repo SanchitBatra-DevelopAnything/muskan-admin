@@ -125,5 +125,6 @@ export class ItemListComponent implements OnInit , OnDestroy {
   ngOnDestroy()
   {
     this.deleteItemSub.unsubscribe();
+    this.updateItemSub.unsubscribe();
   }
 }
