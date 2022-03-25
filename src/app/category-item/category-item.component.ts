@@ -57,7 +57,7 @@ export class CategoryItemComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result)=>{
       if(result === "yes")
       {
-        console.log("Deleted");
+        this.onDeleteCategory();
       }
     }); 
   }
