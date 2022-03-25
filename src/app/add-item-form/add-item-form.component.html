@@ -1,9 +1,9 @@
-<div *ngIf = "isSubmitted" class = "loader"></div>
 <div class="container">
     <div class="jumbotron">
         <div style = "text-align: center;">
             <h2>Add Items here!</h2>
             <p>for {{parentCategoryData.categoryName}}</p>
+            <div *ngIf = "isSubmitted" class = "loader"></div>
         </div>
         <div *ngIf = "!isSubmitted">
             <div class = "card-body">
