@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { ContainerComponent } from '../container/container.component';
 import { ApiserviceService } from '../services/apiservice.service';
 import { UtilityServiceService } from '../services/utility-service.service';
 
@@ -18,7 +20,7 @@ export class CategoryItemComponent implements OnInit {
 
   isDeleting : boolean;
 
-  constructor(private utilityService : UtilityServiceService , private apiService : ApiserviceService , private router:Router) { }
+  constructor(private utilityService : UtilityServiceService , private apiService : ApiserviceService , private router:Router , private dialog : MatDialog) { }
 
   ngOnInit(): void {
     this.isDeleting = false;
@@ -46,6 +48,18 @@ export class CategoryItemComponent implements OnInit {
   openCategoryScreen(e)
   {
     this.router.navigate(['/itemsOf/' + this.categoryKeyInDb + "/" + this.category.categoryName]);
+  }
+
+  openDialog()
+  {
+    let dialogRef = this.dialog.open(ContainerComponent , {data : {categoryName : this.category.categoryName}});
+
+    dialogRef.afterClosed().subscribe((result)=>{
+      if(result === "yes")
+      {
+        console.log("Deleted");
+      }
+    }); 
   }
 
 }

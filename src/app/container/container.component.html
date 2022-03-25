@@ -1,1 +1,9 @@
-<app-header></app-header>
+<h4 mat-dialog-title>Are you sure you want to delete {{data.categoryName}} ?</h4>
+<mat-dialog-content>Deleting the category removes all items / subcategories within this category</mat-dialog-content>
+
+<mat-dialog-actions>
+    <div style = "text-align: right;">
+        <button class = "btn btn-primary" mat-dialog-close mat-dialog-close = "no" style = "margin-right: 10px;"> NO </button>
+        <button class = "btn btn-danger" mat-dialog-close mat-dialog-close = "yes"> YES </button>
+    </div>
+</mat-dialog-actions>

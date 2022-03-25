@@ -15,7 +15,7 @@
                 <button class = "btn btn-primary" (click) = "onAddSubcategory()">Add Subcategory</button>
             </div>
             <div class = "col col-xs-4" *ngIf = "!isDeleting">
-                <button class = "btn btn-danger" (click) = "onDeleteCategory()">Delete</button>
+                <button class = "btn btn-danger" (click) = "openDialog()">Delete</button>
             </div>
             <div class = "col col-xs-4" *ngIf = "isDeleting">
                 <button class = "btn btn-danger">

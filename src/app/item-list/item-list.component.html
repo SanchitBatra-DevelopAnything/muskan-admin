@@ -1,5 +1,6 @@
 <div class="container">
     <input type = "text" placeholder=" Search" style = "float: right; width:50%;" [(ngModel)] = "searchInput" (input) = "searchItems()"> 
+    <br>
     <div class="row">
         <div class="col-xs-12">
             <ul class="nav nav-tabs">
@@ -8,6 +9,7 @@
             </ul>
         </div>
     </div>
+
     <div class="loader" *ngIf = "isLoading">
 
     </div>

@@ -36,6 +36,7 @@ import { RetailersComponent } from './manage-window/retailers/retailers.componen
 import { SalesmenComponent } from './manage-window/salesmen/salesmen.component';
 import { AddSalesmanFormComponent } from './add-salesman-form/add-salesman-form.component';
 import { SubcategoryAddFormComponent } from './subcategory-add-form/subcategory-add-form.component';
+import {MatDialogModule} from '@angular/material/dialog';
 
 
 const appRoutes : Routes = [
@@ -92,6 +93,7 @@ const appRoutes : Routes = [
     NgSelectModule,
     ToastrModule.forRoot(),
     BrowserAnimationsModule,
+    MatDialogModule,
     RouterModule.forRoot(appRoutes,{useHash: true}),
   ],
   providers: [], //the classes for services already have provided in root.
