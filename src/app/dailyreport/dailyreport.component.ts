@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiserviceService } from '../services/apiservice.service';
 
 @Component({
   selector: 'app-dailyreport',
@@ -7,9 +8,30 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DailyreportComponent implements OnInit {
 
-  constructor() { }
+  activeOrders = [];
+  activeOrderKeys = [];
+  isLoading : boolean;
+
+
+  constructor(private apiService : ApiserviceService) {
+
+  }
 
   ngOnInit(): void {
+    this.isLoading = true;
+    this.apiService.getActiveOrders("2732022").subscribe((orders)=>{
+      if(orders == null)
+      {
+        console.log(null);
+        this.isLoading = false;
+        this.activeOrderKeys = [];
+        this.activeOrders = [];
+        return;
+      }
+      this.activeOrders = Object.values(orders);
+      this.activeOrderKeys = Object.keys(orders);
+      this.isLoading = false;
+    });
   }
 
 }

@@ -134,4 +134,9 @@ export class ApiserviceService {
     }
     return this.http.put("https://muskan-admin-app-default-rtdb.firebaseio.com/Categories/"+parentCategoryKey+ "/Subcategories/"+parentSubcategoryKey+"/Items/"+itemKey+".json" , updatedItem);
   }
+
+  public getActiveOrders(todaysDate)
+  {
+    return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/activeShopOrders/"+todaysDate+".json");
+  }
 }

@@ -37,6 +37,8 @@ import { SalesmenComponent } from './manage-window/salesmen/salesmen.component';
 import { AddSalesmanFormComponent } from './add-salesman-form/add-salesman-form.component';
 import { SubcategoryAddFormComponent } from './subcategory-add-form/subcategory-add-form.component';
 import {MatDialogModule} from '@angular/material/dialog';
+import { OrderItemComponent } from './dailyreport/order-item/order-item.component';
+import { OrderDetailComponent } from './dailyreport/order-detail/order-detail.component';
 
 
 const appRoutes : Routes = [
@@ -81,6 +83,9 @@ const appRoutes : Routes = [
     SalesmenComponent,
     AddSalesmanFormComponent,
     SubcategoryAddFormComponent,
+    OrderItemComponent,
+    OrderDetailComponent,
+    DailyreportComponent,
   ],
   imports: [
     BrowserModule,
