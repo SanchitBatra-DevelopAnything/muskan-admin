@@ -139,4 +139,9 @@ export class ApiserviceService {
   {
     return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/activeShopOrders/"+todaysDate+".json");
   }
+
+  public getOrder(orderDate , orderKey)
+  {
+    return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/activeShopOrders/"+orderDate+"/"+orderKey+".json");
+  }
 }

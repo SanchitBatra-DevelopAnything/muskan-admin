@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { throws } from 'assert';
 import { ApiserviceService } from '../services/apiservice.service';
 
 @Component({
@@ -13,7 +15,7 @@ export class DailyreportComponent implements OnInit {
   isLoading : boolean;
 
 
-  constructor(private apiService : ApiserviceService) {
+  constructor(private apiService : ApiserviceService , private router : Router) {
 
   }
 
@@ -32,6 +34,11 @@ export class DailyreportComponent implements OnInit {
       this.activeOrderKeys = Object.keys(orders);
       this.isLoading = false;
     });
+  }
+
+  showBill(orderKey)
+  {
+    this.router.navigate(['/orderBill/'+orderKey+'/2732022']);
   }
 
 }

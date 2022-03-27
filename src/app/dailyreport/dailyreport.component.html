@@ -1,6 +1,6 @@
 <div class="container">
     <h3>
-        Today's Report!
+        Active Orders for Today!
     </h3>
     <p><span style = "font-weight: bold;">Send to Chef</span> Button will send the total items to appropriate chefs and remove the order from this list.</p>
     <p><span style = "font-weight: bold;">Please take care to take the screenshot for the order BILL before sending it to chef.</span></p>
@@ -14,7 +14,7 @@
 
     <div class="row">
 
-        <div *ngFor = "let order of activeOrders" class = "col-xs-3 w3-card" style = "margin-top:15px; height:70px; padding-top:20px; text-align: center; background-color: #e2ebf0">
+        <div *ngFor = "let order of activeOrders; let i = index;" class = "col-xs-3 w3-card pointer order-card" (click) = "showBill(activeOrderKeys[i])">
             <p style = "font-weight: bold;">{{order.shopAddress | uppercase}}</p>
         </div>
 

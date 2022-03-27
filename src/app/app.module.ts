@@ -10,6 +10,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
 
 import { AppComponent } from './app.component';
 import { CategoryListComponent } from './category-list/category-list.component';
@@ -55,6 +57,7 @@ const appRoutes : Routes = [
   {path : 'subcategory/upload/:categoryKey/:categoryName' , component : SubcategoryAddFormComponent , canActivate : [AuthGuardService]},
   {path : 'item/upload/:categoryKey/:categoryName' , component : AddItemFormComponent , canActivate: [AuthGuardService]},
   {path : 'itemsOf/:categoryKey/:categoryName' , component : ItemListComponent , canActivate: [AuthGuardService]},
+  {path : 'orderBill/:orderKey/:orderDate' , component : OrderDetailComponent , canActivate: [AuthGuardService]},
   {path: '' , component:LoginComponent , pathMatch:"full"}
 ];
 
@@ -97,6 +100,8 @@ const appRoutes : Routes = [
     ToastrModule.forRoot(),
     BrowserAnimationsModule,
     MatDialogModule,
+    MatTableModule,
+    MatPaginatorModule,
     RouterModule.forRoot(appRoutes,{useHash: true}),
   ],
   providers: [], //the classes for services already have provided in root.
