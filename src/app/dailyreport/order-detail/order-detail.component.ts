@@ -88,10 +88,12 @@ export class OrderDetailComponent implements OnInit{
     {
       let item = orderInformation['items'][i];
       item['status'] = 'Being Prepared';
+      item['yetToPrepare']  = item['quantity'];
       modifiedItemList.push(item);
     }
     orderInformation['items'] = modifiedItemList;
     orderInformation['orderKey'] = this.orderKey;
+    
     console.log( " Going to Chef = ",orderInformation);
     this.apiService.makeOrderForChef(orderInformation , this.orderDate).subscribe((_)=>{
       this.apiService.deleteActiveOrder(this.orderKey , this.orderDate).subscribe((_)=>{
