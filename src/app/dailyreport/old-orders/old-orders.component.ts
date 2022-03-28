@@ -45,7 +45,12 @@ export class OldOrdersComponent implements OnInit {
 
   showBill(orderKey)
   {
-    this.router.navigate(['/orderBill/'+orderKey+"/"+this.selected]);
+    let d = new Date(this.selected);
+    let date = d.getDate();
+    let month = d.getMonth() + 1;
+    let year = d.getFullYear();
+    let selectedDate = date+""+month+""+year;
+    this.router.navigate(['/orderBill/'+orderKey+"/"+selectedDate]);
   }
 
 }
