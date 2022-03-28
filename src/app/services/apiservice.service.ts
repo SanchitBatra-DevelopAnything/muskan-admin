@@ -144,4 +144,14 @@ export class ApiserviceService {
   {
     return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/activeShopOrders/"+orderDate+"/"+orderKey+".json");
   }
+
+  public makeOrderForChef(orderData : any , orderDate:any) : Observable<any>
+  {
+    return this.http.post("https://muskan-admin-app-default-rtdb.firebaseio.com/ProcessedShopOrders/"+orderDate+".json" , orderData);
+  }
+
+  public deleteActiveOrder(orderKey : string , orderDate : string) : Observable<any>
+  {
+    return this.http.delete("https://muskan-admin-app-default-rtdb.firebaseio.com/activeShopOrders/"+orderDate+"/"+orderKey+".json");
+  }
 }

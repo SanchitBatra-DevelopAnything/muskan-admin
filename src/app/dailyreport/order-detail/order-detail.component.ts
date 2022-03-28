@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ApiserviceService } from 'src/app/services/apiservice.service';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-order-detail',
@@ -24,7 +25,7 @@ export class OrderDetailComponent implements OnInit{
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
 
-  constructor(private route : ActivatedRoute , private router : Router,private apiService : ApiserviceService) { }
+  constructor(private route : ActivatedRoute , private router : Router,private apiService : ApiserviceService , private toastr : ToastrService) { }
 
   ngOnInit(): void {
     this.isLoading = false;
@@ -76,6 +77,33 @@ export class OrderDetailComponent implements OnInit{
   setPaginator()
   {
     this.dataSource.paginator = this.paginator;
+  }
+
+  sendOrderToChef()
+  {
+    this.isLoading = true;
+    let orderInformation = {...this.orderData};
+    let modifiedItemList = [];
+    for(let i=0;i<orderInformation['items'].length;i++)
+    {
+      let item = orderInformation['items'][i];
+      item['status'] = 'Being Prepared';
+      modifiedItemList.push(item);
+    }
+    orderInformation['items'] = modifiedItemList;
+    orderInformation['orderKey'] = this.orderKey;
+    console.log( " Going to Chef = ",orderInformation);
+    this.apiService.makeOrderForChef(orderInformation , this.orderDate).subscribe((_)=>{
+      this.apiService.deleteActiveOrder(this.orderKey , this.orderDate).subscribe((_)=>{
+        this.toastr.success('Order Given To Chefs Successfully', 'Notification!' , {
+          timeOut : 4000 ,
+          closeButton : true , 
+          positionClass : 'toast-bottom-right'
+        });
+        this.router.navigate(['/dailyReport']);
+        this.isLoading = false;
+      });
+    })
   }
 
 }
