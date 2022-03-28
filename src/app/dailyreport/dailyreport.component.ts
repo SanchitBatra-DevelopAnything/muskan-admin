@@ -51,4 +51,9 @@ export class DailyreportComponent implements OnInit {
     this.router.navigate(['/orderBill/'+orderKey+"/"+this.todaysDate]);
   }
 
+  oldOrderPage()
+  {
+    this.router.navigate(['/processedOrders']);
+  }
+
 }

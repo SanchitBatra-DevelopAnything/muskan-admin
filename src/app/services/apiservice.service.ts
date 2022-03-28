@@ -154,4 +154,9 @@ export class ApiserviceService {
   {
     return this.http.delete("https://muskan-admin-app-default-rtdb.firebaseio.com/activeShopOrders/"+orderDate+"/"+orderKey+".json");
   }
+
+  public getProcessedShopOrders(date:string) : Observable<any>
+  {
+    return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/ProcessedShopOrders/"+date+".json");
+  }
 }

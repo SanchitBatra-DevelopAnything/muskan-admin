@@ -12,6 +12,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatCardModule} from '@angular/material/card';
 
 import { AppComponent } from './app.component';
 import { CategoryListComponent } from './category-list/category-list.component';
@@ -40,6 +42,8 @@ import { AddSalesmanFormComponent } from './add-salesman-form/add-salesman-form.
 import { SubcategoryAddFormComponent } from './subcategory-add-form/subcategory-add-form.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import { OrderDetailComponent } from './dailyreport/order-detail/order-detail.component';
+import { OldOrdersComponent } from './dailyreport/old-orders/old-orders.component';
+import { MatNativeDateModule } from '@angular/material/core';
 
 
 const appRoutes : Routes = [
@@ -58,6 +62,7 @@ const appRoutes : Routes = [
   {path : 'item/upload/:categoryKey/:categoryName' , component : AddItemFormComponent , canActivate: [AuthGuardService]},
   {path : 'itemsOf/:categoryKey/:categoryName' , component : ItemListComponent , canActivate: [AuthGuardService]},
   {path : 'orderBill/:orderKey/:orderDate' , component : OrderDetailComponent , canActivate: [AuthGuardService]},
+  {path : 'processedOrders' , component : OldOrdersComponent , canActivate: [AuthGuardService]},
   {path: '' , component:LoginComponent , pathMatch:"full"}
 ];
 
@@ -87,6 +92,7 @@ const appRoutes : Routes = [
     SubcategoryAddFormComponent,
     OrderDetailComponent,
     DailyreportComponent,
+    OldOrdersComponent,
   ],
   imports: [
     BrowserModule,
@@ -101,10 +107,16 @@ const appRoutes : Routes = [
     BrowserAnimationsModule,
     MatDialogModule,
     MatTableModule,
+    MatDatepickerModule,
+    MatCardModule,
+    MatNativeDateModule,
     MatPaginatorModule,
+    
     RouterModule.forRoot(appRoutes,{useHash: true}),
   ],
-  providers: [], //the classes for services already have provided in root.
+  providers: [
+    MatDatepickerModule
+  ], //the classes for services already have provided in root.
   bootstrap: [AppComponent]
 })
 export class AppModule { }
