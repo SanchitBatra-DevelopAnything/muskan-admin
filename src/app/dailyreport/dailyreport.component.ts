@@ -21,11 +21,7 @@ export class DailyreportComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let date = new Date();
-    let utc = date.toUTCString();
-    let istDate = new Date(utc);
-    istDate.setHours(istDate.getHours() + 5);
-    istDate.setMinutes(istDate.getMinutes() + 30);
+    let istDate = this.getISTDate();
     let dateIST = istDate.getDate();
     let monthIST = istDate.getMonth() + 1;
     let yearIST = istDate.getFullYear();
@@ -44,6 +40,24 @@ export class DailyreportComponent implements OnInit {
       this.activeOrderKeys = Object.keys(orders);
       this.isLoading = false;
     });
+  }
+
+  getISTDate() : Date
+  {
+    let date = new Date();
+    date.setDate(date.getUTCDate());
+    date.setMonth(date.getUTCMonth());
+    date.setFullYear(date.getUTCFullYear());
+    date.setHours(date.getUTCHours());
+    date.setMinutes(date.getUTCMinutes());
+    date.setSeconds(date.getUTCSeconds());
+    date.setMilliseconds(date.getUTCMilliseconds());
+
+    let utcDate = date;
+    utcDate.setHours(utcDate.getHours() + 5);
+    utcDate.setMinutes(utcDate.getMinutes() + 30);
+
+    return utcDate;
   }
 
   showBill(orderKey)
