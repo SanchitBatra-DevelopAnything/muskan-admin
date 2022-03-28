@@ -13,6 +13,7 @@ export class DailyreportComponent implements OnInit {
   activeOrders = [];
   activeOrderKeys = [];
   isLoading : boolean;
+  todaysDate : string;
 
 
   constructor(private apiService : ApiserviceService , private router : Router) {
@@ -20,8 +21,17 @@ export class DailyreportComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    let date = new Date();
+    let utc = date.toUTCString();
+    let istDate = new Date(utc);
+    istDate.setHours(istDate.getHours() + 5);
+    istDate.setMinutes(istDate.getMinutes() + 30);
+    let dateIST = istDate.getDate();
+    let monthIST = istDate.getMonth() + 1;
+    let yearIST = istDate.getFullYear();
+    this.todaysDate = dateIST + "" + monthIST + "" + yearIST; 
     this.isLoading = true;
-    this.apiService.getActiveOrders("2732022").subscribe((orders)=>{
+    this.apiService.getActiveOrders(this.todaysDate).subscribe((orders)=>{
       if(orders == null)
       {
         console.log(null);
@@ -38,7 +48,7 @@ export class DailyreportComponent implements OnInit {
 
   showBill(orderKey)
   {
-    this.router.navigate(['/orderBill/'+orderKey+'/2732022']);
+    this.router.navigate(['/orderBill/'+orderKey+"/"+this.todaysDate]);
   }
 
 }

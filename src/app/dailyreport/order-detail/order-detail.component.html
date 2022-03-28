@@ -15,7 +15,7 @@
 
     </div>
 
-    <div class="mat-elevation-z8" *ngIf = "!isLoading">
+    <div class="mat-elevation-z8">
         <table mat-table [dataSource]="dataSource">
       
           <!-- Position Column -->
@@ -48,7 +48,7 @@
       
         <mat-paginator [pageSizeOptions]="[5, 10, 20]"
                        showFirstLastButtons 
-                       aria-label="Select page of periodic elements">
+                       aria-label="Select page of billData">
         </mat-paginator>
       </div>
       
