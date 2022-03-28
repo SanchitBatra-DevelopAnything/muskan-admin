@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ApiserviceService } from 'src/app/services/apiservice.service';
 
 @Component({
@@ -13,7 +14,7 @@ export class OldOrdersComponent implements OnInit {
   processedOrderKeys : any;
   isLoading : boolean;
 
-  constructor(private apiService : ApiserviceService) { }
+  constructor(private apiService : ApiserviceService , private router:Router) { }
 
   ngOnInit(): void {
     this.isLoading = false;
@@ -23,6 +24,7 @@ export class OldOrdersComponent implements OnInit {
 
   changeDate()
   {
+    this.isLoading = true;
     let date = this.selected.getDate();
     let month = this.selected.getMonth();
     let year = this.selected.getFullYear();
@@ -37,7 +39,13 @@ export class OldOrdersComponent implements OnInit {
       }
       this.processedOrders = Object.values(orders);
       this.processedOrderKeys = Object.keys(orders);
-    });  
+      this.isLoading = false;
+    });
+  }
+
+  showBill(orderKey)
+  {
+    this.router.navigate(['/orderBill/'+orderKey+"/"+this.selected]);
   }
 
 }

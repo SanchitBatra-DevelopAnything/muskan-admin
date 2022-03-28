@@ -14,7 +14,17 @@
 
     <hr>
 
+    <div class="loader" *ngIf = "isLoading">
+
+    </div>
+
     <p *ngIf = "processedOrders.length == 0">No orders for selected date available in Databse.</p>
+
+    <div class="row" *ngIf ="!isLoading">
+        <div *ngFor = "let order of processedOrders; let i = index;" class = "col-xs-3 w3-card pointer order-card" (click) = "showBill(processedOrderKeys[i])">
+            <p style = "font-weight: bold;">{{order.shopAddress | uppercase}}</p>
+        </div>
+    </div>
     
          
 </div>
