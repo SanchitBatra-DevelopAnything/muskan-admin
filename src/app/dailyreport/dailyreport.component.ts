@@ -62,7 +62,7 @@ export class DailyreportComponent implements OnInit {
 
   showBill(orderKey)
   {
-    this.router.navigate(['/orderBill/'+orderKey+"/"+this.todaysDate]);
+    this.router.navigate(['/orderBill/'+orderKey+"/"+this.todaysDate+"/active"]);
   }
 
   oldOrderPage()

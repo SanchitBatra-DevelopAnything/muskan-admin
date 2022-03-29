@@ -43,14 +43,14 @@ export class OldOrdersComponent implements OnInit {
     });
   }
 
-  showBill(orderKey)
+  showBill(order , processedOrderKey)
   {
     let d = new Date(this.selected);
     let date = d.getDate();
     let month = d.getMonth() + 1;
     let year = d.getFullYear();
     let selectedDate = date+""+month+""+year;
-    this.router.navigate(['/orderBill/'+orderKey+"/"+selectedDate]);
+    this.router.navigate(['/orderBill/'+order['orderKey']+"/"+selectedDate+"/processed?"+processedOrderKey]);
   }
 
 }

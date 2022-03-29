@@ -18,6 +18,7 @@ export class OrderDetailComponent implements OnInit{
   isLoading : boolean = false;
   orderData : {};
   billData : BillElement[];
+  orderType : string;
 
   displayedColumns: string[] = ['Sno', 'Item', 'Quantity', 'Price'];
   dataSource:any;
@@ -31,6 +32,7 @@ export class OrderDetailComponent implements OnInit{
     this.isLoading = false;
     this.orderKey = this.route.snapshot.params['orderKey'];
     this.orderDate = this.route.snapshot.params['orderDate'];
+    this.orderType = this.route.snapshot.params['orderType'];
     this.getOrderItems();
   }
 
@@ -42,7 +44,7 @@ export class OrderDetailComponent implements OnInit{
   getOrderItems()
   {
     this.isLoading = true;
-    this.apiService.getOrder(this.orderDate , this.orderKey).subscribe((orderDetail)=>{
+    this.apiService.getOrder(this.orderDate , this.orderKey , this.orderType).subscribe((orderDetail)=>{
       if(orderDetail == null)
       {
         this.orderData = {};

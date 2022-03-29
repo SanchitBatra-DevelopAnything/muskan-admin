@@ -140,8 +140,14 @@ export class ApiserviceService {
     return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/activeShopOrders/"+todaysDate+".json");
   }
 
-  public getOrder(orderDate , orderKey)
+  public getOrder(orderDate , orderKey , orderType) : Observable<any>
   {
+    if(orderType.startsWith ("processed"))
+    {
+      let processedOrderKeyArray = orderType.split("?");
+      let processedOrderKey = processedOrderKeyArray[1];
+      return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/ProcessedShopOrders/"+orderDate+"/"+processedOrderKey+".json")  
+    }
     return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/activeShopOrders/"+orderDate+"/"+orderKey+".json");
   }
 
