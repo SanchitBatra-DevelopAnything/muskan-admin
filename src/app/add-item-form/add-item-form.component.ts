@@ -36,6 +36,7 @@ export class AddItemFormComponent implements OnInit {
        'customerPrice' : new FormControl('', [Validators.required]),
        'offer' : new FormControl('' , [Validators.required]),
        'directVariety' : new FormControl('0',[Validators.required]),
+       'minPounds' : new FormControl('-1')
     });
 
     this.resetForm();
@@ -95,6 +96,7 @@ export class AddItemFormComponent implements OnInit {
       shopPrice : '',
       customerPrice: '',
       directVariety : '0',
+      minPounds : '-1',
     });
     this.imgSrc = "../../assets/default.png";
     this.isSubmitted = false;
