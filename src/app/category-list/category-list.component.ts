@@ -35,7 +35,7 @@ export class CategoryListComponent implements OnInit , OnDestroy{
       let categoryNames = [];
       for(let i=0;i<this.categoryList.length;i++)
       {
-        categoryNames.push(this.categoryList[i].categoryName);
+        categoryNames.push({categoryName : this.categoryList[i].categoryName});
       }
       this.utilityService.uploadCategories(categoryNames); //centeralize the category names available. to use in other components.
       this.categoryKeys = Object.keys(allCategories);

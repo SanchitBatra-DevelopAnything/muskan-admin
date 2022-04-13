@@ -13,7 +13,7 @@ export class UtilityServiceService {
   itemDeleted:Subject<string>;
   itemUpdated:Subject<string>;
 
-  categories : String[];
+  categories : {categoryName : string}[];
 
   constructor() { 
     this.loggedInStatusUpdated = new Subject<boolean>();
@@ -25,8 +25,9 @@ export class UtilityServiceService {
     this.categories = [];
   }
 
-  uploadCategories(allPresentCategories : String[])
+  uploadCategories(allPresentCategories : {categoryName : string}[]) //comes from the categoryList component.s
   {
+    this.categories = [];
     this.categories = [...allPresentCategories];
   }
 

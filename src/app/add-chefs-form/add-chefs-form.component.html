@@ -1,1 +1,45 @@
-<p>add-chefs-form works!</p>
+<div class="container" style = "text-align:center;">
+    <div class = "jumbotron">
+        <h3>Add Your Chefs Here!!</h3>
+        
+
+        <form [formGroup] = "addChefForm" (ngSubmit) = "onSubmit()"> 
+            <div class="form-group">
+    
+                    <label for = "shopName">Chef Name</label>
+                    <input type = "text"
+                    id="chefName"
+                    class = "form-control"
+                    formControlName="chefName">
+            </div>
+
+            <div class="form-group">
+                <label for = "shopName">Password</label>
+                <p>Chef only logins once , and will remain logged in in chef's app. Use this default password to login once.</p>
+                <input type = "text"
+                [readOnly] = true
+                id="password"
+                class = "form-control"
+                formControlName="password">
+        </div>
+    
+            <div class="form-group">
+                <label for = "areaName">Will Manage</label>
+                <p>Please select the category this chef will manage</p>
+                <ng-select [items] = "categories" bindLabel = "categoryName" bindValue = "categoryName" [closeOnSelect] = "true"
+                formControlName = "manages"
+                ngDefaultControl>
+                </ng-select>
+            </div>
+
+    
+            <button type = "submit" class = "btn btn-success btn-bold-text" *ngIf = "!isInsertingChef" [disabled] = "addChefForm.pending|| addChefForm.invalid">Add A Chef</button>
+            <button *ngIf = "isInsertingChef" class = "btn btn-success">
+                <div class="loader loader-button">
+    
+                </div>
+            </button>
+        </form>
+    </div>
+    
+</div>
