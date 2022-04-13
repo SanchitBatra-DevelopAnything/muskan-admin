@@ -44,6 +44,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { OrderDetailComponent } from './dailyreport/order-detail/order-detail.component';
 import { OldOrdersComponent } from './dailyreport/old-orders/old-orders.component';
 import { MatNativeDateModule } from '@angular/material/core';
+import { ChefsComponent } from './manage-window/chefs/chefs.component';
 
 
 const appRoutes : Routes = [
@@ -53,7 +54,8 @@ const appRoutes : Routes = [
   {path : 'category/upload' , component : CategoryFormComponent , canActivate : [AuthGuardService]},
   {path : 'manage' , component : ManageWindowComponent , canActivate : [AuthGuardService] , children:[
     {path : 'shops', component : ShopsComponent  , canActivate : [AuthGuardService]},
-    {path : 'retailers' , component : RetailersComponent , canActivate : [AuthGuardService]} , 
+    {path : 'retailers' , component : RetailersComponent , canActivate : [AuthGuardService]} ,
+    {path : 'chefs' , component : ChefsComponent , canActivate : [AuthGuardService]} , 
     {path : 'salesmen' , component : SalesmenComponent , canActivate : [AuthGuardService]}
   ] ,},
   {path : 'salesman/upload' , component : AddSalesmanFormComponent , canActivate : [AuthGuardService]},
@@ -93,6 +95,7 @@ const appRoutes : Routes = [
     OrderDetailComponent,
     DailyreportComponent,
     OldOrdersComponent,
+    ChefsComponent,
   ],
   imports: [
     BrowserModule,

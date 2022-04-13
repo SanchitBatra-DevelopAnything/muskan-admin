@@ -13,6 +13,8 @@ export class UtilityServiceService {
   itemDeleted:Subject<string>;
   itemUpdated:Subject<string>;
 
+  categories : String[];
+
   constructor() { 
     this.loggedInStatusUpdated = new Subject<boolean>();
     this.categoryDeleted = new Subject<string>();
@@ -20,6 +22,12 @@ export class UtilityServiceService {
     this.refreshRetailerNotificationCount = new Subject<string>();
     this.itemDeleted = new Subject<string>();
     this.itemUpdated = new Subject<string>();
+    this.categories = [];
+  }
+
+  uploadCategories(allPresentCategories : String[])
+  {
+    this.categories = [...allPresentCategories];
   }
 
 }
