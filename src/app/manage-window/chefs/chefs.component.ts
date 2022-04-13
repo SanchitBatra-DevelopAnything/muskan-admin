@@ -39,6 +39,11 @@ export class ChefsComponent implements OnInit {
     });
   }
 
+  openChefUpload()
+  {
+    this.router.navigate(['/chef/upload']);
+  }
+
   deleteChef(index)
   {
     this.isLoading = true;
