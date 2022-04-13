@@ -13,13 +13,34 @@ export class AddChefsFormComponent implements OnInit {
 
   addChefForm : FormGroup;
   isInsertingChef : boolean;
+  isLoading : boolean;
   categories : {categoryName : string}[];
+  cantLoadCategories : boolean;
 
 
-  constructor(private apiService : ApiserviceService , private toastr : ToastrService , private utilityService : UtilityServiceService) { }
+  constructor(private apiService : ApiserviceService , private toastr : ToastrService) { }
 
   ngOnInit(): void {
-    this.categories = this.utilityService.categories;
+    this.isLoading = true;
+    this.cantLoadCategories = false;
+    this.categories = [];
+    this.apiService.getCategories().subscribe(catgs=>{
+      let categoriesData:any[] = Object.values(catgs);
+      if(catgs == null)
+      {
+        this.categories = [];
+        this.isLoading = false;
+        return;
+      }
+      for(let i=0;i<categoriesData.length;i++)
+      {
+        this.categories.push({categoryName : categoriesData[i].categoryName});
+      }
+      this.isLoading = false;
+    }),(err)=>{
+      this.isLoading = false;
+      this.cantLoadCategories = true;
+    };
     this.isInsertingChef = false;
     this.addChefForm = new FormGroup({
       'chefName' : new FormControl(null , [Validators.required]), 
