@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { ApiserviceService } from 'src/app/services/apiservice.service';
 import { UtilityServiceService } from 'src/app/services/utility-service.service';
 
@@ -14,7 +15,7 @@ export class ChefsComponent implements OnInit {
   chefsKeys : any[];
   isLoading : boolean;
 
-  constructor(private apiService : ApiserviceService , private router : Router , private utilityService : UtilityServiceService) { }
+  constructor(private apiService : ApiserviceService , private router : Router , private utilityService : UtilityServiceService , private toastr : ToastrService) { }
 
   ngOnInit(): void {
     this.isLoading = false;
@@ -35,16 +36,20 @@ export class ChefsComponent implements OnInit {
       this.chefsData = Object.values(chef);
       this.chefsKeys = Object.keys(chef);
       this.isLoading = false;
-      this.printChefs(this.chefsData);
     });
   }
 
-  printChefs(chefsData)
+  deleteChef(index)
   {
-    for(let i=0;i<chefsData.length;i++)
-    {
-      console.log(chefsData[i].chefName);
-    }
+    this.isLoading = true;
+    this.apiService.deleteChef(this.chefsKeys[index]).subscribe((_)=>{
+      this.toastr.success('Out of chefs app!', 'Chef deleted successfully!' , {
+        timeOut : 4000 ,
+        closeButton : true , 
+        positionClass : 'toast-bottom-right'
+      });
+      this.getChefs();
+    });
   }
 
 }

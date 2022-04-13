@@ -170,4 +170,9 @@ export class ApiserviceService {
   {
     return this.http.get('https://muskan-admin-app-default-rtdb.firebaseio.com/chefs.json');
   }
+
+  public deleteChef(chefKey : string) : Observable<any>
+  {
+    return this.http.delete("https://muskan-admin-app-default-rtdb.firebaseio.com/chefs/"+chefKey+".json");
+  }
 }
