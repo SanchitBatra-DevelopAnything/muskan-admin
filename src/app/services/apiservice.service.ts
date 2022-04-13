@@ -165,4 +165,9 @@ export class ApiserviceService {
   {
     return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/ProcessedShopOrders/"+date+".json");
   }
+
+  public getChefs() : Observable<any>
+  {
+    return this.http.get('https://muskan-admin-app-default-rtdb.firebaseio.com/chefs.json');
+  }
 }
