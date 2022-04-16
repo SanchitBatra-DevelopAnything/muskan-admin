@@ -44,16 +44,18 @@ export class ChefsComponent implements OnInit {
     this.router.navigate(['/chef/upload']);
   }
 
-  deleteChef(index)
+  deleteChef(index , chefName)
   {
     this.isLoading = true;
     this.apiService.deleteChef(this.chefsKeys[index]).subscribe((_)=>{
-      this.toastr.success('Out of chefs app!', 'Chef deleted successfully!' , {
-        timeOut : 4000 ,
-        closeButton : true , 
-        positionClass : 'toast-bottom-right'
+      this.apiService.deleteChefNotificationToken(chefName.toString().toUpperCase()).subscribe((_)=>{
+        this.toastr.success('Out of chefs app!', 'Chef deleted successfully!' , {
+          timeOut : 4000 ,
+          closeButton : true , 
+          positionClass : 'toast-bottom-right'
+        });
+        this.getChefs();
       });
-      this.getChefs();
     });
   }
 

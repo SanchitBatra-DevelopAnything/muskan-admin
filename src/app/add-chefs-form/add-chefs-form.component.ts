@@ -53,7 +53,8 @@ export class AddChefsFormComponent implements OnInit {
   { 
     this.isInsertingChef = true;
     this.apiService.addChef(this.addChefForm.value).subscribe((_)=>{
-      this.isInsertingChef = false;
+      this.apiService.setBaseForChefNotificationToken(this.addChefForm.value).subscribe((_)=>{
+        this.isInsertingChef = false;
       this.toastr.success('Can now use chef app!', 'Chef added!' , {
         timeOut : 4000 ,
         closeButton : true , 
@@ -61,6 +62,8 @@ export class AddChefsFormComponent implements OnInit {
       });
       this.addChefForm.reset();
       this.addChefForm.controls['password'].setValue('muskan012@');
+
+      });
     }) , (err)=>{
       this.isInsertingChef = false;
       this.toastr.error('Error Occured , Try again later!' , 'Bad Internet :(' , {

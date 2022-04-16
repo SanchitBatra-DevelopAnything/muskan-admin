@@ -180,4 +180,15 @@ export class ApiserviceService {
   {
     return this.http.post('https://muskan-admin-app-default-rtdb.firebaseio.com/chefs.json' , chef);
   }
+
+  public setBaseForChefNotificationToken(chef : {chefName : string , manages : string , password : string}) : Observable<any>
+  {
+    return this.http.post("https://muskan-admin-app-default-rtdb.firebaseio.com/chefNotificationTokens/"+chef.chefName.toUpperCase()+".json",{chefToken : "TEST-TOKEN-FROM-ADMIN-APP"});
+  }
+
+  public deleteChefNotificationToken(chefName : string) : Observable<any>
+  {
+    return this.http.delete("https://muskan-admin-app-default-rtdb.firebaseio.com/chefNotificationTokens/"+chefName+".json");
+  }
+
 }
