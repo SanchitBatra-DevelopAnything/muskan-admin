@@ -4,8 +4,12 @@
         <button class = "btn btn-success spaced-button" (click) = "openChefUpload()">Add a new Chef</button> 
     <hr>
 
+    <p>If the chefs app is already opened while you provide the access , Please quit and relaunch the app after access is provided.</p>
+
+    <hr>
+
     <ul class="list-group list-group-flush">
-        <li class="list-group-item" style ="height:50px;" *ngFor = "let chef of chefsData; let i = index;">{{chef.chefName}} , manages {{chef.manages}}
+        <li class="list-group-item" style ="height:50px;" *ngFor = "let chef of chefsData; let i = index;">{{chef.chefName | uppercase}} , manages {{chef.manages | uppercase}}
             <button class = "btn btn-danger" style = "float:right;" (click) = "deleteChef(i)">Delete</button>
         </li>
       </ul>

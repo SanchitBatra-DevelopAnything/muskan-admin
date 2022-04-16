@@ -5,7 +5,7 @@
     <hr>
 
     <ul class="list-group list-group-flush">
-        <li class="list-group-item" style ="height:50px;" *ngFor = "let retailer of retailersData; let i = index;">{{retailer.retailerName}} , {{retailer.shopAddress}}
+        <li class="list-group-item" style ="height:50px;" *ngFor = "let retailer of retailersData; let i = index;">{{retailer.retailerName | uppercase}} , {{retailer.shopAddress | uppercase}}
             <button class = "btn btn-danger" style = "float:right;" (click) = "deleteRetailer(i)">Delete</button>
         </li>
       </ul>
