@@ -4,6 +4,7 @@ import { ApiserviceService } from 'src/app/services/apiservice.service';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
+import { UtilityServiceService } from 'src/app/services/utility-service.service';
 
 @Component({
   selector: 'app-order-detail',
@@ -107,7 +108,16 @@ export class OrderDetailComponent implements OnInit{
         this.router.navigate(['/dailyReport']);
         this.isLoading = false;
       });
-    })
+    });
+    console.log("STARTING CHEF NOTIS");
+    this.apiService.sendNotificationToChefs().subscribe((_)=>{
+      this.toastr.success('Sent notifications to chefs', 'Notification!' , {
+        timeOut : 4000 ,
+        closeButton : true , 
+        positionClass : 'toast-bottom-right'
+      });
+    });
+    console.log("SENT NOTIS COMPLETE");
   }
 
 }
