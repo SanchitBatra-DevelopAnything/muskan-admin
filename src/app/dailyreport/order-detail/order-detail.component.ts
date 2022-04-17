@@ -110,14 +110,24 @@ export class OrderDetailComponent implements OnInit{
       });
     });
     console.log("STARTING CHEF NOTIS");
-    this.apiService.sendNotificationToChefs().subscribe((_)=>{
-      this.toastr.success('Sent notifications to chefs', 'Notification!' , {
-        timeOut : 4000 ,
-        closeButton : true , 
-        positionClass : 'toast-bottom-right'
+    this.apiService.getAllChefNotificationTokens().subscribe((tokens)=>{
+      var regIds = [];
+      if(tokens!=null)
+      {
+        regIds = Object.values(tokens);
+        var onlyTokens = regIds.map((chefToken)=>{
+          return chefToken.chefToken;
+        })
+      }
+      this.apiService.sendNotificationToChefs(onlyTokens).subscribe((_)=>{
+        this.toastr.success('Sent notifications to chefs', 'Notification!' , {
+          timeOut : 4000 ,
+          closeButton : true , 
+          positionClass : 'toast-bottom-right'
+        });
       });
+      console.log("SENT NOTIS COMPLETE");
     });
-    console.log("SENT NOTIS COMPLETE");
   }
 
 }

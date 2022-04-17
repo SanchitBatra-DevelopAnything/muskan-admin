@@ -191,17 +191,14 @@ export class ApiserviceService {
     return this.http.delete("https://muskan-admin-app-default-rtdb.firebaseio.com/chefNotificationTokens/"+chefName+".json");
   }
 
-  public sendNotificationToChefs() : Observable<any>
+  public sendNotificationToChefs(regIds : string[]) : Observable<any>
   {
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': 'key=AAAA1CskWfc:APA91bELCsy-GM2n8hPD3Sc4vaanR3ymcIP8mttKC5rhfg9nU4eDVcxcKOxOICxx5B6zdnGce4bBvPfzOB_NzMUg3iT_hHRQbhIyfTAduQxkkVOYTx0hQd0S1GJaPbmtmJrIKdb4_X1f' });
   let options = { headers: headers };
   let body = {
-    "registration_ids": [
-        "ex0A1MEMSiau7LLPkIuaMo:APA91bHBkf0t1N8H1SI0cci9Wzl-1Fp2FNjJaoIPhrjmSpe8AZecINC3rCtNgVr8-_QN98PT-tfmdZ_tEspYnyotAqsftqgeuByufkPjP8nLWbxgAToegPJdm5cQWxjEudKI6Eh9MSfT",
-        "fSN0uVeMT8Gwn3ITQFMHiR:APA91bFHA3uMo0c_h0A_iPDXNKsdVwfGZDAfE6bMoeD7QokEXTqsk7dxdGmDkSNobr8GhKNwIs9DB-6eJUNVObLv78mDKlk-4MlgFJQSG7CPsYsflQoxATkraf1s0EJqsRJ1P1IkqaWG"
-    ],
+    "registration_ids": regIds,
     "notification": {
         "body": "Click to check out",
         "title": "NEW ORDER",
@@ -210,6 +207,11 @@ export class ApiserviceService {
     }
 }
 return this.http.post("https://fcm.googleapis.com/fcm/send" , body , options);
+  }
+
+  public getAllChefNotificationTokens() : Observable<any>
+  {
+    return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/chefNotificationTokens.json");
   }
 
 }
