@@ -72,7 +72,7 @@ const appRoutes : Routes = [
   {path : 'processedOrders' , component : OldOrdersComponent , canActivate: [AuthGuardService]},
   {path: 'cakes/flavours' , component : FlavoursScreenComponent , canActivate: [AuthGuardService]},
   {path: 'cakes/designCategories' , component : DesignCategoryScreenComponent , canActivate: [AuthGuardService]},
-  {path: 'cakes/addNewFlavour/:flavour/:sp/:cp/:type/:flavorKey' , component : AddFlavourFormComponent , canActivate: [AuthGuardService]},
+  {path: 'cakes/addNewFlavour/:flavour/:sp/:cp/:type/:flavourKey' , component : AddFlavourFormComponent , canActivate: [AuthGuardService]},
   {path: '' , component:LoginComponent , pathMatch:"full"}
 ];
 

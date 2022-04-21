@@ -229,4 +229,9 @@ public getAllChefNotificationTokens() : Observable<any>
     return this.http.delete("https://muskan-admin-app-default-rtdb.firebaseio.com/cakeFlavours/"+flavourKey+".json");
   }
 
+  public editFlavour(flavour:{flavourName : string , shopPrice : number,customerPrice : number} , flavourKey:string) : Observable<any>
+  {
+    return this.http.patch("https://muskan-admin-app-default-rtdb.firebaseio.com/cakeFlavours/"+flavourKey+".json",flavour);
+  }
+
 }

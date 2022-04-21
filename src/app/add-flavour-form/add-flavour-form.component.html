@@ -31,7 +31,8 @@
             </div>
 
     
-            <button type = "submit" class = "btn btn-success btn-bold-text" *ngIf = "!isInsertingFlavour" [disabled] = "flavourForm.pending|| flavourForm.invalid">Add Flavour</button>
+            <button type = "submit" class = "btn btn-success btn-bold-text" *ngIf = "!isInsertingFlavour && !isEdit" [disabled] = "flavourForm.pending|| flavourForm.invalid">Add Flavour</button>
+            <button type = "submit" class = "btn btn-success btn-bold-text" *ngIf = "!isInsertingFlavour && isEdit" [disabled] = "flavourForm.pending|| flavourForm.invalid">Edit Flavour</button>
             <button *ngIf = "isInsertingFlavour" class = "btn btn-success">
                 <div class="loader loader-button">
     
