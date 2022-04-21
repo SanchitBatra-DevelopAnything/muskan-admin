@@ -8,8 +8,8 @@
             <h5 style = "display: inline-block;">Shop Price : {{flavour.shopPrice}} , </h5>
             <h5 style = "display: inline-block;">Customer Price :{{flavour.customerPrice}}</h5>
             <br>
-            <button class = "btn btn-primary" style = "margin-right: 5px;">Edit</button>
-            <button class = "btn btn-danger">Delete</button>
+            <button class = "btn btn-primary" style = "margin-right: 5px;" (click) = "editFlavour(i)">Edit</button>
+            <button class = "btn btn-danger" (click) = "deleteFlavour(i)">Delete</button>
         </li>
       </ul>
 </div>

@@ -19,11 +19,6 @@ export class FlavoursScreenComponent implements OnInit {
     this.getAllFlavours();
   }
 
-  hello()
-  {
-    console.log("hekkli");
-  }
-
   getAllFlavours()
   {
     this.isLoading = true;
@@ -39,4 +34,12 @@ export class FlavoursScreenComponent implements OnInit {
     this.router.navigate(['/cakes/addNewFlavour']);
   }
 
+  deleteFlavour(index)
+  {
+    this.isLoading = true;
+    this.apiService.deleteFlavour(this.flavourKeys[index]).subscribe((_)=>{
+      this.getAllFlavours();
+      this.isLoading = false;
+    }); 
+  }
 }

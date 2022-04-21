@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {  FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ApiserviceService } from '../services/apiservice.service';
 
@@ -14,11 +15,13 @@ export class AddFlavourFormComponent implements OnInit {
   isInsertingFlavour:boolean;
 
 
-  constructor(private apiService : ApiserviceService,private toastr : ToastrService) { }
+
+  constructor(private apiService : ApiserviceService,private toastr : ToastrService , private route : ActivatedRoute) { }
 
   ngOnInit(): void {
+
     this.flavourForm = new FormGroup({
-      'flavourName' : new FormControl('' , [Validators.required]),
+      'flavourName' : new FormControl(null , [Validators.required]),
       'shopPrice' : new FormControl(0 , [Validators.required]),
       'customerPrice' : new FormControl(0 , [Validators.required])
     });
