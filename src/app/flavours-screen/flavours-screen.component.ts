@@ -31,7 +31,7 @@ export class FlavoursScreenComponent implements OnInit {
 
   addNewFlavour()
   {
-    this.router.navigate(['/cakes/addNewFlavour']);
+    this.router.navigate(['/cakes/addNewFlavour/flavour/0/0/new/randomKey']);
   }
 
   deleteFlavour(index)
@@ -42,4 +42,15 @@ export class FlavoursScreenComponent implements OnInit {
       this.isLoading = false;
     }); 
   }
+
+  editFlavour(index)
+  {
+    let flav = this.flavours[index].flavourName;
+    let sp = this.flavours[index].shopPrice;
+    let cp = this.flavours[index].customerPrice;
+    let key = this.flavourKeys[index];
+    this.router.navigate(['/cakes/addNewFlavour/'+flav+"/"+sp+"/"+cp+"/edit/"+key]);
+  }
+
+
 }

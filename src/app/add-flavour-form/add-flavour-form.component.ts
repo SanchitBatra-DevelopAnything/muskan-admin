@@ -14,17 +14,40 @@ export class AddFlavourFormComponent implements OnInit {
   flavourForm : FormGroup;
   isInsertingFlavour:boolean;
 
+  flavour:string;
+  shopPrice:number;
+  customerPrice:number;
+  flavourKey:string;
+  isEdit:boolean;
+
 
 
   constructor(private apiService : ApiserviceService,private toastr : ToastrService , private route : ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.flavour = this.route.snapshot.params["flavour"];
+    this.shopPrice = this.route.snapshot.params["sp"];
+    this.customerPrice = this.route.snapshot.params["cp"];
+    this.flavourKey = this.route.snapshot.params["key"];
+    this.isEdit = this.route.snapshot.params["type"] === "new" ? false : true;
 
-    this.flavourForm = new FormGroup({
-      'flavourName' : new FormControl(null , [Validators.required]),
-      'shopPrice' : new FormControl(0 , [Validators.required]),
-      'customerPrice' : new FormControl(0 , [Validators.required])
-    });
+    if(this.isEdit)
+    {
+      this.flavourForm = new FormGroup({
+        'flavourName' : new FormControl(this.flavour , [Validators.required]),
+        'shopPrice' : new FormControl(this.shopPrice , [Validators.required]),
+        'customerPrice' : new FormControl(this.customerPrice , [Validators.required])
+      });
+    }
+    else
+    {
+      this.flavourForm = new FormGroup({
+        'flavourName' : new FormControl(null , [Validators.required]),
+        'shopPrice' : new FormControl(0 , [Validators.required]),
+        'customerPrice' : new FormControl(0 , [Validators.required])
+      });
+    }
+    
     this.isInsertingFlavour = false;
   }
 
