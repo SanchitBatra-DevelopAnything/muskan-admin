@@ -1,7 +1,9 @@
 <div class="container">
-    <h3>All Your Cake Flavours</h3> 
+    <h3 style = "display: inline-block; margin-right: 10px;">All Your Cake Flavours</h3> 
+    <button class = "btn btn-success" style = "display: inline-block;" (click) = "addNewFlavour()">Add a new flavour</button>
     <hr>
-    <ul class="list-group list-group-flush">
+    <div class="loader" *ngIf = "isLoading"></div>
+    <ul class="list-group list-group-flush" *ngIf = "!isLoading">
         <li class="list-group-item" style ="height:150px;" *ngFor = "let flavour of flavours; let i = index;"><h4>{{flavour.flavourName | uppercase}}</h4>
             <h5 style = "display: inline-block;">Shop Price : {{flavour.shopPrice}} , </h5>
             <h5 style = "display: inline-block;">Customer Price :{{flavour.customerPrice}}</h5>

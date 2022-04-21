@@ -209,9 +209,19 @@ export class ApiserviceService {
 return this.http.post("https://fcm.googleapis.com/fcm/send" , body , options);
   }
 
-  public getAllChefNotificationTokens() : Observable<any>
+public getAllChefNotificationTokens() : Observable<any>
+{
+  return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/chefNotificationTokens.json");
+}
+
+  public addFlavour(flavour : {flavourName : string , shopPrice : number , customerPrice : number}):Observable<any>
   {
-    return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/chefNotificationTokens.json");
+    return this.http.post("https://muskan-admin-app-default-rtdb.firebaseio.com/cakeFlavours.json" , flavour);
+  }
+
+  public getFlavours() : Observable<any>
+  {
+    return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/cakeFlavours.json");
   }
 
 }

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ApiserviceService } from '../services/apiservice.service';
 
 @Component({
   selector: 'app-flavours-screen',
@@ -8,16 +10,33 @@ import { Component, OnInit } from '@angular/core';
 export class FlavoursScreenComponent implements OnInit {
 
   flavours : {flavourName : string , shopPrice : number , customerPrice : number}[];
+  flavourKeys : string[];
+  isLoading : boolean;
 
-  constructor() { }
+  constructor(private router : Router , private apiService : ApiserviceService) { }
 
   ngOnInit(): void {
-    this.flavours = [{flavourName : "pineapple" , shopPrice : 250 , customerPrice : 340} ,{flavourName : "chocloate" , shopPrice : 250 , customerPrice : 340} ];
+    this.getAllFlavours();
   }
 
   hello()
   {
     console.log("hekkli");
+  }
+
+  getAllFlavours()
+  {
+    this.isLoading = true;
+    this.apiService.getFlavours().subscribe((allFlavours)=>{
+      this.flavours = Object.values(allFlavours);
+      this.flavourKeys = Object.keys(allFlavours);
+      this.isLoading = false;
+    });
+  }
+
+  addNewFlavour()
+  {
+    this.router.navigate(['/cakes/addNewFlavour']);
   }
 
 }

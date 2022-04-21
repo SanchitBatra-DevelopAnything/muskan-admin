@@ -1,0 +1,42 @@
+<div class="container" style = "text-align:center;">
+    <div class = "jumbotron">
+        <h3>Add Your Flavours Here!!</h3>
+        
+
+        <form [formGroup] = "flavourForm" (ngSubmit) = "onSubmit()"> 
+            <div class="form-group">
+    
+                    <label for = "flavourName">Flavour Name</label>
+                    <input type = "text"
+                    id="flavourName"
+                    class = "form-control"
+                    formControlName="flavourName">
+            </div>
+            <div class="form-group">
+    
+                <label for = "ShopPrice">Shop Price</label>
+                <input type = "number"
+                id="shopPrice"
+                class = "form-control"
+                formControlName="shopPrice">
+            </div>
+            <div class="form-group">
+    
+                <label for = "customerPrice">Customer Price</label>
+                <input type = "number"
+                id="customerPrice"
+                class = "form-control"
+                formControlName="customerPrice">
+            </div>
+
+    
+            <button type = "submit" class = "btn btn-success btn-bold-text" *ngIf = "!isInsertingFlavour" [disabled] = "flavourForm.pending|| flavourForm.invalid">Add Flavour</button>
+            <button *ngIf = "isInsertingFlavour" class = "btn btn-success">
+                <div class="loader loader-button">
+    
+                </div>
+            </button>
+        </form>
+    </div>
+    
+</div>
