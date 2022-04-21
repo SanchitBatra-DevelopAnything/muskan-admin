@@ -23,6 +23,13 @@ export class FlavoursScreenComponent implements OnInit {
   {
     this.isLoading = true;
     this.apiService.getFlavours().subscribe((allFlavours)=>{
+      if(allFlavours == null)
+      {
+        this.flavourKeys = [];
+        this.flavours = [];
+        this.isLoading = false;
+        return;
+      }
       this.flavours = Object.values(allFlavours);
       this.flavourKeys = Object.keys(allFlavours);
       this.isLoading = false;
