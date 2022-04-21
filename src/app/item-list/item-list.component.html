@@ -4,8 +4,8 @@
 
     <div class="row" *ngIf = "categoryName.toUpperCase() === 'CAKES & PASTRIES'.toUpperCase()">
         <div class="col-xs-12">
-            <button class = "btn btn-primary" style  = "display: inline-block; margin-right: 5px;">Add/Edit Flavours</button>
-            <button class = "btn btn-primary" style = "display: inline-block;">Add/Edit Design Categories</button>
+            <button class = "btn btn-primary" style  = "display: inline-block; margin-right: 5px;" (click) = "moveToFlavours()">Add/Edit Flavours</button>
+            <button class = "btn btn-primary" style = "display: inline-block;" (click) = "moveToDesignCategories()">Add/Edit Design Categories</button>
         </div>
     </div>
 

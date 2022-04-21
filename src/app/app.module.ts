@@ -46,6 +46,8 @@ import { OldOrdersComponent } from './dailyreport/old-orders/old-orders.componen
 import { MatNativeDateModule } from '@angular/material/core';
 import { ChefsComponent } from './manage-window/chefs/chefs.component';
 import { AddChefsFormComponent } from './add-chefs-form/add-chefs-form.component';
+import { FlavoursScreenComponent } from './flavours-screen/flavours-screen.component';
+import { DesignCategoryScreenComponent } from './design-category-screen/design-category-screen.component';
 
 
 const appRoutes : Routes = [
@@ -67,6 +69,8 @@ const appRoutes : Routes = [
   {path : 'itemsOf/:categoryKey/:categoryName' , component : ItemListComponent , canActivate: [AuthGuardService]},
   {path : 'orderBill/:orderKey/:orderDate/:orderType' , component : OrderDetailComponent , canActivate: [AuthGuardService]},
   {path : 'processedOrders' , component : OldOrdersComponent , canActivate: [AuthGuardService]},
+  {path: 'cakes/flavours' , component : FlavoursScreenComponent , canActivate: [AuthGuardService]},
+  {path: 'cakes/designCategories' , component : DesignCategoryScreenComponent , canActivate: [AuthGuardService]},
   {path: '' , component:LoginComponent , pathMatch:"full"}
 ];
 
@@ -99,6 +103,8 @@ const appRoutes : Routes = [
     OldOrdersComponent,
     ChefsComponent,
     AddChefsFormComponent,
+    FlavoursScreenComponent,
+    DesignCategoryScreenComponent,
   ],
   imports: [
     BrowserModule,

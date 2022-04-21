@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
+import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ApiserviceService } from '../services/apiservice.service';
 import { UtilityServiceService } from '../services/utility-service.service';
@@ -35,7 +35,7 @@ export class ItemListComponent implements OnInit , OnDestroy {
 
 
 
-  constructor(private apiService : ApiserviceService , private route : ActivatedRoute , private utilityService : UtilityServiceService) { }
+  constructor(private apiService : ApiserviceService , private route : ActivatedRoute , private utilityService : UtilityServiceService , private router : Router) { }
 
   ngOnInit(): void {
     this.noItems = false;
@@ -122,6 +122,16 @@ export class ItemListComponent implements OnInit , OnDestroy {
       let str2 = this.searchInput.toUpperCase();
       return str1.includes(str2);
     });
+  }
+
+  moveToFlavours()
+  {
+    this.router.navigate(['/cakes/flavours']);
+  }
+
+  moveToDesignCategories()
+  {
+    this.router.navigate(['/cakes/designCategories']);
   }
 
   ngOnDestroy()
