@@ -49,6 +49,7 @@ import { AddChefsFormComponent } from './add-chefs-form/add-chefs-form.component
 import { FlavoursScreenComponent } from './flavours-screen/flavours-screen.component';
 import { DesignCategoryScreenComponent } from './design-category-screen/design-category-screen.component';
 import { AddFlavourFormComponent } from './add-flavour-form/add-flavour-form.component';
+import { AddDesignCategoryFormComponent } from './add-design-category-form/add-design-category-form.component';
 
 
 const appRoutes : Routes = [
@@ -73,6 +74,7 @@ const appRoutes : Routes = [
   {path: 'cakes/flavours' , component : FlavoursScreenComponent , canActivate: [AuthGuardService]},
   {path: 'cakes/designCategories' , component : DesignCategoryScreenComponent , canActivate: [AuthGuardService]},
   {path: 'cakes/addNewFlavour/:flavour/:sp/:cp/:type/:flavourKey' , component : AddFlavourFormComponent , canActivate: [AuthGuardService]},
+  {path: 'cakes/addNewDesign/:design/:sp/:cp/:type/:designKey' , component : AddDesignCategoryFormComponent , canActivate: [AuthGuardService]},
   {path: '' , component:LoginComponent , pathMatch:"full"}
 ];
 
@@ -108,6 +110,7 @@ const appRoutes : Routes = [
     FlavoursScreenComponent,
     DesignCategoryScreenComponent,
     AddFlavourFormComponent,
+    AddDesignCategoryFormComponent,
   ],
   imports: [
     BrowserModule,

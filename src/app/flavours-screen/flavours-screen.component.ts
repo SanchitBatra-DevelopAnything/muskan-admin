@@ -56,7 +56,6 @@ export class FlavoursScreenComponent implements OnInit {
     let sp = this.flavours[index].shopPrice;
     let cp = this.flavours[index].customerPrice;
     let key = this.flavourKeys[index];
-    console.log("FLAVOUR KI KEY HAI YE = ",key);
     this.router.navigate(['/cakes/addNewFlavour/'+flav+"/"+sp+"/"+cp+"/edit/"+key]);
   }
 

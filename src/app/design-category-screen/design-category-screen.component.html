@@ -1,1 +1,15 @@
-<p>design-category-screen works!</p>
+<div class="container">
+    <h3 style = "display: inline-block; margin-right: 10px;">All Your Cake Design Categories</h3> 
+    <button class = "btn btn-success" style = "display: inline-block;" (click) = "addNewDesign()">Add a new design</button>
+    <hr>
+    <div class="loader" *ngIf = "isLoading"></div>
+    <ul class="list-group list-group-flush" *ngIf = "!isLoading">
+        <li class="list-group-item" style ="height:150px;" *ngFor = "let design of designCategories; let i = index;"><h4>{{design.designName | uppercase}}</h4>
+            <h5 style = "display: inline-block;">Shop Price : {{design.shopPrice}} , </h5>
+            <h5 style = "display: inline-block;">Customer Price :{{design.customerPrice}}</h5>
+            <br>
+            <button class = "btn btn-primary" style = "margin-right: 5px;" (click) = "editDesign(i)">Edit</button>
+            <button class = "btn btn-danger" (click) = "deleteDesign(i)">Delete</button>
+        </li>
+      </ul>
+</div>

@@ -234,4 +234,24 @@ public getAllChefNotificationTokens() : Observable<any>
     return this.http.patch("https://muskan-admin-app-default-rtdb.firebaseio.com/cakeFlavours/"+flavourKey+".json",flavour);
   }
 
+  public getDesignCategories():Observable<any>
+  {
+    return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/cakeDesignCategories.json");
+  }
+
+  public deleteDesign(designKey : string) : Observable<any>
+  {
+    return this.http.delete("https://muskan-admin-app-default-rtdb.firebaseio.com/cakeDesignCategories/"+designKey+".json");
+  }
+
+  public addDesign(design : {designName : string , shopPrice : number , customerPrice : number}):Observable<any>
+  {
+    return this.http.post("https://muskan-admin-app-default-rtdb.firebaseio.com/cakeDesignCategories.json" , design);
+  }
+
+  public editDesign(design:{designName : string , shopPrice : number,customerPrice : number} , designKey:string) : Observable<any>
+  {
+    return this.http.patch("https://muskan-admin-app-default-rtdb.firebaseio.com/cakeDesignCategories/"+designKey+".json",design);
+  }
+
 }
