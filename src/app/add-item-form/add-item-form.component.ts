@@ -1,3 +1,4 @@
+import { ReturnStatement } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -23,6 +24,9 @@ export class AddItemFormComponent implements OnInit {
   selectedSubcategoryKey : string;
   showSubcategoryDropdown : boolean;
 
+  flavours : any[];
+  designCategories : any[];
+
   constructor(private storage : AngularFireStorage , private apiService: ApiserviceService,private route : ActivatedRoute , private toastr:ToastrService) { }
 
   ngOnInit(): void {
@@ -32,17 +36,26 @@ export class AddItemFormComponent implements OnInit {
       'itemName' : new FormControl('',[Validators.required]), 
       'imageUrl' : new FormControl('' , [Validators.required]),
       'subcategoryName' : new FormControl('',[Validators.required]),
-       'shopPrice' : new FormControl('' , [Validators.required]),
-       'customerPrice' : new FormControl('', [Validators.required]),
+       'shopPrice' : new FormControl(''),
+       'customerPrice' : new FormControl(''),
        'offer' : new FormControl('' , [Validators.required]),
        'directVariety' : new FormControl('0',[Validators.required]),
+       'cakeFlavour' : new FormControl(null),
+       'designCategory' : new FormControl(null),
        'minPounds' : new FormControl('-1')
     });
 
     this.resetForm();
 
     this.fetchAvailableSubcategories();
+    this.flavours = [];
+    this.designCategories = [];
 
+    if(this.parentCategoryData.categoryName.toUpperCase() === "CAKES & PASTRIES")
+    {
+      this.fetchFlavours();
+      this.fetchDesignCategories();
+    }
   }
 
   showPreview(event : any)
@@ -85,6 +98,31 @@ export class AddItemFormComponent implements OnInit {
     }
   }
 
+  fetchFlavours()
+  {
+    this.apiService.getFlavours().subscribe((allFlavours)=>{
+      if(allFlavours == null)
+      {
+        this.flavours = [];
+        return;
+      }
+      this.flavours = Object.values(allFlavours);
+      this.flavours.push({flavourName : "ALL FLAVOURS"});
+    });
+  }
+
+  fetchDesignCategories()
+  {
+    this.apiService.getDesignCategories().subscribe((allDesigns)=>{
+      if(allDesigns == null)
+      {
+        this.designCategories = [];
+        return;
+      }
+      this.designCategories = Object.values(allDesigns);
+    });
+  }
+
   resetForm()
   {
     this.itemForm.reset();
@@ -97,6 +135,8 @@ export class AddItemFormComponent implements OnInit {
       customerPrice: '',
       directVariety : '0',
       minPounds : '-1',
+      cakeFlavour : null,
+      designCategory : null,
     });
     this.imgSrc = "../../assets/default.png";
     this.isSubmitted = false;

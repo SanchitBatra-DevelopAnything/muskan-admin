@@ -25,13 +25,27 @@
                     formControlName = "itemName"
                     placeholder = "Item Name">
                 </div>
-                <div class = "form-group">
+                <div class="form-group" *ngIf = "parentCategoryData.categoryName === 'CAKES & PASTRIES'">
+                    <label>Flavour in which this cake can be prepared</label>
+                        <ng-select [items] = "flavours" bindLabel = "flavourName" bindValue = "flavourName" [closeOnSelect] = "true"
+                        formControlName = "cakeFlavour"
+                        ngDefaultControl>
+                        </ng-select>
+                </div>
+                <div class="form-group" *ngIf = "parentCategoryData.categoryName === 'CAKES & PASTRIES'">
+                    <label>Design for this cake.</label>
+                    <ng-select [items] = "designCategories" bindLabel = "designName" bindValue = "designName" [closeOnSelect] = "true"
+                        formControlName = "designCategory"
+                        ngDefaultControl>
+                    </ng-select>
+                </div>
+                <div class = "form-group" *ngIf = "parentCategoryData.categoryName !== 'CAKES & PASTRIES'">
                     <input type = "number"
                     class = "form-control"
                     formControlName = "shopPrice"
                     placeholder = "Shop Price">
                 </div>
-                <div class = "form-group">
+                <div class = "form-group" *ngIf = "parentCategoryData.categoryName !== 'CAKES & PASTRIES'">
                     <input type = "number"
                     class = "form-control"
                     formControlName = "customerPrice"
