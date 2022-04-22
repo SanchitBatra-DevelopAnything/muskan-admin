@@ -88,7 +88,7 @@ export class ApiserviceService {
     return this.http.post("https://muskan-admin-app-default-rtdb.firebaseio.com/Categories/"+parentCategoryKey+ "/Subcategories.json", subcategory);
   }
 
-  public addItem(item : {itemName : string , imageUrl : string , subcategoryName : string , directVariety : string , offer: string , shopPrice : string , customerPrice : string} , parentCategoryKey : string , parentSubcategoryKey : string) : Observable<any>
+  public addItem(item : any , parentCategoryKey : string , parentSubcategoryKey : string) : Observable<any>
   {
     if(item.directVariety === "1")
     {
