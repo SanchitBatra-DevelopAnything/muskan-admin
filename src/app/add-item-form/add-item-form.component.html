@@ -29,6 +29,7 @@
                     <label>Flavour in which this cake can be prepared</label>
                         <ng-select [items] = "flavours" bindLabel = "flavourName" bindValue = "flavourName" [closeOnSelect] = "true"
                         formControlName = "cakeFlavour"
+                        (change) = "flavourChanged($event)"
                         ngDefaultControl>
                         </ng-select>
                 </div>
@@ -36,6 +37,7 @@
                     <label>Design for this cake.</label>
                     <ng-select [items] = "designCategories" bindLabel = "designName" bindValue = "designName" [closeOnSelect] = "true"
                         formControlName = "designCategory"
+                        (change) = "designChanged($event)"
                         ngDefaultControl>
                     </ng-select>
                 </div>

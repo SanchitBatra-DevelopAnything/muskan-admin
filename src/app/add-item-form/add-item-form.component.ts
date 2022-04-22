@@ -36,8 +36,8 @@ export class AddItemFormComponent implements OnInit {
       'itemName' : new FormControl('',[Validators.required]), 
       'imageUrl' : new FormControl('' , [Validators.required]),
       'subcategoryName' : new FormControl('',[Validators.required]),
-       'shopPrice' : new FormControl(''),
-       'customerPrice' : new FormControl(''),
+       'shopPrice' : new FormControl(null , [Validators.required]),
+       'customerPrice' : new FormControl('' , [Validators.required]),
        'offer' : new FormControl('' , [Validators.required]),
        'directVariety' : new FormControl('0',[Validators.required]),
        'cakeFlavour' : new FormControl(null),
@@ -45,9 +45,6 @@ export class AddItemFormComponent implements OnInit {
        'minPounds' : new FormControl('-1')
     });
 
-    this.resetForm();
-
-    this.fetchAvailableSubcategories();
     this.flavours = [];
     this.designCategories = [];
 
@@ -56,6 +53,16 @@ export class AddItemFormComponent implements OnInit {
       this.fetchFlavours();
       this.fetchDesignCategories();
     }
+
+    this.resetForm();
+
+    if(this.parentCategoryData.categoryName.toUpperCase() === "CAKES & PASTRIES")
+    {
+      this.setPrices("pineapple","not-decided");
+    }
+
+    this.fetchAvailableSubcategories();
+    
   }
 
   showPreview(event : any)
@@ -143,6 +150,48 @@ export class AddItemFormComponent implements OnInit {
     this.selectedImage = null;
   }
 
+  setPrices(flavour:string , design:string)
+  {
+    let flavourShopPrice = 0;
+    let flavourCustomerPrice = 0;
+    let designShopPrice = 0;
+    let designCustomerPrice= 0;
+    if(flavour.toUpperCase() === "ALL FLAVOURS")
+    {
+      flavour = "pineapple";
+    }
+    for(let i=0;i<this.flavours.length;i++)
+    {
+      if(this.flavours[i].flavourName.toLowerCase() === flavour.toLowerCase())
+      {
+        flavourShopPrice = this.flavours[i].shopPrice;
+        flavourCustomerPrice = this.flavours[i].customerPrice;
+        break;
+      }
+    }
+    if(design === "not-decided")
+    {
+      designCustomerPrice = 0;
+      designShopPrice = 0;
+      this.itemForm.controls["shopPrice"].setValue(flavourShopPrice + designShopPrice);
+      this.itemForm.controls['customerPrice'].setValue(flavourCustomerPrice + designCustomerPrice);
+    }
+    else
+    {
+      for(let i=0;i<this.designCategories.length;i++)
+      {
+        if(this.designCategories[i].designName.toLowerCase() === design.toLowerCase())
+        { 
+           designShopPrice = this.designCategories[i].shopPrice;
+           designCustomerPrice = this.designCategories[i].customerPrice;
+          break;
+        }
+      }
+      this.itemForm.controls["shopPrice"].setValue(flavourShopPrice + designShopPrice);
+      this.itemForm.controls['customerPrice'].setValue(flavourCustomerPrice + designCustomerPrice);
+    }
+  }
+
   fetchAvailableSubcategories()
   {
     this.apiService.getSubcategoriesOfCategory(this.parentCategoryData.categoryKey).subscribe((subcategories)=>{
@@ -183,6 +232,32 @@ export class AddItemFormComponent implements OnInit {
       closeButton : true , 
       positionClass : 'toast-bottom-right'
     });
+  }
+
+  flavourChanged(e)
+  {
+    let selectedDesign = this.itemForm.controls["designCategory"].value;
+    if(selectedDesign == null)
+    {
+      this.setPrices(e.flavourName , "not-decided");
+    }
+    else
+    {
+      this.setPrices(e.flavourName , selectedDesign);
+    }
+  }
+
+  designChanged(e)
+  {
+    let selectedFlavour = this.itemForm.controls["cakeFlavour"].value;
+    if(selectedFlavour == null)
+    {
+      this.setPrices("pineapple",e.designName);
+    }
+    else
+    {
+      this.setPrices(selectedFlavour , e.designName);
+    }
   }
 
 }
