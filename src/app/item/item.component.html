@@ -3,7 +3,22 @@
     <img src = {{item.imageUrl}} class = "card-img-top img img-responsive">
     </a>
     <div class="card-body jumbotron">
-        <div *ngIf = "!isEditMode && !isBeingUpdated">
+        <div *ngIf = "!isEditMode && !isBeingUpdated && parentCategoryName === 'CAKES & PASTRIES'">
+            <h5 class="card-title center-text">
+                {{item.itemName | uppercase}}
+            </h5>
+            <h5 class="card-title center-text">
+                Shop Price : {{item.shopPrice}}
+            </h5>
+            <h5 class="card-title center-text">
+                Customer Price : {{item.customerPrice}}
+            </h5>
+            <br>
+            <p>Offer : {{item.offer}} % </p>
+            <p style="display: inline-block;">Flavour: {{item.cakeFlavour}}</p>
+            <p style = "display: inline-block;">Design : {{item.designCategory}}</p>    
+        </div>
+        <div *ngIf = "!isEditMode && !isBeingUpdated && parentCategoryName !== 'CAKES & PASTRIES'">
             <h5 class="card-title center-text">
                 {{item.itemName | uppercase}}
             </h5>
@@ -12,7 +27,21 @@
             <p style="display: inline-block;">Shop Price : Rs.{{item.shopPrice}}</p>
             <p style = "display: inline-block;">Customer Price : Rs. {{item.customerPrice}}</p>    
         </div>
-        <div *ngIf = "isEditMode && !isBeingUpdated">
+        <div *ngIf = "isEditMode && !isBeingUpdated && parentCategoryName === 'CAKES & PASTRIES'">
+            <p>Item Name : <input type = "text" placeholder = "item name" [(ngModel)] = "editItemName"></p>
+            <p>Offer % : <input type = "number" placeholder = "Offer" [(ngModel)] = "editItemOffer"></p>
+            <p>Design : <select [(ngModel)]="editDesignCategory" name="designs" class="form-control form-control-sm">
+                <option *ngFor = "let design of designs" value = {{design}}>
+                    {{design}}
+                </option>
+            </select></p>
+            <p>Flavour : <select [(ngModel)]="editFlavour" name="flavours" class="form-control form-control-sm">
+                <option *ngFor = "let flavour of flavours" value = {{flavour}}>
+                    {{flavour}}
+                </option>
+            </select></p>
+        </div>
+        <div *ngIf = "isEditMode && !isBeingUpdated && parentCategoryName !== 'CAKES & PASTRIES'">
             <p>Item Name : <input type = "text" placeholder = "item name" [(ngModel)] = "editItemName"></p>
             <p>Offer % : <input type = "number" placeholder = "Offer" [(ngModel)] = "editItemOffer"></p>
             <p>Shop Price : <input type = "number" placeholder = "shop price" [(ngModel)] = "editItemShopPrice"></p>

@@ -16,6 +16,9 @@ export class ItemComponent implements OnInit {
   parentSubcategoryKey : any;
 
   @Input()
+  parentCategoryName: any; // to diffrentiate UI for cakes.
+
+  @Input()
   parentCategoryKey:any; //dv in case of direct variety.
 
   isDeleting : boolean;
@@ -27,6 +30,11 @@ export class ItemComponent implements OnInit {
   editItemOffer : any;
   editItemShopPrice:any;
   editItemCustomerPrice:any;
+  editDesignCategory:any;
+  editFlavour:any;
+
+  flavours:string[];
+  designs:string[];
 
   constructor(private apiService : ApiserviceService , private utilityService : UtilityServiceService) { }
 
@@ -34,7 +42,23 @@ export class ItemComponent implements OnInit {
     this.isDeleting = false;
     this.isEditMode = false;
     this.isBeingUpdated = false;
+
+    this.flavours = ["PINE","RED"];
+    this.designs = ["HEART" , "POT"];
+
+    // if(this.parentCategoryName === "CAKES & PASTRIES")
+    // {
+    //   this.fetchFalvours();
+    //   this.fetchDesigns();
+    // }
   }
+
+  // fetchFlavours()
+  // {
+  //   this.apiService.getFlavours().subscribe((allFlavours)=>{
+
+  //   });
+  // }
 
   deleteItem()
   {
@@ -52,6 +76,12 @@ export class ItemComponent implements OnInit {
     this.editItemOffer = this.item.offer
     this.editItemCustomerPrice = this.item.customerPrice;
     this.editItemShopPrice = this.item.shopPrice;
+  }
+
+  testCakes()
+  {
+    console.log(this.editDesignCategory);
+    console.log(this.editFlavour);
   }
 
   updateItem()

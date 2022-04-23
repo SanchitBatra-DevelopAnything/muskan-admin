@@ -31,7 +31,8 @@
         <div class="col col-xs-4" *ngFor = "let item of filteredItems ; let i = index">
             <app-item [item] = item
             [parentSubcategoryKey] = "selectedSubcategoryKey"
-            [parentCategoryKey] = "categoryKey">
+            [parentCategoryKey] = "categoryKey"
+            [parentCategoryName] ="categoryName">
             </app-item>
         </div>
     </div>
