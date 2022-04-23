@@ -31,12 +31,12 @@
             <p>Item Name : <input type = "text" placeholder = "item name" [(ngModel)] = "editItemName"></p>
             <p>Offer % : <input type = "number" placeholder = "Offer" [(ngModel)] = "editItemOffer"></p>
             <p>Design : <select [(ngModel)]="editDesignCategory" name="designs" class="form-control form-control-sm">
-                <option *ngFor = "let design of designs" value = {{design}}>
+                <option *ngFor = "let design of designsForEditDropdown" value = {{design}}>
                     {{design}}
                 </option>
             </select></p>
             <p>Flavour : <select [(ngModel)]="editFlavour" name="flavours" class="form-control form-control-sm">
-                <option *ngFor = "let flavour of flavours" value = {{flavour}}>
+                <option *ngFor = "let flavour of flavoursForEditDropdown" value = {{flavour}}>
                     {{flavour}}
                 </option>
             </select></p>
@@ -51,7 +51,8 @@
             <p>Item is being updated....</p>
         </div>
         <button class = "btn btn-primary" (click) = "editItem()" *ngIf = "!isEditMode">Edit</button>
-        <button class = "btn btn-primary" (click) = "updateItem()" *ngIf = "isEditMode">Save</button>
+        <button class = "btn btn-primary" (click) = "updateItem()" *ngIf = "isEditMode && parentCategoryName !== 'CAKES & PASTRIES'">Save</button>
+        <button class = "btn btn-primary" (click) = "updateCakeItem()" *ngIf = "isEditMode && parentCategoryName === 'CAKES & PASTRIES'">Save</button>
         <button class = "btn btn-danger spaced-button" (click) = "deleteItem()" *ngIf = "!isDeleting">Delete</button>
         <button class = "btn btn-danger" *ngIf = "isDeleting">
             <div class = "loader loader-button">

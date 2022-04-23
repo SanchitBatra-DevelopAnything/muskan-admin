@@ -33,8 +33,10 @@ export class ItemComponent implements OnInit {
   editDesignCategory:any;
   editFlavour:any;
 
-  flavours:string[];
-  designs:string[];
+  flavours:any;
+  designs:any;
+  flavoursForEditDropdown:any;
+  designsForEditDropdown:any;
 
   constructor(private apiService : ApiserviceService , private utilityService : UtilityServiceService) { }
 
@@ -43,22 +45,45 @@ export class ItemComponent implements OnInit {
     this.isEditMode = false;
     this.isBeingUpdated = false;
 
-    this.flavours = ["PINE","RED"];
-    this.designs = ["HEART" , "POT"];
+    this.flavours = [];
+    this.designs = [];
 
-    // if(this.parentCategoryName === "CAKES & PASTRIES")
-    // {
-    //   this.fetchFalvours();
-    //   this.fetchDesigns();
-    // }
+    if(this.parentCategoryName === "CAKES & PASTRIES")
+    {
+      this.fetchFlavours();
+      this.fetchDesigns();
+    }
   }
 
-  // fetchFlavours()
-  // {
-  //   this.apiService.getFlavours().subscribe((allFlavours)=>{
+  fetchFlavours()
+  {
+    this.apiService.getFlavours().subscribe((allFlavours)=>{
+      if(allFlavours == null)
+      {
+        this.flavours = [];
+        return;
+      }
+      this.flavours = Object.values(allFlavours);
+      this.flavoursForEditDropdown = this.flavours.map(flavour=>{
+        return flavour.flavourName;
+      });
+    });
+  }
 
-  //   });
-  // }
+  fetchDesigns()
+  {
+    this.apiService.getDesignCategories().subscribe(allDesigns=>{
+      if(allDesigns == null)
+      {
+        this.designs = [];
+        return;
+      }
+      this.designs = Object.values(allDesigns);
+      this.designsForEditDropdown = this.designs.map((design)=>{
+        return design.designName;
+      });
+    });
+  }
 
   deleteItem()
   {
@@ -78,22 +103,70 @@ export class ItemComponent implements OnInit {
     this.editItemShopPrice = this.item.shopPrice;
   }
 
-  testCakes()
-  {
-    console.log(this.editDesignCategory);
-    console.log(this.editFlavour);
-  }
-
   updateItem()
   {
     this.isBeingUpdated = true;
     let updatedItem = {'itemName' : this.editItemName , 'offer' : this.editItemOffer , 'shopPrice' : this.editItemShopPrice , 
-  'customerPrice' : this.editItemCustomerPrice , 'imageUrl' : this.item.imageUrl};
+  'customerPrice' : this.editItemCustomerPrice , 'imageUrl' : this.item.imageUrl , 'cakeFlavour' : "not-valid" , 'designCategory' : "not-valid"};
     this.apiService.editItem(this.item.key , this.parentSubcategoryKey , this.parentCategoryKey , updatedItem).subscribe((_)=>{
       this.utilityService.itemUpdated.next(this.item.key);
       this.isEditMode = false;
       this.isBeingUpdated = false;
     });
+  }
+
+  updateCakeItem()
+  {
+    this.isBeingUpdated = true;
+    this.updatePrices(this.editFlavour , this.editDesignCategory);
+    let updatedItem = {'itemName' : this.editItemName , 'offer' : this.editItemOffer , 'shopPrice' : this.editItemShopPrice , 
+    'customerPrice' : this.editItemCustomerPrice , 'imageUrl' : this.item.imageUrl , 'cakeFlavour' : this.editFlavour , 'designCategory' : this.editDesignCategory};
+    this.apiService.editItem(this.item.key , this.parentSubcategoryKey , this.parentCategoryKey , updatedItem).subscribe((_)=>{
+      this.utilityService.itemUpdated.next(this.item.key);
+      this.isEditMode = false;
+      this.isBeingUpdated = false;
+    });
+  }
+
+  updatePrices(flavour , design)
+  {
+    console.log("RECEIVED REQUEST FOR",flavour,design);
+    let flavourShopPrice = 0;
+    let flavourCustomerPrice = 0;
+    let designShopPrice = 0;
+    let designCustomerPrice= 0;
+    if(flavour === "ALL FLAVOURS")
+    {
+      flavour = "pineapple";
+    }
+
+    for(let i=0;i<this.flavours.length;i++)
+    {
+      if(this.flavours[i].flavourName.toLowerCase() === flavour.toLowerCase())
+      {
+        flavourShopPrice = this.flavours[i].shopPrice;
+        flavourCustomerPrice = this.flavours[i].customerPrice;
+        break;
+      }
+    }
+
+    console.log("FLAVOUR PRICES ARE = ", flavourShopPrice , flavourCustomerPrice);
+
+    for(let i=0;i<this.designs.length;i++)
+    {
+      if(this.designs[i].designName.toLowerCase() === design.toLowerCase())
+      {
+        console.log("MATCHED DESIGN");
+        designShopPrice = this.designs[i].shopPrice;
+        designCustomerPrice = this.designs[i].customerPrice;
+        break;
+      }
+    }
+
+    console.log("DESIGN PRICES ARE = ", designShopPrice , designCustomerPrice);
+
+    this.editItemShopPrice = flavourShopPrice + designShopPrice;
+    this.editItemCustomerPrice = flavourCustomerPrice + designCustomerPrice;
   }
 
 }
