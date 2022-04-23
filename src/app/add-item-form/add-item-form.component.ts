@@ -40,8 +40,8 @@ export class AddItemFormComponent implements OnInit {
        'customerPrice' : new FormControl('' , [Validators.required]),
        'offer' : new FormControl('' , [Validators.required]),
        'directVariety' : new FormControl('0',[Validators.required]),
-       'cakeFlavour' : new FormControl(null),
-       'designCategory' : new FormControl(null),
+       'cakeFlavour' : new FormControl(null,[Validators.required]),
+       'designCategory' : new FormControl(null,[Validators.required]),
        'minPounds' : new FormControl('-1')
     });
 
@@ -133,18 +133,36 @@ export class AddItemFormComponent implements OnInit {
   resetForm()
   {
     this.itemForm.reset();
-    this.itemForm.setValue({
-      itemName : '',
-      imageUrl : '',
-      subcategoryName : '',
-      offer : '',
-      shopPrice : '',
-      customerPrice: '',
-      directVariety : '0',
-      minPounds : '-1',
-      cakeFlavour : null,
-      designCategory : null,
-    });
+    if(this.parentCategoryData.categoryName === "CAKES & PASTRIES")
+    {
+      this.itemForm.setValue({
+        itemName : '',
+        imageUrl : '',
+        subcategoryName : '',
+        offer : '',
+        shopPrice : '',
+        customerPrice: '',
+        directVariety : '0',
+        minPounds : '-1',
+        cakeFlavour : null,
+        designCategory : null,
+      });
+    }
+    else
+    {
+      this.itemForm.setValue({
+        itemName : '',
+        imageUrl : '',
+        subcategoryName : '',
+        offer : '',
+        shopPrice : '',
+        customerPrice: '',
+        directVariety : '0',
+        minPounds : '-1',
+        cakeFlavour : "not-valid",
+        designCategory : "not-valid",
+      });
+    }
     this.imgSrc = "../../assets/default.png";
     this.isSubmitted = false;
     this.selectedImage = null;
