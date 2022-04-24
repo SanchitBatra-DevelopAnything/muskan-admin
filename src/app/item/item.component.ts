@@ -73,6 +73,8 @@ export class ItemComponent implements OnInit {
     this.editItemOffer = this.item.offer
     this.editItemCustomerPrice = this.item.customerPrice;
     this.editItemShopPrice = this.item.shopPrice;
+    this.editFlavour = this.item.cakeFlavour;
+    this.editDesignCategory = this.item.designCategory;
   }
 
   updateItem()
