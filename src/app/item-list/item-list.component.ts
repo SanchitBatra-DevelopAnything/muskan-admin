@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ApiserviceService } from '../services/apiservice.service';
@@ -33,6 +33,15 @@ export class ItemListComponent implements OnInit , OnDestroy {
   deleteItemSub : Subscription;
   updateItemSub: Subscription;
 
+  @Output()
+  flavours:any;
+  @Output()
+  designs:any;
+  @Output()
+  flavoursOnlyValues:any;
+  @Output()
+  designsOnlyValues:any;
+
 
 
   constructor(private apiService : ApiserviceService , private route : ActivatedRoute , private utilityService : UtilityServiceService , private router : Router) { }
@@ -45,6 +54,11 @@ export class ItemListComponent implements OnInit , OnDestroy {
     this.fetchError = false;
     this.categoryKey = this.route.snapshot.params['categoryKey'];
     this.categoryName = this.route.snapshot.params['categoryName'];
+    if(this.categoryName.toUpperCase() === "CAKES & PASTRIES")
+    {
+      this.fetchFlavours();
+      this.fetchDesigns();
+    }
     this.loadSubcategories();
    this.deleteItemSub =  this.utilityService.itemDeleted.subscribe((_)=>{
      this.searchInput = "";
@@ -56,6 +70,37 @@ export class ItemListComponent implements OnInit , OnDestroy {
     });
     this.loadItems("Direct Variety" , "dv");
   }
+
+  fetchFlavours()
+  {
+    this.apiService.getFlavours().subscribe((allFlavours)=>{
+      if(allFlavours == null)
+      {
+        this.flavours = [];
+        return;
+      }
+      this.flavours = Object.values(allFlavours);
+      this.flavoursOnlyValues = this.flavours.map(flavour=>{
+        return flavour.flavourName;
+      });
+    });
+  }
+
+  fetchDesigns()
+  {
+    this.apiService.getDesignCategories().subscribe(allDesigns=>{
+      if(allDesigns == null)
+      {
+        this.designs = [];
+        return;
+      }
+      this.designs = Object.values(allDesigns);
+      this.designsOnlyValues = this.designs.map((design)=>{
+        return design.designName;
+      });
+    });
+  }
+
 
   loadItems(Subcategory : string , subcategoryKey : string)
   {

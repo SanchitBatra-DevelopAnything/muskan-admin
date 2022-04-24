@@ -33,9 +33,13 @@ export class ItemComponent implements OnInit {
   editDesignCategory:any;
   editFlavour:any;
 
+  @Input()
   flavours:any;
+  @Input()
   designs:any;
+  @Input()
   flavoursForEditDropdown:any;
+  @Input()
   designsForEditDropdown:any;
 
   constructor(private apiService : ApiserviceService , private utilityService : UtilityServiceService) { }
@@ -45,46 +49,14 @@ export class ItemComponent implements OnInit {
     this.isEditMode = false;
     this.isBeingUpdated = false;
 
-    this.flavours = [];
-    this.designs = [];
-
-    if(this.parentCategoryName === "CAKES & PASTRIES")
-    {
-      this.fetchFlavours();
-      this.fetchDesigns();
-    }
+    // if(this.parentCategoryName === "CAKES & PASTRIES")
+    // {
+    //   this.fetchFlavours();
+    //   this.fetchDesigns();
+    // }
   }
 
-  fetchFlavours()
-  {
-    this.apiService.getFlavours().subscribe((allFlavours)=>{
-      if(allFlavours == null)
-      {
-        this.flavours = [];
-        return;
-      }
-      this.flavours = Object.values(allFlavours);
-      this.flavoursForEditDropdown = this.flavours.map(flavour=>{
-        return flavour.flavourName;
-      });
-    });
-  }
-
-  fetchDesigns()
-  {
-    this.apiService.getDesignCategories().subscribe(allDesigns=>{
-      if(allDesigns == null)
-      {
-        this.designs = [];
-        return;
-      }
-      this.designs = Object.values(allDesigns);
-      this.designsForEditDropdown = this.designs.map((design)=>{
-        return design.designName;
-      });
-    });
-  }
-
+  
   deleteItem()
   {
     this.isDeleting = true;
