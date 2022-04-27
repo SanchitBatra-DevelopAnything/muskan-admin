@@ -9,7 +9,7 @@
     <hr>
 
     <ul class="list-group list-group-flush">
-        <li class="list-group-item" style ="height:50px;" *ngFor = "let chef of chefsData; let i = index;">{{chef.chefName | uppercase}} , manages {{chef.manages | uppercase}}
+        <li class="list-group-item" style ="height:50px;" *ngFor = "let chef of chefsData; let i = index;">{{chef.chefName | uppercase}} , manages <span *ngFor = "let manage of chef.manages">{{manage}},</span>
             <button class = "btn btn-danger" style = "float:right;" (click) = "deleteChef(i,chef.chefName)">Delete</button>
         </li>
       </ul>
