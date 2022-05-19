@@ -42,7 +42,7 @@ export class AddItemFormComponent implements OnInit {
        'directVariety' : new FormControl('0',[Validators.required]),
        'cakeFlavour' : new FormControl(null,[Validators.required]),
        'designCategory' : new FormControl(null,[Validators.required]),
-       'minPounds' : new FormControl('-1')
+       'minPounds' : new FormControl('1')
     });
 
     this.flavours = [];
@@ -143,7 +143,7 @@ export class AddItemFormComponent implements OnInit {
         shopPrice : '',
         customerPrice: '',
         directVariety : '0',
-        minPounds : '-1',
+        minPounds : '1',
         cakeFlavour : null,
         designCategory : null,
       });
@@ -158,7 +158,7 @@ export class AddItemFormComponent implements OnInit {
         shopPrice : '',
         customerPrice: '',
         directVariety : '0',
-        minPounds : '-1',
+        minPounds : '1',
         cakeFlavour : "not-valid",
         designCategory : "not-valid",
       });
@@ -191,8 +191,8 @@ export class AddItemFormComponent implements OnInit {
     {
       designCustomerPrice = 0;
       designShopPrice = 0;
-      this.itemForm.controls["shopPrice"].setValue(flavourShopPrice + designShopPrice);
-      this.itemForm.controls['customerPrice'].setValue(flavourCustomerPrice + designCustomerPrice);
+      this.itemForm.controls["shopPrice"].setValue(+flavourShopPrice + +designShopPrice);
+      this.itemForm.controls['customerPrice'].setValue(+flavourCustomerPrice + +designCustomerPrice);
     }
     else
     {
@@ -205,8 +205,8 @@ export class AddItemFormComponent implements OnInit {
           break;
         }
       }
-      this.itemForm.controls["shopPrice"].setValue(flavourShopPrice + designShopPrice);
-      this.itemForm.controls['customerPrice'].setValue(flavourCustomerPrice + designCustomerPrice);
+      this.itemForm.controls["shopPrice"].setValue(+flavourShopPrice + +designShopPrice);
+      this.itemForm.controls['customerPrice'].setValue(+flavourCustomerPrice + +designCustomerPrice);
     }
   }
 

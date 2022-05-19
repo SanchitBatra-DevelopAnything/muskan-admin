@@ -84,7 +84,9 @@
                 </div>
                 <div class="form-group" *ngIf = "parentCategoryData.categoryName === 'CAKES & PASTRIES'">
                     <label>Minimum Pounds For Cake</label>
-                    <p>Remove this -1 , and let it be empty if this cake can be of ANY NUMBER OF POUNDS.</p>
+                    <br>
+                    <label>If this is left blank , user/shopkeeper will not be able to select any value other than 1 pound while placing the order.</label>
+                    <p>By default : minimum pound of cake = 1 pound , Increase the number below if you want.</p>
                     <input type = "number" placeholder="minimumPounds" formControlName = "minPounds">
                 </div>
                 <div class = "form-group">

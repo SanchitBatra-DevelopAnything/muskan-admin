@@ -139,8 +139,8 @@ export class ItemComponent implements OnInit {
 
     console.log("DESIGN PRICES ARE = ", designShopPrice , designCustomerPrice);
 
-    this.editItemShopPrice = flavourShopPrice + designShopPrice;
-    this.editItemCustomerPrice = flavourCustomerPrice + designCustomerPrice;
+    this.editItemShopPrice = +flavourShopPrice + +designShopPrice;
+    this.editItemCustomerPrice = +flavourCustomerPrice + +designCustomerPrice;
   }
 
 }
