@@ -4,7 +4,7 @@
     </a>
     <div class="card-body jumbotron">
         <div *ngIf = "!isEditMode && !isBeingUpdated && parentCategoryName === 'CAKES & PASTRIES'">
-            <h5 class="card-title center-text">
+            <h5 class="card-title center-text" style = "white-space: nowrap; overflow: hidden;">
                 {{item.itemName | uppercase}}
             </h5>
             <!-- <h5 class="card-title center-text">
@@ -15,8 +15,8 @@
             </h5> -->
             <br>
             <p>Offer : {{item.offer}} % </p>
-            <p style="display: inline-block;">Flavour: {{item.cakeFlavour}}</p>
-            <p style = "display: inline-block;">Design : {{item.designCategory}}</p>    
+            <p style="display: inline-block; white-space: nowrap; overflow: hidden;">Flavour: {{item.cakeFlavour}}</p>
+            <p style = "display: inline-block; white-space: nowrap; overflow: hidden;">Design : {{item.designCategory}}</p>    
         </div>
         <div *ngIf = "!isEditMode && !isBeingUpdated && parentCategoryName !== 'CAKES & PASTRIES'">
             <h5 class="card-title center-text">

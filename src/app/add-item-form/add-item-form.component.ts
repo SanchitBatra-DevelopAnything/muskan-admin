@@ -176,7 +176,7 @@ export class AddItemFormComponent implements OnInit {
     let designCustomerPrice= 0;
     if(flavour.toUpperCase() === "ALL FLAVOURS")
     {
-      flavour = "pineapple";
+      flavour = "pineapple"; //sets the default price to pineapple.
     }
     for(let i=0;i<this.flavours.length;i++)
     {
