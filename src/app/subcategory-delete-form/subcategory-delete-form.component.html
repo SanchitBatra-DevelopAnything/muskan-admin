@@ -1,0 +1,31 @@
+<div class="container" style = "text-align:center;">
+    <div class = "jumbotron">
+        <h3>Subcategory Delete -- {{categoryName}}</h3>
+        <h2>Note : All items under selected subcategory will be deleted if you delete the subcategory.</h2>
+
+        <form [formGroup] = "deleteSubcategoryForm" (ngSubmit) = "onSubmit()"> 
+            
+            <div class="loader" *ngIf = "isLoading" style = "text-align: center;">
+
+            </div>
+
+            <div class="form-group" *ngIf = "!isLoading">
+                <label for = "subcategoryToBeDeleted">Select subcategory to be deleted</label>
+                <ng-select [items] = "subcategories" bindLabel = "name" bindValue = "subcategoryKey" [closeOnSelect] = "true"
+                formControlName = "subcategoryToBeDeleted"
+                ngDefaultControl>
+                </ng-select>
+            </div>
+
+    
+            <button type = "submit" class = "btn btn-danger btn-bold-text" *ngIf = "!isDeletingSubcategory" [disabled] = "deleteSubcategoryForm.pending|| deleteSubcategoryForm.invalid">Delete subcategory</button>
+            <button *ngIf = "isDeletingSubcategory" class = "btn btn-danger">
+                <div class="loader loader-button">
+    
+                </div>
+            </button>
+        </form>
+    </div>
+    
+</div>
+

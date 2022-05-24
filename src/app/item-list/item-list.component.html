@@ -9,11 +9,19 @@
         </div>
     </div>
 
+        <div class="container jumbotron" style = "height:20px;">
+            <button class = "btn btn-danger" style = "float: right; margin-left:4px; margin-bottom:7px;" (click) = "deleteASubcategory()">Delete a subcategory</button>
+
+        <!-- <button class = "btn btn-primary" style = "float: right; border-left: 1px solid grey">Edit a subcategory name</button> -->
+        </div>
+        
+    
+
     <div class="row">
         <div class="col-xs-12">
             <ul class="nav nav-tabs">
                 <li role = "presentation" [ngClass] = "selectedSubcategory === 'Direct Variety' ? 'active' : ''"><a (click) = "loadItems('Direct Variety' , 'dv')" class = "pointer">Direct Variety</a></li>
-                <li role = "presentation" *ngFor = "let subcategory of subcategories; let i = index;" [ngClass] = "selectedSubcategory === subcategory.subcategoryName ? 'active' : ''"><a (click) = "loadItems(subcategory.subcategoryName , subcategoryKeys[i])" class = "pointer">{{subcategory.subcategoryName}}</a></li>
+                <li role = "presentation" *ngFor = "let subcategory of subcategories; let i = index;" [ngClass] = "selectedSubcategory === subcategory.subcategoryName ? 'active' : ''"><a (click) = "loadItems(subcategory.subcategoryName , subcategoryKeys[i])" class = "pointer" style = "display: inline-block;">{{subcategory.subcategoryName}}</a></li>
             </ul>
         </div>
     </div>

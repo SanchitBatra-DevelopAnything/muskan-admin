@@ -14,6 +14,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatCardModule} from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
 
 import { AppComponent } from './app.component';
 import { CategoryListComponent } from './category-list/category-list.component';
@@ -50,6 +52,7 @@ import { FlavoursScreenComponent } from './flavours-screen/flavours-screen.compo
 import { DesignCategoryScreenComponent } from './design-category-screen/design-category-screen.component';
 import { AddFlavourFormComponent } from './add-flavour-form/add-flavour-form.component';
 import { AddDesignCategoryFormComponent } from './add-design-category-form/add-design-category-form.component';
+import { SubcategoryDeleteFormComponent } from './subcategory-delete-form/subcategory-delete-form.component';
 
 
 const appRoutes : Routes = [
@@ -72,6 +75,7 @@ const appRoutes : Routes = [
   {path : 'orderBill/:orderKey/:orderDate/:orderType' , component : OrderDetailComponent , canActivate: [AuthGuardService]},
   {path : 'processedOrders' , component : OldOrdersComponent , canActivate: [AuthGuardService]},
   {path: 'cakes/flavours' , component : FlavoursScreenComponent , canActivate: [AuthGuardService]},
+  {path : 'deleteSubcategory/:categoryKey/:categoryName' , component : SubcategoryDeleteFormComponent , canActivate : [AuthGuardService]},
   {path: 'cakes/designCategories' , component : DesignCategoryScreenComponent , canActivate: [AuthGuardService]},
   {path: 'cakes/addNewFlavour/:flavour/:sp/:cp/:type/:flavourKey' , component : AddFlavourFormComponent , canActivate: [AuthGuardService]},
   {path: 'cakes/addNewDesign/:design/:sp/:cp/:type/:designKey' , component : AddDesignCategoryFormComponent , canActivate: [AuthGuardService]},
@@ -111,6 +115,7 @@ const appRoutes : Routes = [
     DesignCategoryScreenComponent,
     AddFlavourFormComponent,
     AddDesignCategoryFormComponent,
+    SubcategoryDeleteFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -129,6 +134,8 @@ const appRoutes : Routes = [
     MatCardModule,
     MatNativeDateModule,
     MatPaginatorModule,
+    MatButtonModule,
+    MatIconModule,
     
     RouterModule.forRoot(appRoutes,{useHash: true}),
   ],
