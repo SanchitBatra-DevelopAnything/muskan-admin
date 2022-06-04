@@ -259,4 +259,9 @@ public getAllChefNotificationTokens() : Observable<any>
     return this.http.delete("https://muskan-admin-app-default-rtdb.firebaseio.com/Categories/"+categoryKey+"/Subcategories/"+subcategoryKey+".json");
   }
 
+  public editSubcategoryOfCategory(categoryKey : string , subcategoryKey : string , newName : string)  : Observable<any>
+  {
+    return this.http.patch("https://muskan-admin-app-default-rtdb.firebaseio.com/Categories/"+categoryKey+"/Subcategories/"+subcategoryKey+".json" , {'subcategoryName' : newName});
+  }
+
 }

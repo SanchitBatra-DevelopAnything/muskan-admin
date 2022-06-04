@@ -53,11 +53,11 @@ export class SubcategoryEditFormComponent implements OnInit {
   onSubmit()
   {
     console.log(this.editSubcategoryForm.value);
-    // this.isDeletingSubcategory = true;
-    // this.apiService.deleteSubcategoryOfCategory(this.categoryKey ,this.deleteSubcategoryForm.value.subcategoryToBeDeleted).subscribe((_)=>{
-    //   this.isDeletingSubcategory = false;
-    //   this.router.navigate(['itemsOf/'+this.categoryKey+"/"+this.categoryName]);
-    // });
+     this.isEdittingSubcategory = true;
+     this.apiService.editSubcategoryOfCategory(this.categoryKey ,this.editSubcategoryForm.value.subcategoryToBeEditted , this.editSubcategoryForm.value.subcategoryNewName).subscribe((_)=>{
+       this.isEdittingSubcategory = false;
+       this.router.navigate(['itemsOf/'+this.categoryKey+"/"+this.categoryName]);
+     });
   }
 
   }
