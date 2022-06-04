@@ -31,6 +31,10 @@ export class AddShopFormComponent implements OnInit {
   onSubmit()
   {
     this.isInsertingShop = true;
+    this.addShopForm.patchValue({
+      shopName : this.addShopForm.value.shopName.toUpperCase(),
+      areaName : this.addShopForm.value.areaName,
+    })
     this.apiService.addShop(this.addShopForm.value).subscribe((_)=>{
       this.isInsertingShop = false;
       this.toastr.success('Shop Added Successfully!', 'Notification!' , {
