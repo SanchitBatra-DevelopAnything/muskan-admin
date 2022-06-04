@@ -53,6 +53,7 @@ import { DesignCategoryScreenComponent } from './design-category-screen/design-c
 import { AddFlavourFormComponent } from './add-flavour-form/add-flavour-form.component';
 import { AddDesignCategoryFormComponent } from './add-design-category-form/add-design-category-form.component';
 import { SubcategoryDeleteFormComponent } from './subcategory-delete-form/subcategory-delete-form.component';
+import { SubcategoryEditFormComponent } from './subcategory-edit-form/subcategory-edit-form.component';
 
 
 const appRoutes : Routes = [
@@ -76,6 +77,7 @@ const appRoutes : Routes = [
   {path : 'processedOrders' , component : OldOrdersComponent , canActivate: [AuthGuardService]},
   {path: 'cakes/flavours' , component : FlavoursScreenComponent , canActivate: [AuthGuardService]},
   {path : 'deleteSubcategory/:categoryKey/:categoryName' , component : SubcategoryDeleteFormComponent , canActivate : [AuthGuardService]},
+  {path : 'editSubcategory/:categoryKey/:categoryName' , component : SubcategoryEditFormComponent , canActivate : [AuthGuardService]},
   {path: 'cakes/designCategories' , component : DesignCategoryScreenComponent , canActivate: [AuthGuardService]},
   {path: 'cakes/addNewFlavour/:flavour/:sp/:cp/:type/:flavourKey' , component : AddFlavourFormComponent , canActivate: [AuthGuardService]},
   {path: 'cakes/addNewDesign/:design/:sp/:cp/:type/:designKey' , component : AddDesignCategoryFormComponent , canActivate: [AuthGuardService]},
@@ -116,6 +118,7 @@ const appRoutes : Routes = [
     AddFlavourFormComponent,
     AddDesignCategoryFormComponent,
     SubcategoryDeleteFormComponent,
+    SubcategoryEditFormComponent,
   ],
   imports: [
     BrowserModule,

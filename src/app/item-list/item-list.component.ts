@@ -184,6 +184,11 @@ export class ItemListComponent implements OnInit , OnDestroy {
     this.router.navigate(['/deleteSubcategory/'+this.categoryKey+"/"+this.categoryName]);
   }
 
+  editSubcategory()
+  {
+    this.router.navigate(['editSubcategory/' + this.categoryKey + "/" + this.categoryName]);
+  }
+ 
   ngOnDestroy()
   {
     this.deleteItemSub.unsubscribe();
