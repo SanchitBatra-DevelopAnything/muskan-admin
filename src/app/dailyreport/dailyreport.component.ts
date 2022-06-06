@@ -82,6 +82,12 @@ export class DailyreportComponent implements OnInit {
     this.router.navigate(['/orderBill/'+orderKey+"/"+this.todaysDate+"/active"]);
   }
 
+  openCustomOrder(orderKey)
+  {
+    console.log("Trying to open");
+        this.router.navigate(['customOrder/'+orderKey+"/"+this.todaysDate+"/active"]);
+  }
+
   oldOrderPage()
   {
     this.router.navigate(['/processedOrders']);

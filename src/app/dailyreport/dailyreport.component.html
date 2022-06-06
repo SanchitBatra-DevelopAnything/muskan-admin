@@ -27,7 +27,7 @@
     <hr>
 
     <div class="row">
-        <div *ngFor = "let order of customOrders; let i = index;" class = "col-xs-2 w3-card pointer order-card-custom" (click) = "openCustomOrder(customOrders[i])">
+        <div *ngFor = "let order of customOrders; let i = index;" class = "col-xs-2 w3-card pointer order-card-custom" (click) = "openCustomOrder(customOrderKeys[i])">
             <p style = "font-weight: bold;">{{order.shopAddress | uppercase}}</p>
         </div>
     </div>

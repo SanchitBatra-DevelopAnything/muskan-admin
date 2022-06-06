@@ -1,0 +1,19 @@
+<div class="container">
+    <div *ngIf = "!isLoading">
+        <h3 style = "display: inline-block;">Custom Order for {{orderData['shopAddress'] | uppercase}}</h3>
+        <p>Order Id : <span style = "font-weight: bold;">{{orderKey}}</span></p>
+        <p>Ordered By : <span style = "font-weight: bold;">{{orderData['orderedBy']}}</span></p>
+        <p>Order Placed : <span style = "font-weight: bold;">{{orderData['orderTime']}} , {{orderDate}}</span></p>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-xs-6 col-md-6">
+            <img src = {{orderImgUrl}} style = "height : 500px; width : 500px; object-fit: cover; display: inline-block;">
+        </div>
+        <div class="col-xs-6 col-md-6" style = "display: inline-block;">
+            <p>Information about this order : </p>
+            <p style = "font-size: 22px; font-weight: bold;">{{orderDescription}}</p>
+            <button class = "btn btn-success">Send to Chef</button>
+        </div>
+    </div>
+</div>

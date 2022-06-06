@@ -54,6 +54,7 @@ import { AddFlavourFormComponent } from './add-flavour-form/add-flavour-form.com
 import { AddDesignCategoryFormComponent } from './add-design-category-form/add-design-category-form.component';
 import { SubcategoryDeleteFormComponent } from './subcategory-delete-form/subcategory-delete-form.component';
 import { SubcategoryEditFormComponent } from './subcategory-edit-form/subcategory-edit-form.component';
+import { CustomOrderViewComponent } from './dailyreport/custom-order-view/custom-order-view.component';
 
 
 const appRoutes : Routes = [
@@ -74,6 +75,7 @@ const appRoutes : Routes = [
   {path : 'item/upload/:categoryKey/:categoryName' , component : AddItemFormComponent , canActivate: [AuthGuardService]},
   {path : 'itemsOf/:categoryKey/:categoryName' , component : ItemListComponent , canActivate: [AuthGuardService]},
   {path : 'orderBill/:orderKey/:orderDate/:orderType' , component : OrderDetailComponent , canActivate: [AuthGuardService]},
+  {path : 'customOrder/:orderKey/:orderDate/:orderType' , component : CustomOrderViewComponent , canActivate : [AuthGuardService]},
   {path : 'processedOrders' , component : OldOrdersComponent , canActivate: [AuthGuardService]},
   {path: 'cakes/flavours' , component : FlavoursScreenComponent , canActivate: [AuthGuardService]},
   {path : 'deleteSubcategory/:categoryKey/:categoryName' , component : SubcategoryDeleteFormComponent , canActivate : [AuthGuardService]},
@@ -119,6 +121,7 @@ const appRoutes : Routes = [
     AddDesignCategoryFormComponent,
     SubcategoryDeleteFormComponent,
     SubcategoryEditFormComponent,
+    CustomOrderViewComponent,
   ],
   imports: [
     BrowserModule,
