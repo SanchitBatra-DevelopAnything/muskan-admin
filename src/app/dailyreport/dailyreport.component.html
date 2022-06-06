@@ -12,12 +12,24 @@
 
     </div>
 
+    <h3>Regular Orders</h3>
+    <hr>
     <div class="row">
 
-        <div *ngFor = "let order of activeOrders; let i = index;" class = "col-xs-3 w3-card pointer order-card" (click) = "showBill(activeOrderKeys[i])">
+        <div *ngFor = "let order of activeOrders; let i = index;" class = "col-xs-2 w3-card pointer order-card" (click) = "showBill(activeOrderKeys[i])">
             <p style = "font-weight: bold;">{{order.shopAddress | uppercase}}</p>
         </div>
 
+    </div>
+
+    <hr>
+    <h3>Custom Orders</h3>
+    <hr>
+
+    <div class="row">
+        <div *ngFor = "let order of customOrders; let i = index;" class = "col-xs-2 w3-card pointer order-card-custom" (click) = "openCustomOrder(customOrders[i])">
+            <p style = "font-weight: bold;">{{order.shopAddress | uppercase}}</p>
+        </div>
     </div>
     
 </div>

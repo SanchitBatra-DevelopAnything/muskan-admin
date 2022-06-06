@@ -12,6 +12,8 @@ export class DailyreportComponent implements OnInit {
 
   activeOrders = [];
   activeOrderKeys = [];
+  customOrders = [];
+  customOrderKeys = [];
   isLoading : boolean;
   todaysDate : string;
 
@@ -34,10 +36,25 @@ export class DailyreportComponent implements OnInit {
         this.isLoading = false;
         this.activeOrderKeys = [];
         this.activeOrders = [];
+        this.customOrderKeys = [];
+        this.customOrders = [];
         return;
       }
-      this.activeOrders = Object.values(orders);
-      this.activeOrderKeys = Object.keys(orders);
+      let temp_activeOrders = Object.values(orders);
+      let temp_activeOrderKeys = Object.keys(orders);
+      for(let i=0;i<temp_activeOrders.length;i++)
+      {
+        if(temp_activeOrders[i].orderType!=null  && temp_activeOrders[i].orderType.toLowerCase() === "custom")
+        {
+          this.customOrders.push(temp_activeOrders[i]);
+          this.customOrderKeys.push(temp_activeOrderKeys[i]);
+        }
+        else
+        {
+          this.activeOrders.push(temp_activeOrders[i]);
+          this.activeOrderKeys.push(temp_activeOrderKeys[i]);
+        }
+      }
       this.isLoading = false;
     });
   }
