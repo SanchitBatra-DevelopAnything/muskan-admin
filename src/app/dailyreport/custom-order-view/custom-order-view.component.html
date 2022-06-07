@@ -4,6 +4,7 @@
         <p>Order Id : <span style = "font-weight: bold;">{{orderKey}}</span></p>
         <p>Ordered By : <span style = "font-weight: bold;">{{orderData['orderedBy']}}</span></p>
         <p>Order Placed : <span style = "font-weight: bold;">{{orderData['orderTime']}} , {{orderDate}}</span></p>
+        <p>Order Type : <span style = "font-weight: bold;">{{orderData['customType']}}</span></p>
     </div>
     <hr>
     <div class = "loader" *ngIf = "isLoading">
