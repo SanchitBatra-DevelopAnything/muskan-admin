@@ -47,4 +47,45 @@ export class CustomOrderViewComponent implements OnInit {
     });
   }
 
+  
+  sendOrderToChef()
+  {
+    this.isLoading = true;
+    let orderInformation = {...this.orderData};
+    
+    orderInformation['orderKey'] = this.orderKey;
+    
+    console.log( " Going to Chef = ",orderInformation);
+     this.apiService.sendCustomOrderToChef(orderInformation , this.orderDate).subscribe((_)=>{
+       this.apiService.deleteActiveOrder(this.orderKey , this.orderDate).subscribe((_)=>{
+         this.toastr.success('Order Given To Chefs Successfully', 'Notification!' , {
+           timeOut : 4000 ,
+           closeButton : true , 
+           positionClass : 'toast-bottom-right'
+         });
+         this.router.navigate(['/dailyReport']);
+         this.isLoading = false;
+       });
+     });
+     console.log("STARTING CHEF NOTIS");
+     this.apiService.getAllChefNotificationTokens().subscribe((tokens)=>{
+       var regIds = [];
+       if(tokens!=null)
+       {
+         regIds = Object.values(tokens);
+         var onlyTokens = regIds.map((chefToken)=>{
+           return chefToken.chefToken;
+         })
+       }
+       this.apiService.sendNotificationToChefs(onlyTokens,"custom").subscribe((_)=>{
+         this.toastr.success('Sent notifications to chefs', 'Notification!' , {
+           timeOut : 4000 ,
+           closeButton : true , 
+           positionClass : 'toast-bottom-right'
+         });
+       });
+       console.log("SENT NOTIS COMPLETE");
+     });
+  }
+
 }

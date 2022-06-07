@@ -191,17 +191,18 @@ export class ApiserviceService {
     return this.http.delete("https://muskan-admin-app-default-rtdb.firebaseio.com/chefNotificationTokens/"+chefName+".json");
   }
 
-  public sendNotificationToChefs(regIds : string[]) : Observable<any>
+  public sendNotificationToChefs(regIds : string[],type : string = "normal") : Observable<any>
   {
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': 'key=AAAA1CskWfc:APA91bELCsy-GM2n8hPD3Sc4vaanR3ymcIP8mttKC5rhfg9nU4eDVcxcKOxOICxx5B6zdnGce4bBvPfzOB_NzMUg3iT_hHRQbhIyfTAduQxkkVOYTx0hQd0S1GJaPbmtmJrIKdb4_X1f' });
   let options = { headers: headers };
+  let title = type === "custom" ? "NEW CUSTOM ORDER" : "NEW ORDER";
   let body = {
     "registration_ids": regIds,
     "notification": {
         "body": "Click to check out",
-        "title": "NEW ORDER",
+        "title": title,
         "android_channel_id": "chefnotifications",
         "sound": false
     }
@@ -262,6 +263,11 @@ public getAllChefNotificationTokens() : Observable<any>
   public editSubcategoryOfCategory(categoryKey : string , subcategoryKey : string , newName : string)  : Observable<any>
   {
     return this.http.patch("https://muskan-admin-app-default-rtdb.firebaseio.com/Categories/"+categoryKey+"/Subcategories/"+subcategoryKey+".json" , {'subcategoryName' : newName});
+  }
+
+  public sendCustomOrderToChef(orderInformation:any , orderDate : string) : Observable<any>
+  {
+    return this.http.post("https://muskan-admin-app-default-rtdb.firebaseio.com/processedShopCustomOrders/"+orderDate+".json" , orderInformation);
   }
 
 }

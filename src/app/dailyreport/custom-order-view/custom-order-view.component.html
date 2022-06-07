@@ -6,6 +6,9 @@
         <p>Order Placed : <span style = "font-weight: bold;">{{orderData['orderTime']}} , {{orderDate}}</span></p>
     </div>
     <hr>
+    <div class = "loader" *ngIf = "isLoading">
+
+    </div>
     <div class="row">
         <div class="col-xs-6">
             <div style = "height: 400px; width : 600px;">
@@ -16,7 +19,7 @@
         <div class="col-xs-6" style = "display: inline-block;">
             <p>Information about this order : </p>
             <p style = "font-size: 22px; font-weight: bold;">{{orderDescription}}</p>
-            <button class = "btn btn-success">Send to Chef</button>
+            <button class = "btn btn-success" (click) = "sendOrderToChef()">Send to Chef</button>
         </div>
     </div>
 </div>
