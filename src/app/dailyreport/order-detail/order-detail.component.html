@@ -1,13 +1,13 @@
 <div class="container">
     <div *ngIf = "!isLoading">
-    <h3 style = "display: inline-block;">Bill for {{orderData['shopAddress'] | uppercase}}</h3>
+    <h3 style = "display: inline-block;">{{orderData['shopAddress'] | uppercase}}</h3>
     <div class="spaced-button" style = "display: inline-block;">
         <button class = "btn btn-success btn-lg" (click) = "sendOrderToChef()" *ngIf = "orderType == 'active'">Send To Chef</button>
     </div>
-    <p>Order Id : <span style = "font-weight: bold;">{{orderKey}}</span></p>
-    <p>Ordered By : <span style = "font-weight: bold;">{{orderData['orderedBy']}}</span></p>
-    <p>Order Placed : <span style = "font-weight: bold;">{{orderData['orderTime']}} , {{orderDate}}</span></p>
-    <h3> Total Price : Rs. {{orderData['totalPrice']}}</h3>
+    <p style = "display:inline-block;">Order Id : <span style = "font-weight: bold;">{{orderKey}} , </span></p>
+    <p style = "display:inline-block;">Ordered By : <span style = "font-weight: bold;">{{orderData['orderedBy']}} , </span></p>
+    <p style = "display:inline-block;">Order Placed : <span style = "font-weight: bold;">{{orderData['orderTime']}} , {{orderDate}} , </span></p>
+    <h3> Estimate : {{orderData['totalPrice']}}</h3>
     </div>
     <hr>
 
@@ -20,33 +20,33 @@
       
           <!-- Position Column -->
           <ng-container matColumnDef="Sno">
-            <th mat-header-cell *matHeaderCellDef> No. </th>
-            <td mat-cell *matCellDef="let element"> {{element.Sno}} </td>
+            <th mat-header-cell *matHeaderCellDef style = "font-size:10px;"> No. </th>
+            <td mat-cell *matCellDef="let element" style = "font-size: 10px;"> {{element.Sno}} </td>
           </ng-container>
       
           <!-- Name Column -->
           <ng-container matColumnDef="Item">
-            <th mat-header-cell *matHeaderCellDef> Item </th>
-            <td mat-cell *matCellDef="let element"> {{element.Item}} </td>
+            <th mat-header-cell *matHeaderCellDef style = "font-size:35px;"> Qty. </th>
+            <td mat-cell *matCellDef="let element" style = "font-size: 35px;"> {{element.Quantity}} </td>
           </ng-container>
       
           <!-- Weight Column -->
           <ng-container matColumnDef="Quantity">
-            <th mat-header-cell *matHeaderCellDef> Quantity </th>
-            <td mat-cell *matCellDef="let element"> {{element.Quantity}} </td>
+            <th mat-header-cell *matHeaderCellDef style = "font-size:35px;"> Item </th>
+            <td mat-cell *matCellDef="let element" style = "font-size: 35px;"> {{element.Item}} </td>
           </ng-container>
       
           <!-- Symbol Column -->
           <ng-container matColumnDef="Price">
-            <th mat-header-cell *matHeaderCellDef> Price </th>
-            <td mat-cell *matCellDef="let element"> {{element.Price}} </td>
+            <th mat-header-cell *matHeaderCellDef style = "font-size:35px;"> Amt. </th>
+            <td mat-cell *matCellDef="let element" style = "font-size:35px;"> {{element.Price}} </td>
           </ng-container>
       
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
       
-        <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+        <mat-paginator [pageSizeOptions]="[30, 40, 50]"
                        showFirstLastButtons 
                        aria-label="Select page of billData">
         </mat-paginator>

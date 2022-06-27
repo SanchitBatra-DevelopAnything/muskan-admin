@@ -62,4 +62,13 @@ export class CategoryItemComponent implements OnInit {
     }); 
   }
 
+  getCategoryName()
+  {
+    if(this.category.categoryName.toUpperCase() === "CAKES & PASTRIES")
+    {
+      return "CAKES";
+    }
+    return this.category.categoryName;
+  }
+
 }
