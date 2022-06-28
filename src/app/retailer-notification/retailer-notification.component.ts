@@ -16,7 +16,7 @@ export class RetailerNotificationComponent implements OnInit {
   isDeleting : boolean;
 
   @Input()
-  notificationData : {retailerName : string , shopAddress : string};
+  notificationData : {retailerName : string , shopAddress : string , mobileNumber : string};
 
   constructor(private apiService : ApiserviceService,private utilityService : UtilityServiceService) { }
 
