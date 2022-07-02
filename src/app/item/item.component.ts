@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { finalize } from 'rxjs';
 import { ApiserviceService } from '../services/apiservice.service';
 import { UtilityServiceService } from '../services/utility-service.service';
 
@@ -46,7 +48,7 @@ export class ItemComponent implements OnInit {
   @Input()
   designsForEditDropdown:any;
 
-  constructor(private apiService : ApiserviceService , private utilityService : UtilityServiceService) { }
+  constructor(private storage : AngularFireStorage,private apiService : ApiserviceService , private utilityService : UtilityServiceService) { }
 
   ngOnInit(): void {
     this.isDeleting = false;
@@ -105,12 +107,36 @@ export class ItemComponent implements OnInit {
   {
     this.isBeingUpdated = true;
     let updatedItem = {'itemName' : this.editItemName , 'offer' : this.editItemOffer , 'shopPrice' : this.editItemShopPrice , 
-  'customerPrice' : this.editItemCustomerPrice , 'imageUrl' : this.item.imageUrl , 'cakeFlavour' : "not-valid" , 'designCategory' : "not-valid"};
-    this.apiService.editItem(this.item.key , this.parentSubcategoryKey , this.parentCategoryKey , updatedItem).subscribe((_)=>{
-      this.utilityService.itemUpdated.next(this.item.key);
-      this.isEditMode = false;
-      this.isBeingUpdated = false;
-    });
+    'customerPrice' : this.editItemCustomerPrice , 'imageUrl' : this.item.imageUrl , 'cakeFlavour' : "not-valid" , 'designCategory' : "not-valid"};
+    if(this.item.imageUrl!=this.imgEditSrc) //means image change occured.
+    {
+      
+      var filePath = `items/${this.selectedImageForEdit.name}_${new Date().getTime()}`;
+      var fileRef = this.storage.ref(filePath);
+      this.storage.upload(filePath,this.selectedImageForEdit).snapshotChanges().pipe(
+        finalize(()=>{
+          //RETRIEVING THE UPLOADED IMAGE URL.
+          fileRef.getDownloadURL().subscribe((url)=>{
+            updatedItem = {'itemName' : this.editItemName , 'offer' : this.editItemOffer , 'shopPrice' : this.editItemShopPrice , 
+            'customerPrice' : this.editItemCustomerPrice , 'imageUrl' : url , 'cakeFlavour' : "not-valid" , 'designCategory' : "not-valid"};
+            
+            this.apiService.editItem(this.item.key , this.parentSubcategoryKey , this.parentCategoryKey , updatedItem).subscribe((_)=>{
+              this.utilityService.itemUpdated.next(this.item.key);
+              this.isEditMode = false;
+              this.isBeingUpdated = false;
+            });
+          });
+        })
+      ).subscribe();
+    }
+    else
+    {
+      this.apiService.editItem(this.item.key , this.parentSubcategoryKey , this.parentCategoryKey , updatedItem).subscribe((_)=>{
+        this.utilityService.itemUpdated.next(this.item.key);
+        this.isEditMode = false;
+        this.isBeingUpdated = false;
+      });
+    }
   }
 
   updateCakeItem()
@@ -119,11 +145,39 @@ export class ItemComponent implements OnInit {
     this.updatePrices(this.editFlavour , this.editDesignCategory);
     let updatedItem = {'itemName' : this.editItemName , 'offer' : this.editItemOffer , 'shopPrice' : this.editItemShopPrice , 
     'customerPrice' : this.editItemCustomerPrice , 'imageUrl' : this.item.imageUrl , 'cakeFlavour' : this.editFlavour , 'designCategory' : this.editDesignCategory};
-    this.apiService.editItem(this.item.key , this.parentSubcategoryKey , this.parentCategoryKey , updatedItem).subscribe((_)=>{
-      this.utilityService.itemUpdated.next(this.item.key);
-      this.isEditMode = false;
-      this.isBeingUpdated = false;
-    });
+
+    if(this.item.imageUrl!=this.imgEditSrc) //means image change occured.
+    {
+      
+      var filePath = `items/${this.selectedImageForEdit.name}_${new Date().getTime()}`;
+      var fileRef = this.storage.ref(filePath);
+      this.storage.upload(filePath,this.selectedImageForEdit).snapshotChanges().pipe(
+        finalize(()=>{
+          //RETRIEVING THE UPLOADED IMAGE URL.
+          fileRef.getDownloadURL().subscribe((url)=>{
+            updatedItem = {'itemName' : this.editItemName , 'offer' : this.editItemOffer , 'shopPrice' : this.editItemShopPrice , 
+            'customerPrice' : this.editItemCustomerPrice , 'imageUrl' : url , 'cakeFlavour' : this.editFlavour , 'designCategory' : this.editDesignCategory};
+            
+            this.apiService.editItem(this.item.key , this.parentSubcategoryKey , this.parentCategoryKey , updatedItem).subscribe((_)=>{
+              this.utilityService.itemUpdated.next(this.item.key);
+              this.isEditMode = false;
+              this.isBeingUpdated = false;
+            });
+          });
+        })
+      ).subscribe();
+    }
+    else
+    {
+      this.apiService.editItem(this.item.key , this.parentSubcategoryKey , this.parentCategoryKey , updatedItem).subscribe((_)=>{
+        this.utilityService.itemUpdated.next(this.item.key);
+        this.isEditMode = false;
+        this.isBeingUpdated = false;
+      });
+    }
+
+
+   
   }
 
   updatePrices(flavour , design)
