@@ -1,6 +1,16 @@
 <div class="card bottom-spaced-box">
     <a>
-    <img src = {{item.imageUrl}} class = "card-img-top img img-responsive">
+    <img src = {{item.imageUrl}} class = "card-img-top img img-responsive" *ngIf = "!isEditMode">
+    <img [src] = "imgEditSrc" class = "card-img-top img img-responsive" *ngIf = "isEditMode">
+    <div *ngIf = "isEditMode && !isBeingUpdated">
+        <div class = "form-group">
+            <label>Select a file to change the image</label>
+            <input type = "file"
+            class = "form-control"
+            accept = "image/*"
+            (change) = "showPreview($event)">
+        </div>
+    </div>
     </a>
     <div class="card-body jumbotron">
         <div *ngIf = "!isEditMode && !isBeingUpdated && parentCategoryName === 'CAKES & PASTRIES'">

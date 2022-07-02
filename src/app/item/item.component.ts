@@ -32,6 +32,10 @@ export class ItemComponent implements OnInit {
   editItemCustomerPrice:any;
   editDesignCategory:any;
   editFlavour:any;
+  editItemImgUrl:string;
+
+  selectedImageForEdit:any;
+  imgEditSrc:string;
 
   @Input()
   flavours:any;
@@ -74,7 +78,27 @@ export class ItemComponent implements OnInit {
     this.editItemCustomerPrice = this.item.customerPrice;
     this.editItemShopPrice = this.item.shopPrice;
     this.editFlavour = this.item.cakeFlavour;
+    this.editItemImgUrl = this.item.imageUrl;
+    this.imgEditSrc = this.item.imageUrl;
     this.editDesignCategory = this.item.designCategory;
+  }
+
+  showPreview(event : any)
+  {
+    if(event.target.files && event.target.files[0])
+    {
+      const reader = new FileReader();
+      reader.onload = (e:any)=>{
+        this.imgEditSrc = e.target.result;
+      }
+      reader.readAsDataURL(event.target.files[0]);
+      this.selectedImageForEdit = event.target.files[0];
+    }
+    //if someone clicks cancel
+    else {
+      this.imgEditSrc = this.editItemImgUrl;
+      this.selectedImageForEdit = null;
+    }
   }
 
   updateItem()
