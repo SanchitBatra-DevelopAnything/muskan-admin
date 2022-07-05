@@ -1,3 +1,10 @@
+<div class="container jumbotron">
+  <h2>Select category for billing.</h2>
+  <ng-select [items] = "categoriesToShow" bindLabel = "category" bindValue = "category" [closeOnSelect] = "true" (change) = "getCategoryWiseBill($event)"
+                ngDefaultControl>
+                </ng-select>
+</div>
+
 <div class="container">
     <div *ngIf = "!isLoading">
     <h3 style = "display: inline-block;">{{orderData['shopAddress'] | uppercase}}</h3>

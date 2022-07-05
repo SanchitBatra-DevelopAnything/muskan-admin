@@ -23,6 +23,8 @@ export class OrderDetailComponent implements OnInit{
 
   displayedColumns: string[] = ['Sno', 'Item', 'Quantity', 'Price'];
   dataSource:any;
+  categoriesInBillValues:any;
+  categoriesToShow:any;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -50,12 +52,30 @@ export class OrderDetailComponent implements OnInit{
       {
         this.orderData = {};
         this.isLoading = false;
+        this.categoriesInBillValues = [];
         this.billData = [];
         return;
       }
       this.orderData = orderDetail;
+      this.getCategoriesInBill();
       this.formBillData();
       this.isLoading = false;
+    });
+  }
+
+  getCategoriesInBill()
+  {
+    this.categoriesInBillValues = [];
+    this.categoriesToShow = [{category : "ALL"}];
+    let items = this.orderData['items'];
+    for(let i=0;i<items.length;i++)
+    {
+      let item = items[i];
+      this.categoriesInBillValues.push(item.CategoryName);
+    }
+    let arr = this.categoriesInBillValues.filter((v, i, a) => a.indexOf(v) === i); //unique.
+    arr.forEach(element => {
+      this.categoriesToShow.push({category : element});
     });
   }
 
@@ -72,6 +92,28 @@ export class OrderDetailComponent implements OnInit{
       }
       let data = {"Sno" : i+1 , "Item" : item , "Quantity" : items[i].quantity , "Price" : items[i].price};
       this.billData.push(data); 
+    }
+    this.dataSource = new MatTableDataSource<BillElement>(this.billData);
+    this.setPaginator();
+  }
+
+  getCategoryWiseBill(cat : {category : string})
+  {
+    if(cat.category=="ALL")
+    {
+      this.formBillData();
+      return;
+    }
+    let items = this.orderData['items'];
+    this.billData = [];
+    for(let i=0;i<items.length;i++)
+    {
+      let item = items[i].item;
+      let data = {"Sno" : i+1 , "Item" : item , "Quantity" : items[i].quantity , "Price" : items[i].price};
+      if(items[i].CategoryName.toString().toUpperCase() == cat.category.toString().toUpperCase())
+      {
+        this.billData.push(data); 
+      }
     }
     this.dataSource = new MatTableDataSource<BillElement>(this.billData);
     this.setPaginator();
