@@ -36,6 +36,7 @@ export class OrderDetailComponent implements OnInit{
     this.isLoading = false;
     this.orderKey = this.route.snapshot.params['orderKey'];
     this.orderType = this.route.snapshot.params['orderType'];
+    this.orderDate = this.route.snapshot.params['orderDate'];
     this.getOrderItems();
   }
 
@@ -47,7 +48,7 @@ export class OrderDetailComponent implements OnInit{
   getOrderItems()
   {
     this.isLoading = true;
-    this.apiService.getOrder("NO DATE FOR UNPROCESSED ORDERS",this.orderKey , this.orderType).subscribe((orderDetail)=>{
+    this.apiService.getOrder(this.orderDate,this.orderKey , this.orderType).subscribe((orderDetail)=>{
       if(orderDetail == null)
       {
         this.orderData = {};

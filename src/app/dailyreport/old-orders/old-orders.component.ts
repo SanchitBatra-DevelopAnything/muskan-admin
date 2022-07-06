@@ -50,7 +50,7 @@ export class OldOrdersComponent implements OnInit {
     let month = d.getMonth() + 1;
     let year = d.getFullYear();
     let selectedDate = date+""+month+""+year;
-    this.router.navigate(['/orderBill/'+order['orderKey']+"/"+selectedDate+"/processed?"+processedOrderKey]);
+    this.router.navigate(['/orderBill/'+order['orderKey']+"/processed?"+processedOrderKey+"/"+selectedDate]);
   }
 
 }
