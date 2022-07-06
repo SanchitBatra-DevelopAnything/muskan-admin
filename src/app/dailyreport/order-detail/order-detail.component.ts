@@ -47,7 +47,7 @@ export class OrderDetailComponent implements OnInit{
   getOrderItems()
   {
     this.isLoading = true;
-    this.apiService.getOrder("3052022",this.orderKey , this.orderType).subscribe((orderDetail)=>{
+    this.apiService.getOrder("NO DATE FOR UNPROCESSED ORDERS",this.orderKey , this.orderType).subscribe((orderDetail)=>{
       if(orderDetail == null)
       {
         this.orderData = {};
@@ -57,6 +57,7 @@ export class OrderDetailComponent implements OnInit{
         return;
       }
       this.orderData = orderDetail;
+      this.orderDate = this.orderData['orderDate'];
       this.getCategoriesInBill();
       this.formBillData();
       this.isLoading = false;

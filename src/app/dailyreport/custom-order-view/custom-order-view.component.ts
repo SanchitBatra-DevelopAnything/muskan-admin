@@ -25,14 +25,13 @@ export class CustomOrderViewComponent implements OnInit {
   ngOnInit(): void {
     this.isLoading = false;
     this.orderKey = this.route.snapshot.params['orderKey'];
-    this.orderDate = this.route.snapshot.params['orderDate'];
     this.orderType = this.route.snapshot.params['orderType'];
     this.getOrderDetails();
   }
 
   getOrderDetails()
   {
-    this.apiService.getOrder(this.orderDate , this.orderKey , this.orderType).subscribe((orderDetail)=>{
+    this.apiService.getOrder("NO DATE CONCEPT FOR UNPROCESSED ORDERS" , this.orderKey , this.orderType).subscribe((orderDetail)=>{
       if(orderDetail == null)
       {
         this.orderData = {};
@@ -43,6 +42,7 @@ export class CustomOrderViewComponent implements OnInit {
       this.orderData = orderDetail;
       this.orderImgUrl = this.orderData['imgUrl'];
       this.orderDescription = this.orderData['cakeDescription'];
+      this.orderDate = this.orderData['orderDate'];
       this.isLoading = false;
     });
   }
@@ -52,7 +52,6 @@ export class CustomOrderViewComponent implements OnInit {
   {
     this.isLoading = true;
     let orderInformation = {...this.orderData};
-    
     orderInformation['orderKey'] = this.orderKey;
     
     console.log( " Going to Chef = ",orderInformation);
