@@ -135,12 +135,12 @@ export class ApiserviceService {
     return this.http.put("https://muskan-admin-app-default-rtdb.firebaseio.com/Categories/"+parentCategoryKey+ "/Subcategories/"+parentSubcategoryKey+"/Items/"+itemKey+".json" , updatedItem);
   }
 
-  public getActiveOrders(todaysDate)
+  public getActiveOrders()
   {
-    return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/activeShopOrders/"+todaysDate+".json");
+    return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/activeShopOrders.json");
   }
 
-  public getOrder(orderDate , orderKey , orderType) : Observable<any>
+  public getOrder(orderDate,orderKey , orderType) : Observable<any>
   {
     if(orderType.startsWith ("processed"))
     {
@@ -148,7 +148,7 @@ export class ApiserviceService {
       let processedOrderKey = processedOrderKeyArray[1];
       return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/ProcessedShopOrders/"+orderDate+"/"+processedOrderKey+".json")  
     }
-    return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/activeShopOrders/"+orderDate+"/"+orderKey+".json");
+    return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/activeShopOrders/"+orderKey+".json");
   }
 
   public makeOrderForChef(orderData : any , orderDate:any) : Observable<any>
@@ -156,9 +156,9 @@ export class ApiserviceService {
     return this.http.post("https://muskan-admin-app-default-rtdb.firebaseio.com/ProcessedShopOrders/"+orderDate+".json" , orderData);
   }
 
-  public deleteActiveOrder(orderKey : string , orderDate : string) : Observable<any>
+  public deleteActiveOrder(orderKey : string) : Observable<any>
   {
-    return this.http.delete("https://muskan-admin-app-default-rtdb.firebaseio.com/activeShopOrders/"+orderDate+"/"+orderKey+".json");
+    return this.http.delete("https://muskan-admin-app-default-rtdb.firebaseio.com/activeShopOrders"+"/"+orderKey+".json");
   }
 
   public getProcessedShopOrders(date:string) : Observable<any>

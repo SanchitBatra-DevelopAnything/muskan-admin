@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { throws } from 'assert';
+import { Router } from '@angular/router';
 import { ApiserviceService } from '../services/apiservice.service';
 
 @Component({
@@ -29,7 +28,7 @@ export class DailyreportComponent implements OnInit {
     let yearIST = istDate.getFullYear();
     this.todaysDate = dateIST + "" + monthIST + "" + yearIST; 
     this.isLoading = true;
-    this.apiService.getActiveOrders(this.todaysDate).subscribe((orders)=>{
+    this.apiService.getActiveOrders().subscribe((orders)=>{
       if(orders == null)
       {
         console.log(null);
@@ -79,13 +78,13 @@ export class DailyreportComponent implements OnInit {
 
   showBill(orderKey)
   {
-    this.router.navigate(['/orderBill/'+orderKey+"/"+this.todaysDate+"/active"]);
+    this.router.navigate(['/orderBill/'+orderKey+"/active"]);
   }
 
   openCustomOrder(orderKey)
   {
     console.log("Trying to open");
-        this.router.navigate(['customOrder/'+orderKey+"/"+this.todaysDate+"/active"]);
+        this.router.navigate(['customOrder/'+orderKey+"/active"]);
   }
 
   oldOrderPage()

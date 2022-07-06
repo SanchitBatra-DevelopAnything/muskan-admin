@@ -35,7 +35,6 @@ export class OrderDetailComponent implements OnInit{
   ngOnInit(): void {
     this.isLoading = false;
     this.orderKey = this.route.snapshot.params['orderKey'];
-    this.orderDate = this.route.snapshot.params['orderDate'];
     this.orderType = this.route.snapshot.params['orderType'];
     this.getOrderItems();
   }
@@ -48,7 +47,7 @@ export class OrderDetailComponent implements OnInit{
   getOrderItems()
   {
     this.isLoading = true;
-    this.apiService.getOrder(this.orderDate , this.orderKey , this.orderType).subscribe((orderDetail)=>{
+    this.apiService.getOrder("3052022",this.orderKey , this.orderType).subscribe((orderDetail)=>{
       if(orderDetail == null)
       {
         this.orderData = {};
@@ -144,7 +143,7 @@ export class OrderDetailComponent implements OnInit{
     
     console.log( " Going to Chef = ",orderInformation);
     this.apiService.makeOrderForChef(orderInformation , this.orderDate).subscribe((_)=>{
-      this.apiService.deleteActiveOrder(this.orderKey , this.orderDate).subscribe((_)=>{
+      this.apiService.deleteActiveOrder(this.orderKey).subscribe((_)=>{
         this.toastr.success('Order Given To Chefs Successfully', 'Notification!' , {
           timeOut : 4000 ,
           closeButton : true , 
