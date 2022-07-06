@@ -25,6 +25,7 @@ export class OrderDetailComponent implements OnInit{
   dataSource:any;
   categoriesInBillValues:any;
   categoriesToShow:any;
+  hideHeaders:boolean = false;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -81,6 +82,7 @@ export class OrderDetailComponent implements OnInit{
 
   formBillData()
   {
+    this.hideHeaders = false;
     let items = this.orderData['items'];
     this.billData = [];
     for(let i=0;i<items.length;i++)
@@ -104,6 +106,7 @@ export class OrderDetailComponent implements OnInit{
       this.formBillData();
       return;
     }
+    this.hideHeaders = true;
     let items = this.orderData['items'];
     this.billData = [];
     for(let i=0;i<items.length;i++)
