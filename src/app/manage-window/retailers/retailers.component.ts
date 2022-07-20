@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
+import { ContainerComponent } from 'src/app/container/container.component';
 import { ApiserviceService } from 'src/app/services/apiservice.service';
 
 @Component({
@@ -13,7 +15,7 @@ export class RetailersComponent implements OnInit {
   retailerKeys : any[];
   isLoading:boolean;
 
-  constructor(private apiService : ApiserviceService , private toastr : ToastrService) { }
+  constructor(private apiService : ApiserviceService , private toastr : ToastrService,private dialog : MatDialog) { }
 
   ngOnInit(): void {
     this.isLoading = false;
@@ -49,6 +51,18 @@ export class RetailersComponent implements OnInit {
       });
       this.getRetailers();
     });
+  }
+
+  openDialog(retailerName , retailerIndex)
+  {
+    let dialogRef = this.dialog.open(ContainerComponent , {data : {retailerName : retailerName.toUpperCase()}});
+
+    dialogRef.afterClosed().subscribe((result)=>{
+      if(result === "yes")
+      {
+        this.deleteRetailer(retailerIndex);
+      }
+    }); 
   }
 
 
