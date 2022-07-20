@@ -19,6 +19,10 @@ export class CustomOrderViewComponent implements OnInit {
 
   orderDescription : string = "";
   orderImgUrl : string = "";
+  orderImgUrl2:string = "";
+
+  pounds:any;
+  flavour:any;
 
   constructor(private route : ActivatedRoute , private router : Router , private apiService : ApiserviceService , private toastr : ToastrService) { }
 
@@ -37,12 +41,19 @@ export class CustomOrderViewComponent implements OnInit {
         this.orderData = {};
         this.isLoading = false;
         this.orderImgUrl = "";
+        this.pounds = "NOT-VALID";
+        this.flavour = "NOT-VALID";
+        this.orderImgUrl2 = "";
         this.orderDescription = "NO ORDER FOUND WITH THIS KEY IN DB";
       }
       this.orderData = orderDetail;
       this.orderImgUrl = this.orderData['imgUrl'];
+      this.orderImgUrl2 = this.orderData['photoOnCakeUrl'];
+      console.log("hello"+this.orderImgUrl2);
       this.orderDescription = this.orderData['cakeDescription'];
       this.orderDate = this.orderData['orderDate'];
+      this.pounds = this.orderData['pounds'];
+      this.flavour = this.orderData['flavour'];
       this.isLoading = false;
     });
   }

@@ -5,22 +5,49 @@
         <p>Ordered By : <span style = "font-weight: bold;">{{orderData['orderedBy']}}</span></p>
         <p>Order Placed : <span style = "font-weight: bold;">{{orderData['orderTime']}} , {{orderData['orderDate']}}</span></p>
         <p>Order Type : <span style = "font-weight: bold;">{{orderData['customType']}}</span></p>
+        <button class = "btn btn-success" (click) = "sendOrderToChef()">Send to Chef</button>
     </div>
     <hr>
     <div class = "loader" *ngIf = "isLoading">
 
     </div>
     <div class="row">
-        <div class="col-xs-6">
+        <div class="col-xs-4">
             <div style = "height: 400px; width : 600px;">
                 <img src = {{orderImgUrl}} class = "img-rounded" style = "max-height: 100%; height : auto; width: 80%;">
             </div>
             
         </div>
-        <div class="col-xs-6" style = "display: inline-block;">
-            <p>Information about this order : </p>
-            <p style = "font-size : 20px; font-weight : bold; word-wrap: break-word;">{{orderDescription}}</p>
-            <button class = "btn btn-success" (click) = "sendOrderToChef()">Send to Chef</button>
+        <div class="jumbotoron col-xs-2">
+
         </div>
-    </div>
+        <div class="col-xs-4" *ngIf = "orderData['customType']=='Photo Cakes'">
+            <div style = "height: 400px; width : 600px;">
+                <img src = {{orderImgUrl2}} class = "img-rounded" style = "max-height: 100%; height : auto; width: 80%;">
+            </div>
+            
+        </div>
+
+        <div class="row" *ngIf = "orderData['customType'] != 'Photo Cakes'">
+            <div class="col-xs-4" style = "display: inline-block;">
+                <p>Information about this order : </p>
+                <p style = "font-size : 20px; font-weight : bold; word-wrap: break-word;">FLAVOUR : {{flavour}}</p>
+                <p style = "font-size : 20px; font-weight : bold; word-wrap: break-word;">POUNDS : {{pounds}}</p>
+                <p style = "font-size : 20px; font-weight : bold; word-wrap: break-word;">DESCRIPTION : {{orderDescription}}</p>
+            </div>
+    
+        </div>
+
+            </div>
+
+
+        <div class="row" *ngIf = "orderData['customType'] == 'Photo Cakes'">
+            <div class="col-xs-4" style = "display: inline-block;">
+                <p>Information about this order : </p>
+                <p style = "font-size : 20px; font-weight : bold; word-wrap: break-word;">FLAVOUR : {{flavour}}</p>
+                <p style = "font-size : 20px; font-weight : bold; word-wrap: break-word;">POUNDS : {{pounds}}</p>
+                <p style = "font-size : 20px; font-weight : bold; word-wrap: break-word;">DESCRIPTION : {{orderDescription}}</p>
+            </div>
+    
+        </div>
 </div>
