@@ -13,6 +13,7 @@ export class RetailersComponent implements OnInit {
 
   retailersData : any[];
   retailerKeys : any[];
+  retailerUsefulData : any[];
   isLoading:boolean;
 
   constructor(private apiService : ApiserviceService , private toastr : ToastrService,private dialog : MatDialog) { }
@@ -31,19 +32,32 @@ export class RetailersComponent implements OnInit {
       {
         this.retailersData = [];
         this.retailerKeys = [];
+        this.retailerUsefulData = [];
         this.isLoading = false;
         return;
       }
       this.retailersData = Object.values(retailers);
       this.retailerKeys = Object.keys(retailers);
+      this.formRetailersFullData(retailers);
       this.isLoading = false;
     });
   }
 
-  deleteRetailer(index)
+  formRetailersFullData(retailers)
+  {
+    this.retailerUsefulData = [];
+    for(let i=0;i<this.retailerKeys.length;i++)
+    {
+      let obj = {...retailers[this.retailerKeys[i]] , "retailerKey" : this.retailerKeys[i]};
+      this.retailerUsefulData.push(obj);
+    }
+    this.retailerUsefulData.sort((a, b) => (a.shopAddress > b.shopAddress) ? 1 : -1)
+  }
+
+  deleteRetailer(retailerKey)
   {
     this.isLoading = true;
-    this.apiService.deleteRetailer(this.retailerKeys[index]).subscribe((_)=>{
+    this.apiService.deleteRetailer(retailerKey).subscribe((_)=>{
       this.toastr.success('Retailer Deleted Successfully', 'Notification!' , {
         timeOut : 4000 ,
         closeButton : true , 
@@ -53,14 +67,14 @@ export class RetailersComponent implements OnInit {
     });
   }
 
-  openDialog(retailerName , retailerIndex)
+  openDialog(retailerName , retailerKey)
   {
     let dialogRef = this.dialog.open(ContainerComponent , {data : {retailerName : retailerName.toUpperCase()}});
 
     dialogRef.afterClosed().subscribe((result)=>{
       if(result === "yes")
       {
-        this.deleteRetailer(retailerIndex);
+        this.deleteRetailer(retailerKey);
       }
     }); 
   }
