@@ -1,5 +1,6 @@
 <div class="container jumbotron">
   <h2>Select category for billing.</h2>
+  <p style = "color:red; font-size: 18px;">New : Now see cakes and pastries together under cakes & pastries section below.</p>
   <ng-select [items] = "categoriesToShow" bindLabel = "category" bindValue = "category" [closeOnSelect] = "true" (change) = "getCategoryWiseBill($event)"
                 ngDefaultControl>
                 </ng-select>

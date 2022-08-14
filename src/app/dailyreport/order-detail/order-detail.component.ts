@@ -114,7 +114,7 @@ export class OrderDetailComponent implements OnInit{
     {
       let item = items[i].item;
       let data = {"Sno" : i+1 , "Item" : item , "Quantity" : items[i].quantity , "Price" : items[i].price};
-      if(items[i].CategoryName.toString().toUpperCase() == cat.category.toString().toUpperCase())
+      if(items[i].CategoryName.toString().toUpperCase() == cat.category.toString().toUpperCase() || (items[i].CategoryName.toString().toUpperCase() == "PASTRIES" && cat.category.toString().toUpperCase() == "CAKES & PASTRIES"))
       {
         this.billData.push(data); 
       }
