@@ -18,6 +18,11 @@ export class ApiserviceService {
     return this.http.get('https://muskan-admin-app-default-rtdb.firebaseio.com/retailerNotifications.json?shallow=true');
   }
 
+  public getActiveOrdersCount():Observable<any>
+  {
+    return this.http.get('https://muskan-admin-app-default-rtdb.firebaseio.com/activeShopOrders.json?shallow=true');
+  }
+
   public getCategories():Observable<any>
   {
     return this.http.get('https://muskan-admin-app-default-rtdb.firebaseio.com/Categories.json');

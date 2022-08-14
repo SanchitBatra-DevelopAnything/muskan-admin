@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiserviceService } from '../services/apiservice.service';
+import { UtilityServiceService } from '../services/utility-service.service';
 
 @Component({
   selector: 'app-dailyreport',
@@ -17,7 +18,7 @@ export class DailyreportComponent implements OnInit {
   todaysDate : string;
 
 
-  constructor(private apiService : ApiserviceService , private router : Router) {
+  constructor(private apiService : ApiserviceService , private router : Router , private utilityService:UtilityServiceService) {
 
   }
 
@@ -56,6 +57,8 @@ export class DailyreportComponent implements OnInit {
       }
       this.isLoading = false;
     });
+
+    this.utilityService.refreshActiveOrdersCount.next('refresh');
   }
 
   getISTDate() : Date
