@@ -222,6 +222,8 @@ public getAllChefNotificationTokens() : Observable<any>
 
   public addFlavour(flavour : {flavourName : string , shopPrice : number , customerPrice : number}):Observable<any>
   {
+    flavour.shopPrice = +flavour.shopPrice;
+    flavour.customerPrice = +flavour.customerPrice;
     return this.http.post("https://muskan-admin-app-default-rtdb.firebaseio.com/cakeFlavours.json" , flavour);
   }
 
@@ -237,6 +239,8 @@ public getAllChefNotificationTokens() : Observable<any>
 
   public editFlavour(flavour:{flavourName : string , shopPrice : number,customerPrice : number} , flavourKey:string) : Observable<any>
   {
+    flavour.shopPrice = +flavour.shopPrice;
+    flavour.customerPrice = +flavour.customerPrice;
     return this.http.patch("https://muskan-admin-app-default-rtdb.firebaseio.com/cakeFlavours/"+flavourKey+".json",flavour);
   }
 
@@ -252,11 +256,15 @@ public getAllChefNotificationTokens() : Observable<any>
 
   public addDesign(design : {designName : string , shopPrice : number , customerPrice : number}):Observable<any>
   {
+    design.customerPrice = +design.customerPrice;
+    design.shopPrice = +design.shopPrice;
     return this.http.post("https://muskan-admin-app-default-rtdb.firebaseio.com/cakeDesignCategories.json" , design);
   }
 
   public editDesign(design:{designName : string , shopPrice : number,customerPrice : number} , designKey:string) : Observable<any>
   {
+    design.customerPrice = +design.customerPrice;
+    design.shopPrice = +design.shopPrice;
     return this.http.patch("https://muskan-admin-app-default-rtdb.firebaseio.com/cakeDesignCategories/"+designKey+".json",design);
   }
 
