@@ -10,6 +10,19 @@
             <h4>Select a date to see order</h4>
             <img src = "https://c8.alamy.com/comp/M6DFNB/cartoon-of-businessman-holding-arrow-sign-pointing-left-M6DFNB.jpg" style = "height:300px;">
         </div>
+        <div class="col-xs-2" *ngIf = "selected">
+            <h6>From time</h6>
+            <input [ngxTimepicker] = "picker">
+            <ngx-material-timepicker #picker (timeChanged) = "setFromTime($event)"></ngx-material-timepicker>
+
+            <h6>To time</h6>
+            <input [ngxTimepicker] = "picker1">
+            <ngx-material-timepicker #picker1 (timeChanged) = "setToTime($event)"></ngx-material-timepicker>
+
+            <button style = "margin-top:10px;" class="btn btn-success" [disabled] = "fromTime=='' || toTime == ''">
+                Get Total Parchi
+            </button>
+        </div>
     </div>
 
     <hr>

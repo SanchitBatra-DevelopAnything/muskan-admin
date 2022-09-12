@@ -55,6 +55,7 @@ import { AddDesignCategoryFormComponent } from './add-design-category-form/add-d
 import { SubcategoryDeleteFormComponent } from './subcategory-delete-form/subcategory-delete-form.component';
 import { SubcategoryEditFormComponent } from './subcategory-edit-form/subcategory-edit-form.component';
 import { CustomOrderViewComponent } from './dailyreport/custom-order-view/custom-order-view.component';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 
 
 const appRoutes : Routes = [
@@ -142,6 +143,7 @@ const appRoutes : Routes = [
     MatPaginatorModule,
     MatButtonModule,
     MatIconModule,
+    NgxMaterialTimepickerModule,
     
     RouterModule.forRoot(appRoutes,{useHash: true}),
   ],

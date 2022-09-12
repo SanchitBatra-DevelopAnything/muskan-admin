@@ -13,6 +13,8 @@ export class OldOrdersComponent implements OnInit {
   processedOrders: any;
   processedOrderKeys : any;
   isLoading : boolean;
+  fromTime:string = "";
+  toTime:string = "";
 
   constructor(private apiService : ApiserviceService , private router:Router) { }
 
@@ -51,6 +53,16 @@ export class OldOrdersComponent implements OnInit {
     let year = d.getFullYear();
     let selectedDate = date+""+month+""+year;
     this.router.navigate(['/orderBill/'+order['orderKey']+"/processed?"+processedOrderKey+"/"+selectedDate]);
+  }
+
+  setFromTime(value)
+  {
+    this.fromTime = value.toString();
+  }
+
+  setToTime(value)
+  {
+    this.toTime = value.toString();
   }
 
 }
