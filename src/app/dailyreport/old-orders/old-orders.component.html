@@ -12,14 +12,14 @@
         </div>
         <div class="col-xs-2" *ngIf = "selected">
             <h6>From time</h6>
-            <input [ngxTimepicker] = "picker">
+            <input [ngxTimepicker] = "picker" [readOnly] = true>
             <ngx-material-timepicker #picker (timeChanged) = "setFromTime($event)"></ngx-material-timepicker>
 
             <h6>To time</h6>
-            <input [ngxTimepicker] = "picker1">
+            <input [ngxTimepicker] = "picker1" [readOnly] = true>
             <ngx-material-timepicker #picker1 (timeChanged) = "setToTime($event)"></ngx-material-timepicker>
 
-            <button style = "margin-top:10px;" class="btn btn-success" [disabled] = "fromTime=='' || toTime == ''">
+            <button style = "margin-top:10px;" class="btn btn-success" [disabled] = "fromTime=='' || toTime == ''" (click) = "getTotalParchi()">
                 Get Total Parchi
             </button>
         </div>
