@@ -22,6 +22,7 @@
             <button style = "margin-top:10px;" class="btn btn-success" [disabled] = "fromTime=='' || toTime == ''" (click) = "getTotalParchi()">
                 Get Total Parchi
             </button>
+            <p *ngIf = "timeError" style = "color: red;">Start time cant be ahead of end time.</p>
         </div>
     </div>
 

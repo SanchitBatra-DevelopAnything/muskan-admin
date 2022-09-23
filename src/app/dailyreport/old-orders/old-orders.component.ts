@@ -16,6 +16,7 @@ export class OldOrdersComponent implements OnInit {
   fromTime:string = "";
   toTime:string = "";
   totalParchiOrders:any;
+  timeError:boolean;
 
   constructor(private apiService : ApiserviceService , private router:Router) { }
 
@@ -24,6 +25,7 @@ export class OldOrdersComponent implements OnInit {
     this.processedOrders = [];
     this.processedOrderKeys = [];
     this.totalParchiOrders = [];
+    this.timeError = false;
   }
 
   changeDate()
@@ -83,11 +85,14 @@ export class OldOrdersComponent implements OnInit {
     if(startDate>endDate)
     {
       console.log("start big");
+      this.timeError = true;
       //error on the UI , time error , start should be less to get proper time range.
       return;
     }
     else
     {
+      this.timeError = false;
+      this.isLoading = true;
       for(let i=0;i<this.processedOrders.length;i++)
       {
         if(this.orderTimeFilter(this.processedOrders[i].orderTime,startDate,endDate))
@@ -99,6 +104,7 @@ export class OldOrdersComponent implements OnInit {
         }
       }
       console.log(this.totalParchiOrders);
+      this.isLoading = false;
     }
   }
 
