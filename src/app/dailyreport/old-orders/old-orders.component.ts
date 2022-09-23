@@ -15,6 +15,7 @@ export class OldOrdersComponent implements OnInit {
   isLoading : boolean;
   fromTime:string = "";
   toTime:string = "";
+  totalParchiOrders:any;
 
   constructor(private apiService : ApiserviceService , private router:Router) { }
 
@@ -22,6 +23,7 @@ export class OldOrdersComponent implements OnInit {
     this.isLoading = false;
     this.processedOrders = [];
     this.processedOrderKeys = [];
+    this.totalParchiOrders = [];
   }
 
   changeDate()
@@ -63,6 +65,51 @@ export class OldOrdersComponent implements OnInit {
   setToTime(value)
   {
     this.toTime = value.toString();
+  }
+
+  getTotalParchi()
+  {
+    console.log(this.fromTime , this.toTime);
+    this.getRequiredOrders();
+    //redirect.
+  }
+
+  getRequiredOrders()
+  {
+    var startDate = Date.parse("01/01/2011 "+this.fromTime);
+    var endDate = Date.parse("01/01/2011 "+this.toTime);
+
+    console.log(startDate , endDate);
+    if(startDate>endDate)
+    {
+      console.log("start big");
+      //error on the UI , time error , start should be less to get proper time range.
+      return;
+    }
+    else
+    {
+      for(let i=0;i<this.processedOrders.length;i++)
+      {
+        if(this.orderTimeFilter(this.processedOrders[i].orderTime,startDate,endDate))
+        {
+          for(let j=0;j<this.processedOrders[i].items.length;j++)
+          {
+              this.totalParchiOrders.push(this.processedOrders[i].items[j]);
+          }
+        }
+      }
+      console.log(this.totalParchiOrders);
+    }
+  }
+
+  orderTimeFilter(orderTime , startDate,endDate)
+  {
+    var orderTimeDate = Date.parse("01/01/2011 "+orderTime);
+    if(orderTimeDate > startDate && orderTimeDate < endDate)
+    {
+      return true;
+    }
+    return false;
   }
 
 }
