@@ -22,7 +22,7 @@ export class OrderDetailComponent implements OnInit{
   billData : BillElement[];
   orderType : string;
 
-  displayedColumns: string[] = ['Sno', 'Item', 'Quantity', 'Price'];
+  displayedColumns : string[];
   dataSource:any;
   categoriesInBillValues:any;
   categoriesToShow:any;
@@ -39,6 +39,7 @@ export class OrderDetailComponent implements OnInit{
     this.orderKey = this.route.snapshot.params['orderKey'];
     this.orderType = this.route.snapshot.params['orderType'];
     this.orderDate = this.route.snapshot.params['orderDate'];
+    this.displayedColumns = this.orderKey == "totalParchi" ? ['Sno' , 'Item' , 'Quantity'] : ['Sno', 'Item', 'Quantity', 'Price'];
     this.getOrderItems();
   }
 
@@ -105,9 +106,10 @@ export class OrderDetailComponent implements OnInit{
         item = item + "-" + items[i].weight;
       }
       let data = {"Sno" : i+1 , "Item" : item , "Quantity" : items[i].quantity , "Price" : items[i].price};
-      this.billData.push(data); 
+      this.billData.push(data);
+
     }
-    this.dataSource = new MatTableDataSource<BillElement>(this.billData);
+    this.dataSource = this.viewTotalParchi ? new MatTableDataSource<TotalParchiBillElement>(this.billData) : new MatTableDataSource<BillElement>(this.billData);
     this.setPaginator();
   }
 
@@ -130,7 +132,7 @@ export class OrderDetailComponent implements OnInit{
         this.billData.push(data); 
       }
     }
-    this.dataSource = new MatTableDataSource<BillElement>(this.billData);
+    this.dataSource = this.viewTotalParchi ? new MatTableDataSource<TotalParchiBillElement>(this.billData) : new MatTableDataSource<BillElement>(this.billData);
     this.setPaginator();
   }
 
@@ -194,4 +196,10 @@ export interface BillElement {
   'Sno': number;
   'Quantity': number;
   'Price': string;
+}
+
+export interface TotalParchiBillElement {
+  'Item' : string , 
+  'Sno' : number , 
+  'Quantity' : number
 }

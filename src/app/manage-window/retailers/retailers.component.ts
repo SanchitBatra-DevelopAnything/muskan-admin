@@ -20,6 +20,7 @@ export class RetailersComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoading = false;
+    this.retailerUsefulData = [];
     this.getRetailers();
   }
 
@@ -51,7 +52,7 @@ export class RetailersComponent implements OnInit {
       let obj = {...retailers[this.retailerKeys[i]] , "retailerKey" : this.retailerKeys[i]};
       this.retailerUsefulData.push(obj);
     }
-    this.retailerUsefulData.sort((a, b) => (a.shopAddress > b.shopAddress) ? 1 : -1)
+    this.retailerUsefulData.sort((a, b) => (a.shopAddress.trim() > b.shopAddress.trim()) ? 1 : -1)
   }
 
   deleteRetailer(retailerKey)
