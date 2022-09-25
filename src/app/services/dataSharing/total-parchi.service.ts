@@ -24,7 +24,7 @@ export class TotalParchiService {
       if(this.itemsMap.has(itemInfo.item))
       {
         let info = this.itemsMap.get(itemInfo.item);
-        let updatedObject = {'quantity' : info.quantity + 1, 'CategoryName' : info.CategoryName , 'price' : ((+itemInfo.price)/itemInfo.quantity) * (itemInfo.quantity + 1)};
+        let updatedObject = {'quantity' : +info.quantity + +itemInfo.quantity, 'CategoryName' : info.CategoryName , 'price' : ((+itemInfo.price)/itemInfo.quantity) * (itemInfo.quantity + 1)};
         this.itemsMap.set(itemInfo.item , updatedObject);
       }
       else

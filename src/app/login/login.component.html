@@ -24,6 +24,9 @@
             formControlName = "password">
         </div>
 
+        <p style = "color : red; font-weight: bold;">New Feature Added : <mark>Now see total parchis for the given interval of time on particular date</mark></p>
+        <p style = "color : red;">Move to active orders --> Show last 7 days Orders --> Select date & time.</p>
+
         <button type = "submit" class = "btn btn-success btn-bold-text" [disabled]="isLoading && !internetProblem">LOGIN</button>
         <p  class = "red" *ngIf="!isLoading && internetProblem">Internet Issues Detected. Not able to login now.</p>
         </form>
