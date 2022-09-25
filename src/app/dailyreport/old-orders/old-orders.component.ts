@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiserviceService } from 'src/app/services/apiservice.service';
+import { TotalParchiService } from 'src/app/services/dataSharing/total-parchi.service';
 
 @Component({
   selector: 'app-old-orders',
@@ -18,7 +19,7 @@ export class OldOrdersComponent implements OnInit {
   totalParchiOrders:any;
   timeError:boolean;
 
-  constructor(private apiService : ApiserviceService , private router:Router) { }
+  constructor(private apiService : ApiserviceService , private router:Router , private totalParchiService : TotalParchiService) { }
 
   ngOnInit(): void {
     this.isLoading = false;
@@ -73,7 +74,15 @@ export class OldOrdersComponent implements OnInit {
   {
     console.log(this.fromTime , this.toTime);
     this.getRequiredOrders();
+    this.totalParchiService.setAllItems(this.totalParchiOrders);
+    this.totalParchiService.makeMap();
     //redirect.
+    let d = new Date(this.selected);
+    let date = d.getDate();
+    let month = d.getMonth() + 1;
+    let year = d.getFullYear();
+    let selectedDate = date+""+month+""+year;
+    this.router.navigate(['/orderBill/'+"totalParchi"+"/processed?"+"totalParchi"+"/"+selectedDate]);
   }
 
   getRequiredOrders()
