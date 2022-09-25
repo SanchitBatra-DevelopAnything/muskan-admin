@@ -24,15 +24,24 @@ export class TotalParchiService {
       if(this.itemsMap.has(itemInfo.item))
       {
         let info = this.itemsMap.get(itemInfo.item);
-        let updatedObject = {'quantity' : info.quantity + 1, 'CategoryName' : info.CategoryName};
+        let updatedObject = {'quantity' : info.quantity + 1, 'CategoryName' : info.CategoryName , 'price' : ((+itemInfo.price)/itemInfo.quantity) * (itemInfo.quantity + 1)};
         this.itemsMap.set(itemInfo.item , updatedObject);
       }
       else
       {
-        this.itemsMap.set(itemInfo.item , {'quantity' : +itemInfo.quantity , 'CategoryName' : itemInfo.CategoryName});
+        this.itemsMap.set(itemInfo.item , {'quantity' : +itemInfo.quantity , 'CategoryName' : itemInfo.CategoryName , 'price' : +itemInfo.price});
       }
     });
+  }
 
-    console.log(this.itemsMap);
+  makeListFromMap()
+  {
+    let items = [];
+    for (let entry of this.itemsMap.entries()) {
+      let createdObject = {'item' : entry[0].toString() , 'quantity' : entry[1].quantity , 'CategoryName' : entry[1].CategoryName , 'price': +entry[1].price};
+      items.push(createdObject);
+  }
+  console.log(items);
+  return items;
   }
 }

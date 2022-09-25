@@ -82,7 +82,11 @@ export class OldOrdersComponent implements OnInit {
     let month = d.getMonth() + 1;
     let year = d.getFullYear();
     let selectedDate = date+""+month+""+year;
-    this.router.navigate(['/orderBill/'+"totalParchi"+"/processed?"+"totalParchi"+"/"+selectedDate]);
+    if(!this.timeError)
+    {
+      this.router.navigate(['/orderBill/'+"totalParchi"+"/processed?"+"totalParchi"+"/"+selectedDate]);
+    }
+    
   }
 
   getRequiredOrders()

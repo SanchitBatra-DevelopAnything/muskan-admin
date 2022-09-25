@@ -12,10 +12,12 @@
     <div class="spaced-button" style = "display: inline-block;">
         <button class = "btn btn-success btn-lg" (click) = "sendOrderToChef()" *ngIf = "orderType == 'active'" [disabled] = "hideHeaders">Send To Chef</button>
     </div>
+    <div *ngIf = "!viewTotalParchi">
     <h3 style = "display:inline-block;">Order Id : <span style = "font-weight: bold;">{{orderKey}} , </span></h3>
     <h3 style = "display:inline-block;">Ordered By : <span style = "font-weight: bold;">{{orderData['orderedBy']}} , </span></h3>
     <h3 style = "display:inline-block;">Order Placed : <span style = "font-weight: bold;">{{orderData['orderTime']}} , {{orderData['orderDate']}} , </span></h3>
     <h3> Estimate : {{orderData['totalPrice']}}</h3>
+    </div>
     </div>
     <hr>
 

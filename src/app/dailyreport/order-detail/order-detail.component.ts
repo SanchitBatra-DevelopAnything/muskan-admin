@@ -5,6 +5,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
 import { UtilityServiceService } from 'src/app/services/utility-service.service';
+import { TotalParchiService } from 'src/app/services/dataSharing/total-parchi.service';
 
 @Component({
   selector: 'app-order-detail',
@@ -26,11 +27,12 @@ export class OrderDetailComponent implements OnInit{
   categoriesInBillValues:any;
   categoriesToShow:any;
   hideHeaders:boolean = false;
+  viewTotalParchi : boolean = false;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
 
-  constructor(private route : ActivatedRoute , private router : Router,private apiService : ApiserviceService , private toastr : ToastrService) { }
+  constructor(private route : ActivatedRoute , private router : Router,private apiService : ApiserviceService , private toastr : ToastrService , private totalParchiService : TotalParchiService) { }
 
   ngOnInit(): void {
     this.isLoading = false;
@@ -47,6 +49,15 @@ export class OrderDetailComponent implements OnInit{
 
   getOrderItems()
   {
+    if(this.orderKey == "totalParchi")
+    {
+      this.orderData = {'items' : this.totalParchiService.makeListFromMap()};
+      this.getCategoriesInBill();
+      this.formBillData();
+      this.viewTotalParchi = true;
+      return;
+    }
+    this.viewTotalParchi = false;
     this.isLoading = true;
     this.apiService.getOrder(this.orderDate,this.orderKey , this.orderType).subscribe((orderDetail)=>{
       if(orderDetail == null)
