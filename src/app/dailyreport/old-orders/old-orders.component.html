@@ -37,6 +37,7 @@
     <div class="row" *ngIf ="!isLoading">
         <div *ngFor = "let order of processedOrders; let i = index;" class = "col-xs-3 w3-card pointer order-card" (click) = "showBill(processedOrders[i] , processedOrderKeys[i])">
             <p style = "font-weight: bold;">{{order.shopAddress | uppercase}}</p>
+            <p style = "font-weight: bold;">{{order.orderTime}}</p>
         </div>
     </div>
     
