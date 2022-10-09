@@ -3,9 +3,9 @@
     <h3 class = "inline-heading">Retailers</h3>
     <p>New retailers will be added through the retailers app. Please see the <a routerLink = "/notifications">notifications</a>  to add new retailers into the system.</p>
     <hr>
-
+    <input type = "text" placeholder = "search by shop name or retailer name" style = "width: 40%;" (input) = "filterRetailers($event)">
     <ul class="list-group list-group-flush">
-        <li class="list-group-item" style ="height:50px;" *ngFor = "let retailer of retailerUsefulData; let i = index;">{{retailer.shopAddress | uppercase}} , {{retailer.retailerName | uppercase}} , {{retailer.mobileNumber | uppercase}}
+        <li class="list-group-item" style ="height:50px;" *ngFor = "let retailer of filteredRetailerUsefulData; let i = index;">{{retailer.shopAddress | uppercase}} , {{retailer.retailerName | uppercase}} , {{retailer.mobileNumber | uppercase}}
             <button class = "btn btn-danger" style = "float:right;" (click) = "openDialog(retailer.retailerName , retailer.retailerKey)">Delete</button>
         </li>
       </ul>
