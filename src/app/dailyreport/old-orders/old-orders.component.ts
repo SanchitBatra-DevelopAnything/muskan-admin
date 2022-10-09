@@ -112,6 +112,10 @@ export class OldOrdersComponent implements OnInit {
         {
           for(let j=0;j<this.processedOrders[i].items.length;j++)
           {
+              if(this.processedOrders[i].items[j].item.toString().toLowerCase() == "veg patties")
+              {
+                console.log("VEG PATTIES FOUND : ", this.processedOrders[i].items[j].quantity , "Ordered by : " , this.processedOrders[i].shopAddress);
+              }
               this.totalParchiOrders.push(this.processedOrders[i].items[j]);
           }
         }
