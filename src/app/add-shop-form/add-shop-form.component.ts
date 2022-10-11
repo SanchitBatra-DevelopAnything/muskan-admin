@@ -32,7 +32,7 @@ export class AddShopFormComponent implements OnInit {
   {
     this.isInsertingShop = true;
     this.addShopForm.patchValue({
-      shopName : this.addShopForm.value.shopName.toUpperCase(),
+      shopName : this.addShopForm.value.shopName.toUpperCase().trim(),
       areaName : this.addShopForm.value.areaName,
     })
     this.apiService.addShop(this.addShopForm.value).subscribe((_)=>{
