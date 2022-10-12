@@ -19,7 +19,19 @@
             <input [ngxTimepicker] = "picker1" [readOnly] = true>
             <ngx-material-timepicker #picker1 (timeChanged) = "setToTime($event)"></ngx-material-timepicker>
 
-            <button style = "margin-top:10px;" class="btn btn-success" [disabled] = "fromTime=='' || toTime == ''" (click) = "getTotalParchi()">
+            <label id="example-radio-group-label">Total Parchi is needed for : </label>
+<mat-radio-group
+  aria-labelledby="example-radio-group-label"
+  class="example-radio-group"
+  [(ngModel)]="totalParchiFor">
+  <mat-radio-button class="example-radio-button" *ngFor="let option of options" [value]="option">
+    {{option}}
+  </mat-radio-button>
+</mat-radio-group>
+<div>Your have selected : {{totalParchiFor}}</div>
+
+
+            <button style = "margin-top:10px;" class="btn btn-success" [disabled] = "(fromTime=='' || toTime == '') || totalParchiFor==''" (click) = "getTotalParchi()">
                 Get Total Parchi
             </button>
             <p *ngIf = "timeError" style = "color: red;">Start time cant be ahead of end time.</p>

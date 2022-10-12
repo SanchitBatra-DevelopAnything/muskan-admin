@@ -16,6 +16,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatCardModule} from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
+import {MatRadioModule} from '@angular/material/radio';
 
 import { AppComponent } from './app.component';
 import { CategoryListComponent } from './category-list/category-list.component';
@@ -56,6 +57,7 @@ import { SubcategoryDeleteFormComponent } from './subcategory-delete-form/subcat
 import { SubcategoryEditFormComponent } from './subcategory-edit-form/subcategory-edit-form.component';
 import { CustomOrderViewComponent } from './dailyreport/custom-order-view/custom-order-view.component';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+
 
 
 const appRoutes : Routes = [
@@ -144,6 +146,7 @@ const appRoutes : Routes = [
     MatButtonModule,
     MatIconModule,
     NgxMaterialTimepickerModule,
+    MatRadioModule,
     
     RouterModule.forRoot(appRoutes,{useHash: true}),
   ],

@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio';
 import { Subscription } from 'rxjs';
 import { ApiserviceService } from './services/apiservice.service';
 import { ImageService } from './services/image.service';
@@ -7,7 +8,11 @@ import { UtilityServiceService } from './services/utility-service.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  providers: [{
+    provide: MAT_RADIO_DEFAULT_OPTIONS,
+    useValue: { color: 'accent' },
+}]
 })
 export class AppComponent implements OnInit , OnDestroy {
   // isLoggedIn:Boolean;

@@ -18,6 +18,8 @@ export class OldOrdersComponent implements OnInit {
   toTime:string = "";
   totalParchiOrders:any;
   timeError:boolean;
+  options:any;
+  totalParchiFor:string;
 
   constructor(private apiService : ApiserviceService , private router:Router , private totalParchiService : TotalParchiService) { }
 
@@ -27,6 +29,8 @@ export class OldOrdersComponent implements OnInit {
     this.processedOrderKeys = [];
     this.totalParchiOrders = [];
     this.timeError = false;
+    this.totalParchiFor = '';
+    this.options = ["Retailers Only" , "Salesmen Only" , "All Mixed"];
   }
 
   changeDate()
@@ -104,24 +108,56 @@ export class OldOrdersComponent implements OnInit {
     }
     else
     {
+      let selectedDomainFilteredOrders = this.filterOrdersBasedOnDomain();
       this.timeError = false;
       this.isLoading = true;
-      for(let i=0;i<this.processedOrders.length;i++)
+      for(let i=0;i<selectedDomainFilteredOrders.length;i++)
       {
-        if(this.orderTimeFilter(this.processedOrders[i].orderTime,startDate,endDate))
+        if(this.orderTimeFilter(selectedDomainFilteredOrders[i].orderTime,startDate,endDate))
         {
-          for(let j=0;j<this.processedOrders[i].items.length;j++)
+          for(let j=0;j<selectedDomainFilteredOrders[i].items.length;j++)
           {
-              if(this.processedOrders[i].items[j].item.toString().toLowerCase() == "veg patties")
-              {
-                console.log("VEG PATTIES FOUND : ", this.processedOrders[i].items[j].quantity , "Ordered by : " , this.processedOrders[i].shopAddress);
-              }
-              this.totalParchiOrders.push(this.processedOrders[i].items[j]);
+              // if(selectedDomainFilteredOrders[i].items[j].item.toString().toLowerCase() == "veg patties")
+              // {
+              //   console.log("VEG PATTIES FOUND : ", this.processedOrders[i].items[j].quantity , "Ordered by : " , selectedDomainFilteredOrders[i].shopAddress);
+              // }
+              this.totalParchiOrders.push(selectedDomainFilteredOrders[i].items[j]);
           }
         }
       }
       console.log(this.totalParchiOrders);
       this.isLoading = false;
+    }
+  }
+
+  filterOrdersBasedOnDomain()
+  {
+    let selectedDomain = this.totalParchiFor;
+    if(selectedDomain.includes("Salesmen"))
+    {
+      let filteredOrders = this.processedOrders.filter((order)=>{
+        if(order.shopAddress.toString().toLowerCase().trim().startsWith("sm"))
+        {
+          return true;
+        }
+        
+      });
+      console.log("Salesmans found : ",filteredOrders.length);
+      return filteredOrders;
+    }
+    else if(selectedDomain.includes("Retailers"))
+    {
+      let filteredOrders = this.processedOrders.filter((order)=>{
+        if(!order.shopAddress.toString().toLowerCase().trim().startsWith("sm"))
+        {
+          return true;
+        }
+      });
+      return filteredOrders;
+    }
+    else
+    {
+      return this.processedOrders;
     }
   }
 
