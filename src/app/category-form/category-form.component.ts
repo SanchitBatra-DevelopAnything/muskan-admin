@@ -22,11 +22,24 @@ export class CategoryFormComponent implements OnInit {
 
     this.categoryForm = new FormGroup({
       'categoryName' : new FormControl('',Validators.required), 
-      'imageUrl' : new FormControl('' , Validators.required)
+      'imageUrl' : new FormControl('' , Validators.required),
+      'forDistributor' : new FormControl(null,[Validators.required])
     });
 
     this.resetForm();
 
+  }
+
+  checkValue(e:any)
+  {
+    if(e.target.value > 1)
+    {
+      e.target.value = 1;
+    }
+    if(e.target.value < 0)
+    {
+      e.target.value = 0;
+    }
   }
 
   showPreview(event : any)
@@ -72,7 +85,8 @@ export class CategoryFormComponent implements OnInit {
     this.categoryForm.reset();
     this.categoryForm.setValue({
       categoryName : '',
-      imageUrl : ''
+      imageUrl : '',
+      forDistributor : null,
     });
     this.imgSrc = "../../assets/default.png";
     this.isSubmitted = false;

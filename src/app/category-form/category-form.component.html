@@ -23,6 +23,15 @@
                     placeholder = "Category Name">
                 </div>
                 <div class = "form-group">
+                    <input type = "number"
+                    class = "form-control"
+                    max="1"
+                    min="0"
+                    (input) = "checkValue($event)"
+                    formControlName = "forDistributor"
+                    placeholder = "1/0 for distributor?">
+                </div>
+                <div class = "form-group">
                     <button type = "submit" class = "btn btn-success btn-lg" [disabled] = "categoryForm.invalid">Add</button>
                 </div>
               </form>  
