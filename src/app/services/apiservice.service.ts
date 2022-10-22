@@ -283,4 +283,9 @@ public getAllChefNotificationTokens() : Observable<any>
     return this.http.post("https://muskan-admin-app-default-rtdb.firebaseio.com/processedShopCustomOrders/"+orderDate+".json" , orderInformation);
   }
 
+  public isCategoryForDistributor(categoryKey : string) : Observable<any>
+  {
+    return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/Categories/"+categoryKey+"/forDistributor.json");
+  }
+
 }

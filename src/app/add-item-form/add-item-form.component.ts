@@ -23,6 +23,7 @@ export class AddItemFormComponent implements OnInit {
   availableSubcategoriesKeys : any;
   selectedSubcategoryKey : string;
   showSubcategoryDropdown : boolean;
+  isParentCategoryForDistributor :boolean;
 
   flavours : any[];
   designCategories : any[];
@@ -42,7 +43,13 @@ export class AddItemFormComponent implements OnInit {
        'directVariety' : new FormControl('0',[Validators.required]),
        'cakeFlavour' : new FormControl(null,[Validators.required]),
        'designCategory' : new FormControl(null,[Validators.required]),
-       'minPounds' : new FormControl('1')
+       'minPounds' : new FormControl('1'),
+       'distributorPrice' : new FormControl(null),
+       'distributorItemName' : new FormControl(null)
+    });
+
+    this.apiService.isCategoryForDistributor(this.parentCategoryData.categoryKey).subscribe((forD)=>{
+      this.isParentCategoryForDistributor = forD;
     });
 
     this.flavours = [];
@@ -146,6 +153,8 @@ export class AddItemFormComponent implements OnInit {
         minPounds : '1',
         cakeFlavour : null,
         designCategory : null,
+        distributorPrice : null,
+        distributorItemName : null,
       });
     }
     else
@@ -161,6 +170,8 @@ export class AddItemFormComponent implements OnInit {
         minPounds : '1',
         cakeFlavour : "not-valid",
         designCategory : "not-valid",
+        distributorPrice : null,
+        distributorItemName : null
       });
     }
     this.imgSrc = "../../assets/default.png";

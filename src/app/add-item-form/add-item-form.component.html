@@ -25,6 +25,12 @@
                     formControlName = "itemName"
                     placeholder = "Item Name">
                 </div>
+                <div class = "form-group" *ngIf = "isParentCategoryForDistributor">
+                    <input type = "text"
+                    class = "form-control"
+                    formControlName = "distributorItemName"
+                    placeholder = "Item Name for distributor">
+                </div>
                 <div class="form-group" *ngIf = "parentCategoryData.categoryName === 'CAKES & PASTRIES'">
                     <label>Flavour in which this cake can be prepared</label>
                     <p>If this cake can be prepared in all flavours , please select the ALL Flavours option in the dropdown.</p>
@@ -54,6 +60,14 @@
                     formControlName = "customerPrice"
                     placeholder = "Customer Price">
                 </div>
+                
+                    <div class = "form-group" *ngIf = "isParentCategoryForDistributor">
+                        <input type = "number"
+                        class = "form-control"
+                        formControlName = "distributorPrice"
+                        placeholder = "Distributor Price">
+                    </div>
+                
                 <div class="form-group">
                     <p>
                     <label>
