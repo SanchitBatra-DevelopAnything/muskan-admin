@@ -15,13 +15,16 @@ export class ItemComponent implements OnInit {
   item : any; //comes with a key.
 
   @Input()
-  parentSubcategoryKey : any;
+  parentSubcategoryKey : any; //dv in case of direct variety.
 
   @Input()
   parentCategoryName: any; // to diffrentiate UI for cakes.
 
   @Input()
-  parentCategoryKey:any; //dv in case of direct variety.
+  parentCategoryKey:any; 
+
+  @Input()
+  forDistributor:any;
 
   isDeleting : boolean;
   isBeingUpdated : boolean;
@@ -35,6 +38,8 @@ export class ItemComponent implements OnInit {
   editDesignCategory:any;
   editFlavour:any;
   editItemImgUrl:string;
+  editDistributorItemName:any;
+  editDistributorPrice:any;
 
   selectedImageForEdit:any;
   imgEditSrc:string;
@@ -54,6 +59,7 @@ export class ItemComponent implements OnInit {
     this.isDeleting = false;
     this.isEditMode = false;
     this.isBeingUpdated = false;
+    console.log(this.forDistributor);
 
     // if(this.parentCategoryName === "CAKES & PASTRIES")
     // {
@@ -83,6 +89,11 @@ export class ItemComponent implements OnInit {
     this.editItemImgUrl = this.item.imageUrl;
     this.imgEditSrc = this.item.imageUrl;
     this.editDesignCategory = this.item.designCategory;
+    if(this.forDistributor)
+    {
+      this.editDistributorItemName = this.item.editDistributorItemName;
+      this.editDistributorPrice = this.item.distributorPrice;
+    }
   }
 
   showPreview(event : any)
@@ -108,6 +119,11 @@ export class ItemComponent implements OnInit {
     this.isBeingUpdated = true;
     let updatedItem = {'itemName' : this.editItemName , 'offer' : this.editItemOffer , 'shopPrice' : this.editItemShopPrice , 
     'customerPrice' : this.editItemCustomerPrice , 'imageUrl' : this.item.imageUrl , 'cakeFlavour' : "not-valid" , 'designCategory' : "not-valid"};
+    if(this.forDistributor)
+    {
+     updatedItem["distributorPrice"] = this.editDistributorPrice;
+     updatedItem["distributorItemName"] = this.editDistributorItemName;
+    }
     if(this.item.imageUrl!=this.imgEditSrc) //means image change occured.
     {
       
@@ -145,6 +161,12 @@ export class ItemComponent implements OnInit {
     this.updatePrices(this.editFlavour , this.editDesignCategory);
     let updatedItem = {'itemName' : this.editItemName , 'offer' : this.editItemOffer , 'shopPrice' : this.editItemShopPrice , 
     'customerPrice' : this.editItemCustomerPrice , 'imageUrl' : this.item.imageUrl , 'cakeFlavour' : this.editFlavour , 'designCategory' : this.editDesignCategory};
+
+    if(this.forDistributor)
+    {
+     updatedItem["distributorPrice"] = this.editDistributorPrice;
+     updatedItem["distributorItemName"] = this.editDistributorItemName;
+    }
 
     if(this.item.imageUrl!=this.imgEditSrc) //means image change occured.
     {

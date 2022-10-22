@@ -33,6 +33,8 @@ export class ItemListComponent implements OnInit , OnDestroy {
   deleteItemSub : Subscription;
   updateItemSub: Subscription;
 
+  isCategoryForDistributor : boolean;
+
   @Output()
   flavours:any;
   @Output()
@@ -54,6 +56,10 @@ export class ItemListComponent implements OnInit , OnDestroy {
     this.fetchError = false;
     this.categoryKey = this.route.snapshot.params['categoryKey'];
     this.categoryName = this.route.snapshot.params['categoryName'];
+    this.isCategoryForDistributor = false;
+    this.apiService.isCategoryForDistributor(this.categoryKey).subscribe((ans)=>{
+      this.isCategoryForDistributor = ans;
+    });
     if(this.categoryName.toUpperCase() === "CAKES & PASTRIES")
     {
       this.fetchFlavours();
