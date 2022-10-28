@@ -26,7 +26,7 @@ export class AddDistributorshipFormComponent implements OnInit {
   {
     this.isInsertingDistributorship = true;
     this.addDistributorshipForm.patchValue({
-      distributorship : this.addDistributorshipForm.value.shopName.toUpperCase().trim()
+      distributorship : this.addDistributorshipForm.value.distributorship.toUpperCase().trim()
     })
     this.apiService.addDistributorship(this.addDistributorshipForm.value).subscribe((_)=>{
       this.isInsertingDistributorship = false;

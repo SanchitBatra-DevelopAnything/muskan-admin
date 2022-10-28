@@ -58,6 +58,7 @@ import { SubcategoryEditFormComponent } from './subcategory-edit-form/subcategor
 import { CustomOrderViewComponent } from './dailyreport/custom-order-view/custom-order-view.component';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { AddDistributorshipFormComponent } from './add-distributorship-form/add-distributorship-form.component';
+import { DistributorshipsComponent } from './manage-window/distributorships/distributorships.component';
 
 
 
@@ -70,11 +71,13 @@ const appRoutes : Routes = [
     {path : 'shops', component : ShopsComponent  , canActivate : [AuthGuardService]},
     {path : 'retailers' , component : RetailersComponent , canActivate : [AuthGuardService]} ,
     {path : 'chefs' , component : ChefsComponent , canActivate : [AuthGuardService]} , 
-    {path : 'salesmen' , component : SalesmenComponent , canActivate : [AuthGuardService]}
+    {path : 'salesmen' , component : SalesmenComponent , canActivate : [AuthGuardService]},
+    {path : 'distributorships' , component : DistributorshipsComponent , canActivate : [AuthGuardService]},
   ] ,},
   {path : 'salesman/upload' , component : AddSalesmanFormComponent , canActivate : [AuthGuardService]},
   {path : 'chef/upload' , component : AddChefsFormComponent , canActivate : [AuthGuardService]},
   {path : 'shop/upload' , component : AddShopFormComponent , canActivate : [AuthGuardService]},
+  {path : 'distributorship/upload' , component : AddDistributorshipFormComponent , canActivate : [AuthGuardService]},
   {path : 'subcategory/upload/:categoryKey/:categoryName' , component : SubcategoryAddFormComponent , canActivate : [AuthGuardService]},
   {path : 'item/upload/:categoryKey/:categoryName' , component : AddItemFormComponent , canActivate: [AuthGuardService]},
   {path : 'itemsOf/:categoryKey/:categoryName' , component : ItemListComponent , canActivate: [AuthGuardService]},
@@ -127,6 +130,7 @@ const appRoutes : Routes = [
     SubcategoryEditFormComponent,
     CustomOrderViewComponent,
     AddDistributorshipFormComponent,
+    DistributorshipsComponent,
   ],
   imports: [
     BrowserModule,

@@ -293,4 +293,14 @@ public getAllChefNotificationTokens() : Observable<any>
     return this.http.post('https://muskan-admin-app-default-rtdb.firebaseio.com/Distributorships.json' , distributorship);
   }
 
+  public getDistributorships() : Observable<any>
+  {
+    return this.http.get('https://muskan-admin-app-default-rtdb.firebaseio.com/Distributorships.json');
+  }
+
+  public deleteDistributorship(distributorshipKey) : Observable<any>
+  {
+    return this.http.delete('https://muskan-admin-app-default-rtdb.firebaseio.com/Distributorships/'+distributorshipKey+".json");
+  }
+
 }
