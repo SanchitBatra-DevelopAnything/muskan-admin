@@ -57,6 +57,7 @@ import { SubcategoryDeleteFormComponent } from './subcategory-delete-form/subcat
 import { SubcategoryEditFormComponent } from './subcategory-edit-form/subcategory-edit-form.component';
 import { CustomOrderViewComponent } from './dailyreport/custom-order-view/custom-order-view.component';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { AddDistributorshipFormComponent } from './add-distributorship-form/add-distributorship-form.component';
 
 
 
@@ -125,6 +126,7 @@ const appRoutes : Routes = [
     SubcategoryDeleteFormComponent,
     SubcategoryEditFormComponent,
     CustomOrderViewComponent,
+    AddDistributorshipFormComponent,
   ],
   imports: [
     BrowserModule,

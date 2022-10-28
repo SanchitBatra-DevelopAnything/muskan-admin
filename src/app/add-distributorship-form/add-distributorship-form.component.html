@@ -1,0 +1,25 @@
+<div class="container" style = "text-align:center;">
+    <div class = "jumbotron">
+        <h3>Add Your Distributorships Here!!</h3>
+        
+        <form [formGroup] = "addDistributorshipForm" (ngSubmit) = "onSubmit()"> 
+            <div class="form-group">
+    
+                    <label for = "distributorship">Distributorship Area</label>
+                    <input type = "text"
+                    id="distributorship"
+                    class = "form-control"
+                    formControlName="distributorship">
+            </div>
+
+    
+            <button type = "submit" class = "btn btn-success btn-bold-text" *ngIf = "!isInsertingDistributorship" [disabled] = "addDistributorshipForm.pending|| addDistributorshipForm.invalid">Add Distributorship</button>
+            <button *ngIf = "isInsertingDistributorship" class = "btn btn-success">
+                <div class="loader loader-button">
+    
+                </div>
+            </button>
+        </form>
+    </div>
+    
+</div>
