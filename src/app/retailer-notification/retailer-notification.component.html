@@ -1,4 +1,4 @@
-<div class="jumbotron" *ngIf = "notificationData.distributorship == null">
+<div class="jumbotron" *ngIf = "notificationData!=null && notificationData.distributorship == null">
     
         <div>
             <h3>Shop : {{notificationData.shopAddress}}</h3>
@@ -23,7 +23,7 @@
     
 </div>
 
-<div class="jumbotron" *ngIf = "notificationData.distributorship != null">
+<div class="jumbotron" *ngIf = "notificationData!=null && notificationData.distributorship != null">
     
     <div>
         <h3>Distributorship : {{notificationData.distributorship}}</h3>

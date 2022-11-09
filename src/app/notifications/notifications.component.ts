@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ApiserviceService } from '../services/apiservice.service';
 import { UtilityServiceService } from '../services/utility-service.service';
@@ -8,7 +8,7 @@ import { UtilityServiceService } from '../services/utility-service.service';
   templateUrl: './notifications.component.html',
   styleUrls: ['./notifications.component.css']
 })
-export class NotificationsComponent implements OnInit {
+export class NotificationsComponent implements OnInit,OnDestroy {
 
   retailerNotifications : any[];
   notificationKeys : any[];
@@ -29,14 +29,14 @@ export class NotificationsComponent implements OnInit {
     this.noMoreDistributorNotifications = false;
     this.utilityService.refreshRetailerNotificationCount.next('refresh');
     this.retailerNotificationDeletedSub = this.utilityService.retailerNotificationDeleted.subscribe((_)=>{
-      this.getRetailerNotifications();
+      this.getNotifications();
     });
-    this.getRetailerNotifications();
+    this.getNotifications();
   }
 
-  getRetailerNotifications()
+  getNotifications()
   {
-    this.apiService.getRetailerNotifications().subscribe((notis)=>{
+    this.apiService.getNotifications().subscribe((notis)=>{
       if(notis === null)
       {
         this.noMoreRetailerNotifications = true;
@@ -82,6 +82,11 @@ export class NotificationsComponent implements OnInit {
     {
       this.noMoreDistributorNotifications = true;
     }
+  }
+
+  ngOnDestroy()
+  {
+    this.retailerNotificationDeletedSub.unsubscribe();
   }
 
 }

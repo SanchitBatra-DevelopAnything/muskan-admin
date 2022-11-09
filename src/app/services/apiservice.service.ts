@@ -33,12 +33,12 @@ export class ApiserviceService {
     return this.http.delete('https://muskan-admin-app-default-rtdb.firebaseio.com/Categories/'+key+".json");
   }
 
-  public getRetailerNotifications() : Observable<any>
+  public getNotifications() : Observable<any>
   {
     return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/retailerNotifications.json");
   }
 
-  public deleteRetailerNotification(notificationKey : string) : Observable<any>
+  public deleteNotification(notificationKey : string) : Observable<any>
   {
     return this.http.delete("https://muskan-admin-app-default-rtdb.firebaseio.com/retailerNotifications/" + notificationKey + ".json");
   }
