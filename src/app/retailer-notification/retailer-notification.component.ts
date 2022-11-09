@@ -16,7 +16,7 @@ export class RetailerNotificationComponent implements OnInit {
   isDeleting : boolean;
 
   @Input()
-  notificationData : {retailerName : string , shopAddress : string , mobileNumber : string};
+  notificationData : any;
 
   constructor(private apiService : ApiserviceService,private utilityService : UtilityServiceService) { }
 
@@ -36,9 +36,17 @@ export class RetailerNotificationComponent implements OnInit {
 
   }
 
-  approveNotification()
+  approveNotification(approveFor:string)
   {
     this.isApproving = true;
+    if(approveFor == "distributor")
+    {
+      this.apiService.approveDistributorNotification(this.notificationKey , this.notificationData).subscribe((_)=>{
+        this.isApproving = false;
+        this.deleteNotification();
+      });
+      return;
+    }
     this.apiService.approveRetailerNotification(this.notificationKey , this.notificationData).subscribe((_)=>{
       this.isApproving = false;
       this.deleteNotification();

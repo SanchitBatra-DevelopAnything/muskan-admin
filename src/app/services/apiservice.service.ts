@@ -303,4 +303,9 @@ public getAllChefNotificationTokens() : Observable<any>
     return this.http.delete('https://muskan-admin-app-default-rtdb.firebaseio.com/Distributorships/'+distributorshipKey+".json");
   }
 
+  public approveDistributorNotification(notificationKey : string , notificationData : any) : Observable<any>
+  {
+    return this.http.post('https://muskan-admin-app-default-rtdb.firebaseio.com/Distributors.json' , notificationData);
+  }
+
 }

@@ -38,6 +38,7 @@ export class AppComponent implements OnInit , OnDestroy {
     this.refreshRetailerNotificationCountSub = this.utilityService.refreshRetailerNotificationCount.subscribe((_)=>{
       this.getRetailerNotificationCount();
     });
+
     this.getRetailerNotificationCount();
     this.refreshActiveOrdersCountSub = this.utilityService.refreshActiveOrdersCount.subscribe((_)=>{
       this.getActiveOrdersCount();

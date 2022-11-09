@@ -12,5 +12,19 @@
             <h4>No Pending Retailer Notifications.</h4>
         </div>
     </div>
+
+    <hr>
+
+    <h3>Distributor Notifications</h3>
+    <hr>
+    <div class = "loader" *ngIf = "isLoading"></div>
+    <div *ngIf = "!isLoading">
+        <div *ngFor = "let notification of distributorNotifications; let i = index">
+            <app-retailer-notification [notificationKey] = "distributorNotificationKeys[i]" [notificationData] = "notification"></app-retailer-notification>
+        </div>
+        <div *ngIf = "noMoreDistributorNotifications">
+            <h4>No Pending Distributor Notifications.</h4>
+        </div>
+    </div>
     
 </div>
