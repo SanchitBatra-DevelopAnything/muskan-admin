@@ -20,7 +20,7 @@ export class AppComponent implements OnInit , OnDestroy {
   retailerNotificationDeletedSub : Subscription;
   refreshRetailerNotificationCountSub : Subscription;
 
-  totalOrders:number;
+  totalRetailerOrders:number;
   refreshActiveOrdersCountSub:Subscription;
 
   constructor(private apiService: ApiserviceService , private imageService : ImageService,private utilityService : UtilityServiceService) {
@@ -68,10 +68,10 @@ export class AppComponent implements OnInit , OnDestroy {
     this.apiService.getActiveOrdersCount().subscribe((shallowObject)=>{
       if(shallowObject === null)
       {
-        this.totalOrders = 0;
+        this.totalRetailerOrders = 0;
         return;
       }
-      this.totalOrders = Object.keys(shallowObject).length;
+      this.totalRetailerOrders = Object.keys(shallowObject).length;
     });
   }
 

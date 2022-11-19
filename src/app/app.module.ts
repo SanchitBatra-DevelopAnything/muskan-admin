@@ -59,12 +59,14 @@ import { CustomOrderViewComponent } from './dailyreport/custom-order-view/custom
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { AddDistributorshipFormComponent } from './add-distributorship-form/add-distributorship-form.component';
 import { DistributorshipsComponent } from './manage-window/distributorships/distributorships.component';
+import { DistributorDailyReportComponent } from './distributor-daily-report/distributor-daily-report.component';
 
 
 
 const appRoutes : Routes = [
   {path : 'notifications' , component : NotificationsComponent , canActivate : [AuthGuardService]},
   {path : 'dailyReport' , component : DailyreportComponent  , canActivate : [AuthGuardService]},
+  {path : 'dailyDistributorReport' , component : DistributorDailyReportComponent , canActivate : [AuthGuardService]},
   {path : 'categories' , component : CategoryListComponent , canActivate : [AuthGuardService]},
   {path : 'category/upload' , component : CategoryFormComponent , canActivate : [AuthGuardService]},
   {path : 'manage' , component : ManageWindowComponent , canActivate : [AuthGuardService] , children:[
@@ -131,6 +133,7 @@ const appRoutes : Routes = [
     CustomOrderViewComponent,
     AddDistributorshipFormComponent,
     DistributorshipsComponent,
+    DistributorDailyReportComponent,
   ],
   imports: [
     BrowserModule,
