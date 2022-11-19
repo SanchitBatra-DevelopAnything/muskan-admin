@@ -36,7 +36,7 @@ export class DistributorDailyReportComponent implements OnInit {
         this.activeDistributorOrders = [];
         return;
       }
-      this.activeDistributorOrderKeys = Object.values(orders);
+      this.activeDistributorOrders = Object.values(orders);
       this.activeDistributorOrderKeys = Object.keys(orders);
       this.isLoading = false;
     });
