@@ -308,4 +308,14 @@ public getAllChefNotificationTokens() : Observable<any>
     return this.http.post('https://muskan-admin-app-default-rtdb.firebaseio.com/Distributors.json' , notificationData);
   }
 
+  public getActiveOrdersForDistributors() : Observable<any>
+  {
+    return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/activeDistributorOrders.json");
+  }
+
+  public getActiveDistributorOrdersCount():Observable<any>
+  {
+    return this.http.get('https://muskan-admin-app-default-rtdb.firebaseio.com/activeDistributorOrders.json?shallow=true');
+  }
+
 }

@@ -21,7 +21,9 @@ export class AppComponent implements OnInit , OnDestroy {
   refreshRetailerNotificationCountSub : Subscription;
 
   totalRetailerOrders:number;
+  totalDistributorOrders : number;
   refreshActiveOrdersCountSub:Subscription;
+  refreshDistributorActiveOrdersCountSub:Subscription;
 
   constructor(private apiService: ApiserviceService , private imageService : ImageService,private utilityService : UtilityServiceService) {
 
@@ -44,6 +46,11 @@ export class AppComponent implements OnInit , OnDestroy {
       this.getActiveOrdersCount();
     });
     this.getActiveOrdersCount();
+
+    this.refreshDistributorActiveOrdersCountSub = this.utilityService.refreshDistributorActiveOrdersCount.subscribe((_)=>{
+      this.getDistributorActiveOrdersCount();
+    });
+    this.getDistributorActiveOrdersCount();
   }
 
   // onAdminLogin(loginData : Boolean)
@@ -75,11 +82,24 @@ export class AppComponent implements OnInit , OnDestroy {
     });
   }
 
+  getDistributorActiveOrdersCount()
+  {
+    this.apiService.getActiveDistributorOrdersCount().subscribe((shallowObject)=>{
+      if(shallowObject === null)
+      {
+        this.totalDistributorOrders = 0;
+        return;
+      }
+      this.totalDistributorOrders = Object.keys(shallowObject).length;
+    });
+  }
+
   ngOnDestroy()
   { 
     this.retailerNotificationDeletedSub.unsubscribe();
     this.refreshRetailerNotificationCountSub.unsubscribe();
     this.refreshActiveOrdersCountSub.unsubscribe();
+    this.refreshDistributorActiveOrdersCountSub.unsubscribe();
   }
 
 

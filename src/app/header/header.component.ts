@@ -17,6 +17,9 @@ export class HeaderComponent implements OnInit,OnDestroy {
   @Input()
   totalRetailerOrders:number;
 
+  @Input()
+  totalDistributorOrders:number;
+
 
   constructor(private UtilityService : UtilityServiceService) { 
   }
