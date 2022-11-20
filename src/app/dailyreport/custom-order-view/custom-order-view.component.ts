@@ -35,7 +35,7 @@ export class CustomOrderViewComponent implements OnInit {
 
   getOrderDetails()
   {
-    this.apiService.getOrder("NO DATE CONCEPT FOR UNPROCESSED ORDERS" , this.orderKey , this.orderType).subscribe((orderDetail)=>{
+    this.apiService.getOrder("NO DATE CONCEPT FOR UNPROCESSED ORDERS" , this.orderKey , this.orderType,"retailer").subscribe((orderDetail)=>{
       if(orderDetail == null)
       {
         this.orderData = {};

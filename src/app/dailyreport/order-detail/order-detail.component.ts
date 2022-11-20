@@ -4,7 +4,6 @@ import { ApiserviceService } from 'src/app/services/apiservice.service';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
-import { UtilityServiceService } from 'src/app/services/utility-service.service';
 import { TotalParchiService } from 'src/app/services/dataSharing/total-parchi.service';
 
 @Component({
@@ -21,6 +20,7 @@ export class OrderDetailComponent implements OnInit{
   orderData : {};
   billData : BillElement[];
   orderType : string;
+  orderedBy : string;
 
   displayedColumns : string[];
   dataSource:any;
@@ -39,12 +39,18 @@ export class OrderDetailComponent implements OnInit{
     this.orderKey = this.route.snapshot.params['orderKey'];
     this.orderType = this.route.snapshot.params['orderType'];
     this.orderDate = this.route.snapshot.params['orderDate'];
+    this.orderedBy = this.route.snapshot.params['orderedBy'];
     this.displayedColumns = this.orderKey == "totalParchi" ? ['Sno' , 'Item' , 'Quantity'] : ['Sno', 'Item', 'Quantity', 'Price'];
     this.getOrderItems();
   }
 
   goBackToOrders()
   {
+    if(this.orderedBy == "distributor")
+    {
+      this.router.navigate(['/dailyDistributorReport']); 
+      return; //go to distributor orders.
+    }
     this.router.navigate(['/dailyReport']);
   }
 
@@ -60,7 +66,7 @@ export class OrderDetailComponent implements OnInit{
     }
     this.viewTotalParchi = false;
     this.isLoading = true;
-    this.apiService.getOrder(this.orderDate,this.orderKey , this.orderType).subscribe((orderDetail)=>{
+    this.apiService.getOrder(this.orderDate,this.orderKey , this.orderType, this.orderedBy).subscribe((orderDetail)=>{
       if(orderDetail == null)
       {
         this.orderData = {};

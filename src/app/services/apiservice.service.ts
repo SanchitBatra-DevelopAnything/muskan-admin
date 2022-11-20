@@ -145,13 +145,23 @@ export class ApiserviceService {
     return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/activeShopOrders.json");
   }
 
-  public getOrder(orderDate,orderKey , orderType) : Observable<any>
+  public getOrder(orderDate,orderKey , orderType , orderedBy) : Observable<any>
   {
-    if(orderType.startsWith ("processed"))
+    if(orderType.startsWith ("processed") && !orderedBy.startsWith("distributor"))
     {
       let processedOrderKeyArray = orderType.split("?");
       let processedOrderKey = processedOrderKeyArray[1];
       return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/ProcessedShopOrders/"+orderDate+"/"+processedOrderKey+".json")  
+    }
+    if(orderType.startsWith ("processed") && orderedBy.startsWith("distributor"))
+    {
+      let processedOrderKeyArray = orderType.split("?");
+      let processedOrderKey = processedOrderKeyArray[1];
+      return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/ProcessedDistributorOrders/"+orderDate+"/"+processedOrderKey+".json")  
+    }
+    if(orderedBy.startsWith("distributor"))
+    {
+      return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/activeDistributorOrders/"+orderKey+".json");  
     }
     return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/activeShopOrders/"+orderKey+".json");
   }
