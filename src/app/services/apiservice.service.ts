@@ -25,7 +25,7 @@ export class ApiserviceService {
 
   public getCategories():Observable<any>
   {
-    return this.http.get('https://muskan-admin-app-default-rtdb.firebaseio.com/Categories.json');
+    return this.http.get('https://muskan-admin-app-default-rtdb.firebaseio.com/onlyCategories.json');
   }
 
   public deleteCategory(key:string) : Observable<any>
@@ -326,6 +326,11 @@ public getAllChefNotificationTokens() : Observable<any>
   public getActiveDistributorOrdersCount():Observable<any>
   {
     return this.http.get('https://muskan-admin-app-default-rtdb.firebaseio.com/activeDistributorOrders.json?shallow=true');
+  }
+
+  public uploadOnlyCategory(catKey : string , catData : any)
+  {
+    return this.http.put('https://muskan-admin-app-default-rtdb.firebaseio.com/onlyCategories/'+catKey+'.json' , catData);
   }
 
 }
