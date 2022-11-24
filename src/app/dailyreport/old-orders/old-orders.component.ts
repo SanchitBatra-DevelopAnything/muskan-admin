@@ -61,7 +61,7 @@ export class OldOrdersComponent implements OnInit {
     let month = d.getMonth() + 1;
     let year = d.getFullYear();
     let selectedDate = date+""+month+""+year;
-    this.router.navigate(['/orderBill/'+order['orderKey']+"/processed?"+processedOrderKey+"/"+selectedDate]);
+    this.router.navigate(['/orderBill/'+order['orderKey']+"/processed?"+processedOrderKey+"/"+selectedDate+"/retailer"]);
   }
 
   setFromTime(value)
