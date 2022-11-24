@@ -88,7 +88,7 @@ export class OldOrdersComponent implements OnInit {
     let selectedDate = date+""+month+""+year;
     if(!this.timeError)
     {
-      this.router.navigate(['/orderBill/'+"totalParchi"+"/processed?"+"totalParchi"+"/"+selectedDate]);
+      this.router.navigate(['/orderBill/'+"totalParchi"+"/processed?"+"totalParchi"+"/"+selectedDate+"/retailer"]);
     }
     
   }
