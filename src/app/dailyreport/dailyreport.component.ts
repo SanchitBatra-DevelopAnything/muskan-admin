@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { timeStamp } from 'console';
 import { ApiserviceService } from '../services/apiservice.service';
 import { UtilityServiceService } from '../services/utility-service.service';
 
@@ -28,7 +29,16 @@ export class DailyreportComponent implements OnInit {
     let monthIST = istDate.getMonth() + 1;
     let yearIST = istDate.getFullYear();
     this.todaysDate = dateIST + "" + monthIST + "" + yearIST; 
+    this.getActiveOrders();
+  }
+
+  getActiveOrders()
+  {
     this.isLoading = true;
+    this.activeOrders = [];
+    this.activeOrderKeys = [];
+    this.customOrderKeys = [];
+    this.customOrderKeys = [];
     this.apiService.getActiveOrders().subscribe((orders)=>{
       if(orders == null)
       {
@@ -93,6 +103,25 @@ export class DailyreportComponent implements OnInit {
   oldOrderPage()
   {
     this.router.navigate(['/processedOrders']);
+  }
+
+  deleteDirtyOrders()
+  {
+    this.isLoading = true;
+    let dirtyOrderKeys = [];
+    for(let i=0;i<this.activeOrders.length;i++)
+    {
+      let items = this.activeOrders[i]['items'];
+      if(items == undefined)
+      {
+        dirtyOrderKeys.push(this.activeOrderKeys[i]);
+      }
+    }
+    this.apiService.deleteAllDirtyOrders(dirtyOrderKeys).subscribe(
+      (_)=>{
+        this.getActiveOrders();
+      }
+    );
   }
 
 }

@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { forkJoin, Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -328,9 +328,32 @@ public getAllChefNotificationTokens() : Observable<any>
     return this.http.get('https://muskan-admin-app-default-rtdb.firebaseio.com/activeDistributorOrders.json?shallow=true');
   }
 
-  public uploadOnlyCategory(catKey : string , catData : any)
+  public uploadOnlyCategory(catKey : string , catData : any) : Observable<any>
   {
     return this.http.put('https://muskan-admin-app-default-rtdb.firebaseio.com/onlyCategories/'+catKey+'.json' , catData);
+  }
+
+  public deleteAllDirtyOrders(dirtyOrderKeys) : Observable<any>
+  {
+    // return Observable.create((observer)=>{
+    //   for(let i=0;i<dirtyOrderKeys.length;i++)
+    //   {
+    //     this.http.delete('https://muskan-admin-app-default-rtdb.firebaseio.com/activeShopOrders/'+dirtyOrderKeys[i]+'/.json').subscribe((_)=>{
+    //       observer.next('Completed deleting '+dirtyOrderKeys[i]);
+    //     });
+    //   }
+    //   observer.Completed('Compeleted Deleting');
+    // });
+    const requests = dirtyOrderKeys
+      .map(requestId => this.deleteOrder(requestId));
+    return forkJoin(
+      ...requests
+    );
+  }
+
+  private deleteOrder(key) : Observable<any>
+  {
+    return this.http.delete('https://muskan-admin-app-default-rtdb.firebaseio.com/activeShopOrders/'+key+'/.json');
   }
 
 }
