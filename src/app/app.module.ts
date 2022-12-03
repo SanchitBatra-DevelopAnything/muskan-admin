@@ -60,6 +60,7 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { AddDistributorshipFormComponent } from './add-distributorship-form/add-distributorship-form.component';
 import { DistributorshipsComponent } from './manage-window/distributorships/distributorships.component';
 import { DistributorDailyReportComponent } from './distributor-daily-report/distributor-daily-report.component';
+import { DistributorsComponent } from './manage-window/distributors/distributors.component';
 
 
 
@@ -75,6 +76,7 @@ const appRoutes : Routes = [
     {path : 'chefs' , component : ChefsComponent , canActivate : [AuthGuardService]} , 
     {path : 'salesmen' , component : SalesmenComponent , canActivate : [AuthGuardService]},
     {path : 'distributorships' , component : DistributorshipsComponent , canActivate : [AuthGuardService]},
+    {path : 'distributors' , component : DistributorsComponent , canActivate : [AuthGuardService]},
   ] ,},
   {path : 'salesman/upload' , component : AddSalesmanFormComponent , canActivate : [AuthGuardService]},
   {path : 'chef/upload' , component : AddChefsFormComponent , canActivate : [AuthGuardService]},
@@ -134,6 +136,7 @@ const appRoutes : Routes = [
     AddDistributorshipFormComponent,
     DistributorshipsComponent,
     DistributorDailyReportComponent,
+    DistributorsComponent,
   ],
   imports: [
     BrowserModule,
