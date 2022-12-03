@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ApiserviceService } from 'src/app/services/apiservice.service';
 import { TotalParchiService } from 'src/app/services/dataSharing/total-parchi.service';
 
@@ -21,7 +21,9 @@ export class OldOrdersComponent implements OnInit {
   options:any;
   totalParchiFor:string;
 
-  constructor(private apiService : ApiserviceService , private router:Router , private totalParchiService : TotalParchiService) { }
+  appType:string;
+
+  constructor(private apiService : ApiserviceService , private router:Router , private totalParchiService : TotalParchiService,private route:ActivatedRoute) { }
 
   ngOnInit(): void {
     this.isLoading = false;
@@ -31,6 +33,7 @@ export class OldOrdersComponent implements OnInit {
     this.timeError = false;
     this.totalParchiFor = '';
     this.options = ["Retailers Only" , "Salesmen Only" , "All Mixed"];
+    this.appType = this.route.snapshot.params['type'];
   }
 
   changeDate()
@@ -40,18 +43,37 @@ export class OldOrdersComponent implements OnInit {
     let month = this.selected.getMonth();
     let year = this.selected.getFullYear();
     let fullDate = date+""+(month+1)+""+year;
-    this.apiService.getProcessedShopOrders(fullDate).subscribe((orders)=>{
-      if(orders == null)
-      {
-        this.processedOrderKeys= [];
-        this.processedOrders = [];
+    if(this.appType == "retailer")
+    {
+      this.apiService.getProcessedShopOrders(fullDate).subscribe((orders)=>{
+        if(orders == null)
+        {
+          this.processedOrderKeys= [];
+          this.processedOrders = [];
+          this.isLoading = false;
+          return;
+        }
+        this.processedOrders = Object.values(orders);
+        this.processedOrderKeys = Object.keys(orders);
         this.isLoading = false;
-        return;
-      }
-      this.processedOrders = Object.values(orders);
-      this.processedOrderKeys = Object.keys(orders);
-      this.isLoading = false;
-    });
+      });
+    }
+    else
+    {
+      this.apiService.getProcessedDistributorOrders(fullDate).subscribe((orders)=>{
+        if(orders == null)
+        {
+          this.processedOrderKeys= [];
+          this.processedOrders = [];
+          this.isLoading = false;
+          return;
+        }
+        this.processedOrders = Object.values(orders);
+        this.processedOrderKeys = Object.keys(orders);
+        this.isLoading = false;
+      });
+    }
+    
   }
 
   showBill(order , processedOrderKey)
@@ -61,7 +83,14 @@ export class OldOrdersComponent implements OnInit {
     let month = d.getMonth() + 1;
     let year = d.getFullYear();
     let selectedDate = date+""+month+""+year;
-    this.router.navigate(['/orderBill/'+order['orderKey']+"/processed?"+processedOrderKey+"/"+selectedDate+"/retailer"]);
+    if(this.appType == "retailer")
+    {
+      this.router.navigate(['/orderBill/'+order['orderKey']+"/processed?"+processedOrderKey+"/"+selectedDate+"/retailer"]);
+    }
+    else
+    {
+      this.router.navigate(['/orderBill/'+order['orderKey']+"/processed?"+processedOrderKey+"/"+selectedDate+"/distributor"]);
+    }
   }
 
   setFromTime(value)
@@ -88,7 +117,15 @@ export class OldOrdersComponent implements OnInit {
     let selectedDate = date+""+month+""+year;
     if(!this.timeError)
     {
-      this.router.navigate(['/orderBill/'+"totalParchi"+"/processed?"+"totalParchi"+"/"+selectedDate+"/retailer"]);
+      if(this.appType == "retailer")
+      {
+        this.router.navigate(['/orderBill/'+"totalParchi"+"/processed?"+"totalParchi"+"/"+selectedDate+"/retailer"]);
+      }
+      else
+      {
+        this.router.navigate(['/orderBill/'+"totalParchi"+"/processed?"+"totalParchi"+"/"+selectedDate+"/distributor"]);
+      }
+      
     }
     
   }
@@ -108,7 +145,7 @@ export class OldOrdersComponent implements OnInit {
     }
     else
     {
-      let selectedDomainFilteredOrders = this.filterOrdersBasedOnDomain();
+      let selectedDomainFilteredOrders = this.appType == "retailer" ? this.filterOrdersBasedOnDomain() : this.processedOrders;
       this.timeError = false;
       this.isLoading = true;
       for(let i=0;i<selectedDomainFilteredOrders.length;i++)

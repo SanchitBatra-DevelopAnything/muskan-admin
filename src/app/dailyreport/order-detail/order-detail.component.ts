@@ -163,14 +163,22 @@ export class OrderDetailComponent implements OnInit{
     orderInformation['orderKey'] = this.orderKey;
     
     console.log( " Going to Chef = ",orderInformation);
-    this.apiService.makeOrderForChef(orderInformation , this.orderDate).subscribe((_)=>{
-      this.apiService.deleteActiveOrder(this.orderKey).subscribe((_)=>{
+    this.apiService.makeOrderForChef(orderInformation , this.orderDate , this.orderedBy).subscribe((_)=>{
+      this.apiService.deleteActiveOrder(this.orderKey , this.orderedBy).subscribe((_)=>{
         this.toastr.success('Order Given To Chefs Successfully', 'Notification!' , {
           timeOut : 4000 ,
           closeButton : true , 
           positionClass : 'toast-bottom-right'
         });
-        this.router.navigate(['/dailyReport']);
+        if(this.orderedBy == "retailer")
+        {
+          this.router.navigate(['/dailyReport']);
+        }
+        else
+        {
+          this.router.navigate(['/distributorDailyReport']);
+        }
+        
         this.isLoading = false;
       });
     });

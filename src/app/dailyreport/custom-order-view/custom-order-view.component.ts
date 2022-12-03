@@ -67,7 +67,7 @@ export class CustomOrderViewComponent implements OnInit {
     
     console.log( " Going to Chef = ",orderInformation);
      this.apiService.sendCustomOrderToChef(orderInformation , this.orderDate).subscribe((_)=>{
-       this.apiService.deleteActiveOrder(this.orderKey).subscribe((_)=>{
+       this.apiService.deleteActiveOrder(this.orderKey,"retailer").subscribe((_)=>{
          this.toastr.success('Order Given To Chefs Successfully', 'Notification!' , {
            timeOut : 4000 ,
            closeButton : true , 

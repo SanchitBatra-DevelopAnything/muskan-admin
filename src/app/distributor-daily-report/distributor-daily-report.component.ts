@@ -70,7 +70,7 @@ export class DistributorDailyReportComponent implements OnInit {
 
   oldOrderPage()
   {
-    this.router.navigate(['/processedOrders']);
+    this.router.navigate(['/processedOrders/distributor']);
   }
 
 

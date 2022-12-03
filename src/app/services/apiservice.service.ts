@@ -166,13 +166,21 @@ export class ApiserviceService {
     return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/activeShopOrders/"+orderKey+".json");
   }
 
-  public makeOrderForChef(orderData : any , orderDate:any) : Observable<any>
+  public makeOrderForChef(orderData : any , orderDate:any , orderedBy:any) : Observable<any>
   {
+    if(orderedBy == "distributor")
+    {
+      return this.http.post("https://muskan-admin-app-default-rtdb.firebaseio.com/ProcessedDistributorOrders/"+orderDate+".json" , orderData);
+    }
     return this.http.post("https://muskan-admin-app-default-rtdb.firebaseio.com/ProcessedShopOrders/"+orderDate+".json" , orderData);
   }
 
-  public deleteActiveOrder(orderKey : string) : Observable<any>
+  public deleteActiveOrder(orderKey : string , orderedBy:string) : Observable<any>
   {
+    if(orderedBy == "distributor")
+    {
+      return this.http.delete("https://muskan-admin-app-default-rtdb.firebaseio.com/activeDistributorOrders"+"/"+orderKey+".json");
+    }
     return this.http.delete("https://muskan-admin-app-default-rtdb.firebaseio.com/activeShopOrders"+"/"+orderKey+".json");
   }
 
@@ -354,6 +362,11 @@ public getAllChefNotificationTokens() : Observable<any>
   private deleteOrder(key) : Observable<any>
   {
     return this.http.delete('https://muskan-admin-app-default-rtdb.firebaseio.com/activeShopOrders/'+key+'/.json');
+  }
+
+  public getProcessedDistributorOrders(date:string) : Observable<any>
+  {
+    return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/ProcessedDistributorOrders/"+date+".json");
   }
 
 }

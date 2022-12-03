@@ -20,7 +20,7 @@
             <ngx-material-timepicker #picker1 (timeChanged) = "setToTime($event)"></ngx-material-timepicker>
 
             <label id="example-radio-group-label">Total Parchi is needed for : </label>
-<mat-radio-group
+<mat-radio-group *ngIf = "appType=='retailer'"
   aria-labelledby="example-radio-group-label"
   class="example-radio-group"
   [(ngModel)]="totalParchiFor">
@@ -28,10 +28,14 @@
     {{option}}
   </mat-radio-button>
 </mat-radio-group>
-<div>Your have selected : {{totalParchiFor}}</div>
+<div *ngIf = "appType=='retailer'">Your have selected : {{totalParchiFor}}</div>
 
 
-            <button style = "margin-top:10px;" class="btn btn-success" [disabled] = "(fromTime=='' || toTime == '') || totalParchiFor==''" (click) = "getTotalParchi()">
+            <button *ngIf = "appType == 'distributor'" style = "margin-top:10px;" class="btn btn-success" [disabled] = "(fromTime=='' || toTime == '')" (click) = "getTotalParchi()">
+                Get Total Parchi
+            </button>
+
+            <button *ngIf = "appType == 'retailer'" style = "margin-top:10px;" class="btn btn-success" [disabled] = "(fromTime=='' || toTime == '') || totalParchiFor==''" (click) = "getTotalParchi()">
                 Get Total Parchi
             </button>
             <p *ngIf = "timeError" style = "color: red;">Start time cant be ahead of end time.</p>

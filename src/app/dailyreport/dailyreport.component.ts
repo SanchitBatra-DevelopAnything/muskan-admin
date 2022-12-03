@@ -102,7 +102,7 @@ export class DailyreportComponent implements OnInit {
 
   oldOrderPage()
   {
-    this.router.navigate(['/processedOrders']);
+    this.router.navigate(['/processedOrders/retailer']);
   }
 
   deleteDirtyOrders()

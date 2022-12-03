@@ -85,7 +85,7 @@ const appRoutes : Routes = [
   {path : 'itemsOf/:categoryKey/:categoryName' , component : ItemListComponent , canActivate: [AuthGuardService]},
   {path : 'orderBill/:orderKey/:orderType/:orderDate/:orderedBy' , component : OrderDetailComponent , canActivate: [AuthGuardService]},
   {path : 'customOrder/:orderKey/:orderType' , component : CustomOrderViewComponent , canActivate : [AuthGuardService]},
-  {path : 'processedOrders' , component : OldOrdersComponent , canActivate: [AuthGuardService]},
+  {path : 'processedOrders/:type' , component : OldOrdersComponent , canActivate: [AuthGuardService]},
   {path: 'cakes/flavours' , component : FlavoursScreenComponent , canActivate: [AuthGuardService]},
   {path : 'deleteSubcategory/:categoryKey/:categoryName' , component : SubcategoryDeleteFormComponent , canActivate : [AuthGuardService]},
   {path : 'editSubcategory/:categoryKey/:categoryName' , component : SubcategoryEditFormComponent , canActivate : [AuthGuardService]},
