@@ -176,7 +176,7 @@ export class OrderDetailComponent implements OnInit{
         }
         else
         {
-          this.router.navigate(['/distributorDailyReport']);
+          this.router.navigate(['/dailyDistributorReport']);
         }
         
         this.isLoading = false;
