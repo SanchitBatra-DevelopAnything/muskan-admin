@@ -351,6 +351,11 @@ public getAllChefNotificationTokens() : Observable<any>
     return this.http.put('https://muskan-admin-app-default-rtdb.firebaseio.com/onlyCategories/'+catKey+'.json' , catData);
   }
 
+  public insertCategory(catData:any) : Observable<any>
+  {
+    return this.http.post('https://muskan-admin-app-default-rtdb.firebaseio.com/Categories.json' , catData);
+  }
+
   public deleteAllDirtyOrders(dirtyOrderKeys) : Observable<any>
   {
     // return Observable.create((observer)=>{
