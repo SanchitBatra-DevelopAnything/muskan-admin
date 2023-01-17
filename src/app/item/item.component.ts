@@ -91,7 +91,7 @@ export class ItemComponent implements OnInit {
     this.editDesignCategory = this.item.designCategory;
     if(this.forDistributor)
     {
-      this.editDistributorItemName = this.item.editDistributorItemName;
+      this.editDistributorItemName = this.item.distributorItemName;
       this.editDistributorPrice = this.item.distributorPrice;
     }
   }
