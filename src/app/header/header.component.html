@@ -11,7 +11,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li routerLinkActive = "active"><a routerLink = "/manage">Manage</a></li>
-                <li routerLinkActive = "active"><a routerLink = "/notifications">Notifications ({{totalNotifications}})</a></li>
+                <li routerLinkActive = "active"><a routerLink = "/notifications"><i class="pi pi-bell mr-4 p-text-secondary" pBadge style="font-size: 2rem" value="{{totalNotifications}}"></i></a></li>
                 <li *ngIf = "loggedIn"><a routerLink = "/" (click) = "onLogout()">Logout</a></li>
             </ul>
         </div>

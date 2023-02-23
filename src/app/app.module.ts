@@ -17,6 +17,7 @@ import {MatCardModule} from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatRadioModule} from '@angular/material/radio';
+import {BadgeModule} from 'primeng/badge';
 
 import { AppComponent } from './app.component';
 import { CategoryListComponent } from './category-list/category-list.component';
@@ -159,6 +160,7 @@ const appRoutes : Routes = [
     MatIconModule,
     NgxMaterialTimepickerModule,
     MatRadioModule,
+    BadgeModule,
     
     RouterModule.forRoot(appRoutes,{useHash: true}),
   ],

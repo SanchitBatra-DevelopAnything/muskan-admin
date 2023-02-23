@@ -24,6 +24,9 @@
             ],
             "styles": [
               "../muskan-admin-app/node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "../muskan-admin-app/node_modules/primeicons/primeicons.css",
+              "../muskan-admin-app/node_modules/primeng/resources/themes/lara-light-blue/theme.css",
+              "../muskan-admin-app/node_modules/primeng/resources/primeng.min.css",
               "src/styles.css"
             ],
             "scripts": []
