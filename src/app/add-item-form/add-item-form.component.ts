@@ -103,6 +103,7 @@ export class AddItemFormComponent implements OnInit {
           fileRef.getDownloadURL().subscribe((url)=>{
             formValue['imageUrl']=url;
             this.apiService.addItem(formValue , this.parentCategoryData.categoryKey , this.selectedSubcategoryKey).subscribe((_)=>{
+              this.sendNotification("Added "+formValue['itemName'] , "GO TO "+this.parentCategoryData.categoryName+"--->"+formValue['subcategoryName'],formValue['imageUrl']);
               this.showToasterNotification();
               this.resetForm();
             });
@@ -110,6 +111,15 @@ export class AddItemFormComponent implements OnInit {
         })
       ).subscribe();
     }
+  }
+
+  sendNotification(title , body , image) {
+    console.log("function called");
+    this.apiService.sendNotification(body,title,image).subscribe((_)=>{
+      console.log("sent noti");
+    }, (err)=>{
+      console.log(err);
+    })
   }
 
   fetchFlavours()

@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { forkJoin, Observable, of } from 'rxjs';
+import { catchError, forkJoin, Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -382,6 +382,24 @@ public getAllChefNotificationTokens() : Observable<any>
   public getProcessedDistributorOrders(date:string) : Observable<any>
   {
     return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/ProcessedDistributorOrders/"+date+".json");
+  }
+
+  public sendNotification(Nbody:string , title:string , image:string) : Observable<any>
+  {
+    console.log("notification call");
+    const body = {
+      "to" : "/topics/items",
+      "notification" : {
+          "body" : Nbody,
+          "title" : title,
+          "android_channel_id" : "Muskan-Admin-App",
+          "image": image,
+          "sound" : true
+      },
+      "topic" : "items"
+  };
+    const headers = { 'Authorization': 'Bearer AAAAaXPIZ2w:APA91bEgPROJFmaweC-pHnP9IMyeVfxBUowqiaiQDQh-WpWUM183m12SEf8uhd-b-u3QnbljavfwKt7riYAKyBZ0pbRMH6KZv1qUiezYocj8Y_lVc8i9zL_ChF6c_ifAQ7ifgn77qJQ4', 'Content-Type': 'application/json' };
+    return this.http.post("https://fcm.googleapis.com/fcm/send" ,body,{headers});
   }
 
 }
