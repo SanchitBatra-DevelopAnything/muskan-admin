@@ -185,6 +185,14 @@ export class OrderDetailComponent implements OnInit{
       });
     });
     const deviceToken = this.notificationService.findParticularToken(orderInformation['orderedBy']);
+    if(deviceToken == undefined || deviceToken == null)
+    {
+     //try again to load notification data , kyuki shayad app initial load pe app component ne nahi pick kiya ho.. ek aur try delo.
+     this.apiService.getAllNotificationTokens().subscribe((allTokens)=>{
+       const data = Object.values(allTokens);
+       this.notificationService.setNotificationData(data);
+     });
+    }
     this.apiService.sendNotificationToParticularDevice("Check details in my orders.","REGULAR ORDER ACCEPTED!",deviceToken).subscribe((_)=>{
       console.log("SENT NOTIFICATION");
       this.toastr.success('Sent notification successfull!', 'Notification!' , {
