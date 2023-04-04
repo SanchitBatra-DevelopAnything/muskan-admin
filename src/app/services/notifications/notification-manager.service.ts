@@ -20,6 +20,6 @@ export class NotificationManagerService {
       return notificationData.name.toUpperCase() === name.toUpperCase();
     });
     console.log(data);
-    return data[0].token.toString();
+    return data[data.length-1].token.toString();
   }
 }
