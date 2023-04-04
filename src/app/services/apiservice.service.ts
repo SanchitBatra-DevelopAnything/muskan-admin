@@ -384,6 +384,11 @@ public getAllChefNotificationTokens() : Observable<any>
     return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/ProcessedDistributorOrders/"+date+".json");
   }
 
+  public getAllNotificationTokens() : Observable<any>
+  {
+    return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/notificationTokens.json");
+  }
+
   public sendNotification(Nbody:string , title:string , image:string) : Observable<any>
   {
     console.log("notification call");
@@ -399,6 +404,22 @@ public getAllChefNotificationTokens() : Observable<any>
       "topic" : "items"
   };
     const headers = { 'Authorization': 'Bearer AAAAaXPIZ2w:APA91bEgPROJFmaweC-pHnP9IMyeVfxBUowqiaiQDQh-WpWUM183m12SEf8uhd-b-u3QnbljavfwKt7riYAKyBZ0pbRMH6KZv1qUiezYocj8Y_lVc8i9zL_ChF6c_ifAQ7ifgn77qJQ4', 'Content-Type': 'application/json' };
+    return this.http.post("https://fcm.googleapis.com/fcm/send" ,body,{headers});
+  }
+
+  public sendNotificationToParticularDevice(Nbody:string , title:string , token:string) : Observable<any>
+  {
+    console.log("notification call");
+    const body = {
+      "to" : token,
+      "notification" : {
+          "body" : Nbody,
+          "title" : title,
+          "android_channel_id" : "Muskan-Admin-App",
+          "sound" : true
+      },
+  };
+    const headers = { 'Authorization': 'key=AAAAaXPIZ2w:APA91bEgPROJFmaweC-pHnP9IMyeVfxBUowqiaiQDQh-WpWUM183m12SEf8uhd-b-u3QnbljavfwKt7riYAKyBZ0pbRMH6KZv1qUiezYocj8Y_lVc8i9zL_ChF6c_ifAQ7ifgn77qJQ4', 'Content-Type': 'application/json' };
     return this.http.post("https://fcm.googleapis.com/fcm/send" ,body,{headers});
   }
 

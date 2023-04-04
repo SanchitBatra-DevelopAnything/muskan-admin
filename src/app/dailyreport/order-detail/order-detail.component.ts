@@ -5,6 +5,8 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
 import { TotalParchiService } from 'src/app/services/dataSharing/total-parchi.service';
+import { throws } from 'assert';
+import { NotificationManagerService } from 'src/app/services/notifications/notification-manager.service';
 
 @Component({
   selector: 'app-order-detail',
@@ -32,7 +34,7 @@ export class OrderDetailComponent implements OnInit{
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
 
-  constructor(private route : ActivatedRoute , private router : Router,private apiService : ApiserviceService , private toastr : ToastrService , private totalParchiService : TotalParchiService) { }
+  constructor(private route : ActivatedRoute , private router : Router,private apiService : ApiserviceService , private toastr : ToastrService , private totalParchiService : TotalParchiService , private notificationService :NotificationManagerService) { }
 
   ngOnInit(): void {
     this.isLoading = false;
@@ -182,24 +184,14 @@ export class OrderDetailComponent implements OnInit{
         this.isLoading = false;
       });
     });
-    console.log("STARTING CHEF NOTIS");
-    this.apiService.getAllChefNotificationTokens().subscribe((tokens)=>{
-      var regIds = [];
-      if(tokens!=null)
-      {
-        regIds = Object.values(tokens);
-        var onlyTokens = regIds.map((chefToken)=>{
-          return chefToken.chefToken;
-        })
-      }
-      this.apiService.sendNotificationToChefs(onlyTokens).subscribe((_)=>{
-        this.toastr.success('Sent notifications to chefs', 'Notification!' , {
-          timeOut : 4000 ,
-          closeButton : true , 
-          positionClass : 'toast-bottom-right'
-        });
+    const deviceToken = this.notificationService.findParticularToken(orderInformation['orderedBy']);
+    this.apiService.sendNotificationToParticularDevice("Please go to my orders section to view the order.","REGULAR ORDER ACCEPTED!",deviceToken).subscribe((_)=>{
+      console.log("SENT NOTIFICATION");
+      this.toastr.success('Sent notification successfull!', 'Notification!' , {
+        timeOut : 4000 ,
+        closeButton : true , 
+        positionClass : 'toast-bottom-right'
       });
-      console.log("SENT NOTIS COMPLETE");
     });
   }
 

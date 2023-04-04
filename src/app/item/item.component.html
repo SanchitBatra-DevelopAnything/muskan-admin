@@ -29,7 +29,7 @@
             <p style = "display: inline-block; white-space: nowrap; overflow: hidden;">Design : {{item.designCategory}}</p>    
         </div>
         <div *ngIf = "!isEditMode && !isBeingUpdated && parentCategoryName !== 'CAKES & PASTRIES'">
-            <h5 class="card-title center-text">
+            <h5 class="card-title center-text" style = "white-space: nowrap; overflow: hidden;">
                 {{item.itemName | uppercase}}
             </h5>
             <br>
@@ -37,7 +37,7 @@
             <p style="display: inline-block;">Shop Price : Rs.{{item.shopPrice}}</p>
             <p style = "display: inline-block;">Customer Price : Rs. {{item.customerPrice}}</p>
             <p *ngIf = "forDistributor" style = "display: inline-block;">distributor Price : Rs. {{item.distributorPrice}}</p> 
-            <p *ngIf = "forDistributor" style = "display: inline-block;">distributor Item Name : {{item.distributorItemName}}</p>       
+            <p *ngIf = "forDistributor" style = "display: inline-block;" style = "white-space: nowrap; overflow: hidden";>distributor Item Name : {{item.distributorItemName}}</p>       
         </div>
         <div *ngIf = "isEditMode && !isBeingUpdated && parentCategoryName === 'CAKES & PASTRIES'">
             <p>Item Name : <input type = "text" placeholder = "item name" [(ngModel)] = "editItemName"></p>

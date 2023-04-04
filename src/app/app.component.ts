@@ -3,6 +3,7 @@ import { MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio';
 import { Subscription } from 'rxjs';
 import { ApiserviceService } from './services/apiservice.service';
 import { ImageService } from './services/image.service';
+import { NotificationManagerService } from './services/notifications/notification-manager.service';
 import { UtilityServiceService } from './services/utility-service.service';
 
 @Component({
@@ -25,7 +26,7 @@ export class AppComponent implements OnInit , OnDestroy {
   refreshActiveOrdersCountSub:Subscription;
   refreshDistributorActiveOrdersCountSub:Subscription;
 
-  constructor(private apiService: ApiserviceService , private imageService : ImageService,private utilityService : UtilityServiceService) {
+  constructor(private apiService: ApiserviceService , private imageService : ImageService,private utilityService : UtilityServiceService , private notificationService : NotificationManagerService) {
 
   }
 
@@ -51,6 +52,13 @@ export class AppComponent implements OnInit , OnDestroy {
       this.getDistributorActiveOrdersCount();
     });
     this.getDistributorActiveOrdersCount();
+
+    //load all notification tokens to notification service. This is used to send a particular notification to a particular device , example order accepted etc.
+    //app initial load par saare tokens aagaye aur set hogaye , ab kahin bhi required retailer ka token use krke notification bhejdo.
+    this.apiService.getAllNotificationTokens().subscribe((allTokens)=>{
+      const data = Object.values(allTokens);
+      this.notificationService.setNotificationData(data);
+    });
   }
 
   // onAdminLogin(loginData : Boolean)
