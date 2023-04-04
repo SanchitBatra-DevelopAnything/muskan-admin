@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { MatDialog } from '@angular/material/dialog';
 import { finalize } from 'rxjs';
+import { ContainerComponent } from '../container/container.component';
 import { ApiserviceService } from '../services/apiservice.service';
 import { UtilityServiceService } from '../services/utility-service.service';
 
@@ -53,7 +55,7 @@ export class ItemComponent implements OnInit {
   @Input()
   designsForEditDropdown:any;
 
-  constructor(private storage : AngularFireStorage,private apiService : ApiserviceService , private utilityService : UtilityServiceService) { }
+  constructor(private storage : AngularFireStorage,private apiService : ApiserviceService , private utilityService : UtilityServiceService , private dialog:MatDialog) { }
 
   ngOnInit(): void {
     this.isDeleting = false;
@@ -76,6 +78,18 @@ export class ItemComponent implements OnInit {
       this.utilityService.itemDeleted.next(this.item.key);
       this.isDeleting = false;
     });
+  }
+
+  openDialog()
+  {
+    let dialogRef = this.dialog.open(ContainerComponent , {data : {itemName : this.item.itemName.toUpperCase()}});
+
+    dialogRef.afterClosed().subscribe((result)=>{
+      if(result === "yes")
+      {
+        this.deleteItem();
+      }
+    }); 
   }
 
   editItem()

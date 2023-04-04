@@ -24,7 +24,7 @@
             formControlName = "password">
         </div>
 
-        <p style = "color : red; font-weight: bold;">New Feature Added : <mark>Sending notifications each time you add a new item!</mark></p>
+        <p style = "color : red; font-weight: bold;">New Feature Added : <mark>Notifications on new items and LOCK on item delete!</mark></p>
 
         <button type = "submit" class = "btn btn-success btn-bold-text" [disabled]="isLoading && !internetProblem">LOGIN</button>
         <p  class = "red" *ngIf="!isLoading && internetProblem">Internet Issues Detected. Not able to login now.</p>

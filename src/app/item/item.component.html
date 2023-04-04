@@ -67,7 +67,7 @@
         <button class = "btn btn-primary" (click) = "editItem()" *ngIf = "!isEditMode">Edit</button>
         <button class = "btn btn-primary" (click) = "updateItem()" *ngIf = "isEditMode && parentCategoryName !== 'CAKES & PASTRIES'">Save</button>
         <button class = "btn btn-primary" (click) = "updateCakeItem()" *ngIf = "isEditMode && parentCategoryName === 'CAKES & PASTRIES'">Save</button>
-        <button class = "btn btn-danger spaced-button" (click) = "deleteItem()" *ngIf = "!isDeleting">Delete</button>
+        <button class = "btn btn-danger spaced-button" (click) = "openDialog()" *ngIf = "!isDeleting">Delete</button>
         <button class = "btn btn-danger" *ngIf = "isDeleting">
             <div class = "loader loader-button">
 
