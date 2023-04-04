@@ -185,7 +185,7 @@ export class OrderDetailComponent implements OnInit{
       });
     });
     const deviceToken = this.notificationService.findParticularToken(orderInformation['orderedBy']);
-    this.apiService.sendNotificationToParticularDevice("Please go to my orders section to view the order.","REGULAR ORDER ACCEPTED!",deviceToken).subscribe((_)=>{
+    this.apiService.sendNotificationToParticularDevice("Check details in my orders.","REGULAR ORDER ACCEPTED!",deviceToken).subscribe((_)=>{
       console.log("SENT NOTIFICATION");
       this.toastr.success('Sent notification successfull!', 'Notification!' , {
         timeOut : 4000 ,

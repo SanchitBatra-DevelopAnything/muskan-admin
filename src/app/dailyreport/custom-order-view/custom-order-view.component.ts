@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ApiserviceService } from 'src/app/services/apiservice.service';
+import { NotificationManagerService } from 'src/app/services/notifications/notification-manager.service';
 
 @Component({
   selector: 'app-custom-order-view',
@@ -24,7 +25,7 @@ export class CustomOrderViewComponent implements OnInit {
   pounds:any;
   flavour:any;
 
-  constructor(private route : ActivatedRoute , private router : Router , private apiService : ApiserviceService , private toastr : ToastrService) { }
+  constructor(private route : ActivatedRoute , private router : Router , private apiService : ApiserviceService , private toastr : ToastrService , private notificationService : NotificationManagerService) { }
 
   ngOnInit(): void {
     this.isLoading = false;
@@ -77,25 +78,17 @@ export class CustomOrderViewComponent implements OnInit {
          this.isLoading = false;
        });
      });
-     console.log("STARTING CHEF NOTIS");
-     this.apiService.getAllChefNotificationTokens().subscribe((tokens)=>{
-       var regIds = [];
-       if(tokens!=null)
-       {
-         regIds = Object.values(tokens);
-         var onlyTokens = regIds.map((chefToken)=>{
-           return chefToken.chefToken;
-         })
-       }
-       this.apiService.sendNotificationToChefs(onlyTokens,"custom").subscribe((_)=>{
-         this.toastr.success('Sent notifications to chefs', 'Notification!' , {
-           timeOut : 4000 ,
-           closeButton : true , 
-           positionClass : 'toast-bottom-right'
-         });
-       });
-       console.log("SENT NOTIS COMPLETE");
-     });
+     console.log("STARTING NOTIS");
+     const deviceToken = this.notificationService.findParticularToken(orderInformation['orderedBy']);
+    this.apiService.sendNotificationToParticularDevice("Check details in my orders","CUSTOM ORDER ACCEPTED!",deviceToken).subscribe((_)=>{
+      console.log("SENT NOTIFICATION");
+      this.toastr.success('Sent notification successfull!', 'Notification!' , {
+        timeOut : 4000 ,
+        closeButton : true , 
+        positionClass : 'toast-bottom-right'
+      });
+    });
+     
   }
 
 }
