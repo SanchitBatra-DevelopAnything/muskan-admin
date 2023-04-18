@@ -55,10 +55,6 @@ export class AppComponent implements OnInit , OnDestroy {
 
     //load all notification tokens to notification service. This is used to send a particular notification to a particular device , example order accepted etc.
     //app initial load par saare tokens aagaye aur set hogaye , ab kahin bhi required retailer ka token use krke notification bhejdo.
-    this.apiService.getAllNotificationTokens().subscribe((allTokens)=>{
-      const data = Object.values(allTokens);
-      this.notificationService.setNotificationData(data);
-    });
   }
 
   // onAdminLogin(loginData : Boolean)

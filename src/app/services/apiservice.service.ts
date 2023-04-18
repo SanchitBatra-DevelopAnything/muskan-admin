@@ -393,7 +393,7 @@ public getAllChefNotificationTokens() : Observable<any>
   {
     console.log("notification call");
     const body = {
-      "to" : "/topics/items",
+      "to" : "/topics/items_2",
       "notification" : {
           "body" : Nbody,
           "title" : title,
@@ -421,6 +421,11 @@ public getAllChefNotificationTokens() : Observable<any>
   };
     const headers = { 'Authorization': 'key=AAAAaXPIZ2w:APA91bEgPROJFmaweC-pHnP9IMyeVfxBUowqiaiQDQh-WpWUM183m12SEf8uhd-b-u3QnbljavfwKt7riYAKyBZ0pbRMH6KZv1qUiezYocj8Y_lVc8i9zL_ChF6c_ifAQ7ifgn77qJQ4', 'Content-Type': 'application/json' };
     return this.http.post("https://fcm.googleapis.com/fcm/send" ,body,{headers});
+  }
+
+  public findToken(name,shop)
+  {
+    return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/notificationTokens/"+shop+"/"+name+".json");
   }
 
 }

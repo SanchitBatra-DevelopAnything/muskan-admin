@@ -184,23 +184,21 @@ export class OrderDetailComponent implements OnInit{
         this.isLoading = false;
       });
     });
-    const deviceToken = this.notificationService.findParticularToken(orderInformation['orderedBy']);
-    if(deviceToken == undefined || deviceToken == null)
-    {
-     //try again to load notification data , kyuki shayad app initial load pe app component ne nahi pick kiya ho.. ek aur try delo.
-     this.apiService.getAllNotificationTokens().subscribe((allTokens)=>{
-       const data = Object.values(allTokens);
-       this.notificationService.setNotificationData(data);
-     });
-    }
-    this.apiService.sendNotificationToParticularDevice("Check details in my orders.","REGULAR ORDER ACCEPTED!",deviceToken).subscribe((_)=>{
-      console.log("SENT NOTIFICATION");
-      this.toastr.success('Sent notification successfull!', 'Notification!' , {
-        timeOut : 4000 ,
-        closeButton : true , 
-        positionClass : 'toast-bottom-right'
+    let deviceToken = "";
+    console.log("FINDING TOKEN");
+    this.apiService.findToken(orderInformation['orderedBy'],orderInformation['shopAddress']).subscribe((token)=>{
+      console.log("FOUND TOKEN = "+token['token']);
+      deviceToken = token['token'];  
+      this.apiService.sendNotificationToParticularDevice("Check details in my orders.","REGULAR ORDER ACCEPTED!",deviceToken).subscribe((_)=>{
+        console.log("SENT NOTIFICATION");
+        this.toastr.success('Sent notification successfull!', 'Notification!' , {
+          timeOut : 4000 ,
+          closeButton : true , 
+          positionClass : 'toast-bottom-right'
+        });
       });
     });
+    
   }
 
 }
