@@ -186,7 +186,12 @@ export class OrderDetailComponent implements OnInit{
     });
     let deviceToken = "";
     console.log("FINDING TOKEN");
-    this.apiService.findToken(orderInformation['orderedBy'],orderInformation['shopAddress']).subscribe((token)=>{
+    let shopAddress = orderInformation['shopAddress'];
+    if(this.orderedBy.toLowerCase() == "distributor")
+    {
+      shopAddress = "DISTRIBUTOR-"+shopAddress;
+    }
+    this.apiService.findToken(orderInformation['orderedBy'],shopAddress).subscribe((token)=>{
       console.log("FOUND TOKEN = "+token['token']);
       deviceToken = token['token'];  
       this.apiService.sendNotificationToParticularDevice("Check details in my orders.","REGULAR ORDER ACCEPTED!",deviceToken).subscribe((_)=>{
