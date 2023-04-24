@@ -415,8 +415,8 @@ public getAllChefNotificationTokens() : Observable<any>
       "notification" : {
           "body" : Nbody,
           "title" : title,
-          "android_channel_id" : "Muskan-Admin-App",
-          "sound" : true
+          "android_channel_id" : "Muskan-Admin-App-2",
+          "sound" : "sound.mp3"
       },
   };
     const headers = { 'Authorization': 'key=AAAAaXPIZ2w:APA91bEgPROJFmaweC-pHnP9IMyeVfxBUowqiaiQDQh-WpWUM183m12SEf8uhd-b-u3QnbljavfwKt7riYAKyBZ0pbRMH6KZv1qUiezYocj8Y_lVc8i9zL_ChF6c_ifAQ7ifgn77qJQ4', 'Content-Type': 'application/json' };
