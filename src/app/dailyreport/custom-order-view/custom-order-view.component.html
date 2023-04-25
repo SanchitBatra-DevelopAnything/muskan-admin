@@ -5,7 +5,7 @@
         <p>Ordered By : <span style = "font-weight: bold;">{{orderData['orderedBy']}}</span></p>
         <p>Order Placed : <span style = "font-weight: bold;">{{orderData['orderTime']}} , {{orderData['orderDate']}}</span></p>
         <p>Order Type : <span style = "font-weight: bold;">{{orderData['customType']}}</span></p>
-        <button class = "btn btn-success" (click) = "sendOrderToChef()">Send to Chef</button>
+        <button class = "btn btn-primary" (click) = "sendOrderToChef()">ACCEPT</button>
     </div>
     <hr>
     <div class = "loader" *ngIf = "isLoading">
