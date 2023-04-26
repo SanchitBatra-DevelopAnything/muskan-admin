@@ -11,8 +11,15 @@
     <div class = "loader" *ngIf = "isLoading">
 
     </div>
-    <div class="row">
+
+    <div class="row" *ngIf = "orderData['customType'].toLowerCase() == 'message cakes'">
         <div class="col-xs-12">
+            <h1>NORMAL {{orderData['flavour']}} CAKE</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12" *ngIf = "orderData['customType'].toLowerCase()!='message cakes'">
             <div style = "height: 400px; width : 600px;">
                 <img src = {{orderImgUrl}} class = "img-rounded" style = "max-height: 100%; height : auto; width: 80%;">
             </div>
