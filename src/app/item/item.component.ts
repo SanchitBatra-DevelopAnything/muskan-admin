@@ -149,6 +149,12 @@ export class ItemComponent implements OnInit {
           fileRef.getDownloadURL().subscribe((url)=>{
             updatedItem = {'itemName' : this.editItemName , 'offer' : this.editItemOffer , 'shopPrice' : this.editItemShopPrice , 
             'customerPrice' : this.editItemCustomerPrice , 'imageUrl' : url , 'cakeFlavour' : "not-valid" , 'designCategory' : "not-valid"};
+
+          if(this.forDistributor)
+          {
+              updatedItem["distributorPrice"] = this.editDistributorPrice;
+              updatedItem["distributorItemName"] = this.editDistributorItemName;
+          }
             
             this.apiService.editItem(this.item.key , this.parentSubcategoryKey , this.parentCategoryKey , updatedItem).subscribe((_)=>{
               this.utilityService.itemUpdated.next(this.item.key);
