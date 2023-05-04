@@ -35,7 +35,7 @@
             <br>
             <p>Offer : {{item.offer}} % </p>
             <p style="display: inline-block;">Shop Price : Rs.{{item.shopPrice}}</p>
-            <p style = "display: inline-block;">Customer Price : Rs. {{item.customerPrice}}</p>
+            <p style = "display: inline-block;">MRP : Rs. {{item.customerPrice}}</p>
             <p *ngIf = "forDistributor" style = "display: inline-block;">distributor Price : Rs. {{item.distributorPrice}}</p> 
             <p *ngIf = "forDistributor" style = "display: inline-block; white-space: nowrap; overflow: auto;">distributor Item Name : {{item.distributorItemName}}</p>       
         </div>
@@ -57,7 +57,7 @@
             <p>Item Name : <input type = "text" placeholder = "item name" [(ngModel)] = "editItemName"></p>
             <p>Offer % : <input type = "number" placeholder = "Offer" [(ngModel)] = "editItemOffer"></p>
             <p>Shop Price : <input type = "number" placeholder = "shop price" [(ngModel)] = "editItemShopPrice"></p>
-            <p>Customer Price : <input type = "number" placeholder = "customer price" [(ngModel)] = "editItemCustomerPrice"></p>
+            <p>MRP : <input type = "number" placeholder = "MRP" [(ngModel)] = "editItemCustomerPrice"></p>
             <p *ngIf = "forDistributor"><input type = "text" placeholder = "distributor item name" [(ngModel)] = "editDistributorItemName"></p> 
             <p *ngIf = "forDistributor"><input type = "number" placeholder = "distributor price" [(ngModel)] = "editDistributorPrice"></p> 
         </div>
