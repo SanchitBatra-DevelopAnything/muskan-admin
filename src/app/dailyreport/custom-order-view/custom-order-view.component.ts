@@ -21,6 +21,7 @@ export class CustomOrderViewComponent implements OnInit {
   orderDescription : string = "";
   orderImgUrl : string = "";
   orderImgUrl2:string = "";
+  neededOnDate:string ="NO DATA AVAILABLE";
 
   pounds:any;
   flavour:any;
@@ -46,6 +47,7 @@ export class CustomOrderViewComponent implements OnInit {
         this.flavour = "NOT-VALID";
         this.orderImgUrl2 = "";
         this.orderDescription = "NO ORDER FOUND WITH THIS KEY IN DB";
+        this.neededOnDate = "NO DATA AVAILABLE";
       }
       this.orderData = orderDetail;
       this.orderImgUrl = this.orderData['imgUrl'];
@@ -55,10 +57,19 @@ export class CustomOrderViewComponent implements OnInit {
       this.orderDate = this.orderData['orderDate'];
       this.pounds = this.orderData['pounds'];
       this.flavour = this.orderData['flavour'];
+      this.neededOnDate = this.formNeededDate(this.orderData['neededOnDate'].split(' ')[0]);
       this.isLoading = false;
     });
   }
 
+  formNeededDate(date)
+  {
+    let day = date.split('-')[2];
+    let month = date.split('-')[1];
+    let year = date.split('-')[0];
+
+    return day+"-"+month+"-"+year;
+  }
   
   sendOrderToChef()
   {
