@@ -65,10 +65,49 @@ export class DailyreportComponent implements OnInit {
           this.activeOrderKeys.push(temp_activeOrderKeys[i]);
         }
       }
+      if(this.customOrders.length!=0)
+      {
+        this.fitTodayTagOnCustomOrders();
+      }
       this.isLoading = false;
     });
 
     this.utilityService.refreshActiveOrdersCount.next('refresh');
+  }
+
+  fitTodayTagOnCustomOrders()
+  {
+     const today = new Date();
+     let aaj = this.transform(today.getDate()) + "-" +this.transform(today.getMonth()+1) + "-" + today.getFullYear();
+
+
+     for(let i=0;i<this.customOrders.length;i++)
+     {
+        let date = this.customOrders[i]['neededOnDate'].split(' ')[0];
+        let day = date.split('-')[2];
+        let month = date.split('-')[1];
+        let year = date.split('-')[0];
+
+        let formedDate = day+"-"+month+"-"+year;
+
+        if(formedDate == aaj)
+        {
+          this.customOrders[i]['todayTag'] = true;
+        }
+        else
+        {
+          this.customOrders[i]['todayTag'] = false;
+        }
+     }
+  }
+
+  transform(month)
+  {
+    if(month < 10)
+    {
+      return "0"+month;
+    }
+    return month;
   }
 
   getISTDate() : Date
