@@ -31,6 +31,8 @@ export class OrderDetailComponent implements OnInit{
   hideHeaders:boolean = false;
   viewTotalParchi : boolean = false;
 
+  showPrices:boolean = true;
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
 
@@ -204,6 +206,20 @@ export class OrderDetailComponent implements OnInit{
       });
     });
     
+  }
+
+  togglePricesView()
+  {
+    this.showPrices = !this.showPrices;
+  }
+
+  getDataForPriceColumn(element:any)
+  {
+    if(this.showPrices)
+    {
+      return element.Price;
+    }
+    return "----";
   }
 
 }

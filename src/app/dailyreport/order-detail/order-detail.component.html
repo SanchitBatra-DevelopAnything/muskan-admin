@@ -16,7 +16,12 @@
     <h3 style = "display:inline-block;">Order Id : <span style = "font-weight: bold;">{{orderKey}} , </span></h3>
     <h3 style = "display:inline-block;">Ordered By : <span style = "font-weight: bold;">{{orderData['orderedBy']}} , </span></h3>
     <h3 style = "display:inline-block;">Order Placed : <span style = "font-weight: bold;">{{orderData['orderTime']}} , {{orderData['orderDate']}} , </span></h3>
-    <h3> Estimate : {{orderData['totalPrice']}}</h3>
+    <h3 *ngIf = "showPrices"> Estimate : {{orderData['totalPrice']}}</h3>
+    <h3 *ngIf = "!showPrices"> Estimate : ----</h3>
+    <div class="container" *ngIf = "orderedBy == 'distributor'">
+      <button class = "btn btn-danger" (click) = "togglePricesView()" *ngIf = "showPrices">Hide Prices</button>
+      <button class = "btn btn-primary" (click) = "togglePricesView()" *ngIf = "!showPrices">Show Prices</button>
+    </div>
     </div>
     </div>
     <hr>
@@ -49,7 +54,9 @@
           <!-- Symbol Column -->
           <ng-container matColumnDef="Price" *ngIf = "!viewTotalParchi">
             <th mat-header-cell *matHeaderCellDef style = "font-size:35px;"> Amt. </th>
-            <td mat-cell *matCellDef="let element" style = "font-size:35px;"> {{element.Price}} </td>
+            
+            <td mat-cell *matCellDef="let element" style = "font-size:35px;"> {{getDataForPriceColumn(element)}} </td>
+            <!-- <td mat-cell *matCellDef="let element" style = "font-size:35px;" *ngIf = "!showPrices"> ----- </td> -->
           </ng-container>
       
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
