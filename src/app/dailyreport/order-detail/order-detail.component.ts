@@ -211,16 +211,20 @@ export class OrderDetailComponent implements OnInit{
   togglePricesView()
   {
     this.showPrices = !this.showPrices;
-  }
-
-  getDataForPriceColumn(element:any)
-  {
     if(this.showPrices)
     {
-      return element.Price;
+      this.displayedColumns = ['Sno', 'Item', 'Quantity', 'Price'];
     }
-    return "----";
+    else
+    {
+      this.displayedColumns = ['Sno', 'Item', 'Quantity'];
+    }
   }
+
+  // getDataForPriceColumn(element:any)
+  // {
+    
+  // }
 
 }
 

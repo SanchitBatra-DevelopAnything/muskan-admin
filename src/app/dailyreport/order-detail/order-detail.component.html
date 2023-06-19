@@ -52,10 +52,10 @@
           </ng-container>
       
           <!-- Symbol Column -->
-          <ng-container matColumnDef="Price" *ngIf = "!viewTotalParchi">
+          <ng-container matColumnDef="Price" *ngIf = "!viewTotalParchi && showPrices">
             <th mat-header-cell *matHeaderCellDef style = "font-size:35px;"> Amt. </th>
             
-            <td mat-cell *matCellDef="let element" style = "font-size:35px;"> {{getDataForPriceColumn(element)}} </td>
+            <td mat-cell *matCellDef="let element" style = "font-size:35px;"> {{element.Price}} </td>
             <!-- <td mat-cell *matCellDef="let element" style = "font-size:35px;" *ngIf = "!showPrices"> ----- </td> -->
           </ng-container>
       
