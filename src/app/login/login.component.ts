@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
         alert('invalid password');
         return;
       }
-      this.loginSuccessfull();
+      this.loginSuccessfull(adminIndex);
     }
     else
     {
@@ -72,14 +72,23 @@ export class LoginComponent implements OnInit {
     return -1;
   }
 
-  loginSuccessfull() : void 
+  loginSuccessfull(index) : void 
   {
+    console.log(this.validUsers);
     sessionStorage.setItem('user' , this.loginForm.value.username);
     sessionStorage.setItem('loggedIn' , "true");
-    this.UtilityService.loggedInStatusUpdated.next(true); //inform header for the same.
+    sessionStorage.setItem('adminType' , Object.values(this.validUsers)[index]['type']);
+    this.UtilityService.loggedInStatusUpdated.next(true);
 
     // this.isLoggedIn.emit(true);
-    this.router.navigate(['/categories']);
+    if(sessionStorage.getItem('adminType') == "super-admin")
+    {
+      this.router.navigate(['/categories']);
+    }
+    else if(sessionStorage.getItem('adminType') == "worker")
+    {
+      this.router.navigate(['/dailyReport']);
+    }
   }
 
   fetchAdmins()
