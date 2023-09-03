@@ -5,7 +5,12 @@
         <p>Ordered By : <span style = "font-weight: bold;">{{orderData['orderedBy']}}</span></p>
         <p>Order Placed : <span style = "font-weight: bold;">{{orderData['orderTime']}} , {{orderData['orderDate']}}</span></p>
         <p>Order Type : <span style = "font-weight: bold;">{{orderData['customType']}}</span></p>
-        <button class = "btn btn-primary" (click) = "sendOrderToChef()">ACCEPT</button>
+        <p style = "font-weight: bold;">Choose Design : </p>
+        <div class="card flex justify-content-center">
+            <p-dropdown [options]="designData" [(ngModel)]="selectedDesign" optionLabel="designName" (onChange) = "calculatePrice($event)"></p-dropdown>
+        </div>
+        
+        <button class = "btn btn-primary" (click) = "sendOrderToChef()" *ngIf = "showAccept" style = "margin-top: 10px;;">ACCEPT</button>
     </div>
     <hr>
     <div class = "loader" *ngIf = "isLoading">
@@ -39,6 +44,7 @@
             <br>
             <div class="col-xs-12" style = "display: inline-block;">
                 <p>Information about this order : </p>
+                <p style = "font-size : 20px; font-weight : bold; word-wrap: break-word;">AMOUNT : {{subTotal}}</p>
                 <p style = "font-size : 20px; font-weight : bold; word-wrap: break-word;">FLAVOUR : {{flavour}}</p>
                 <p style = "font-size : 20px; font-weight : bold; word-wrap: break-word;">POUNDS : {{pounds}}</p>
                 <p style = "font-size : 20px; font-weight : bold; word-wrap: break-word;">NEEDED BY : {{neededOnDate}}</p>

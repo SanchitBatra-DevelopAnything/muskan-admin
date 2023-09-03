@@ -18,6 +18,7 @@ import { MatButtonModule } from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatRadioModule} from '@angular/material/radio';
 import {BadgeModule} from 'primeng/badge';
+import { DropdownModule } from 'primeng/dropdown';
 
 import { AppComponent } from './app.component';
 import { CategoryListComponent } from './category-list/category-list.component';
@@ -161,6 +162,7 @@ const appRoutes : Routes = [
     NgxMaterialTimepickerModule,
     MatRadioModule,
     BadgeModule,
+    DropdownModule,
     
     RouterModule.forRoot(appRoutes,{useHash: true}),
   ],

@@ -25,6 +25,12 @@ export class CustomOrderViewComponent implements OnInit {
 
   pounds:any;
   flavour:any;
+  showAccept:boolean = false;
+  designData = {};
+  selectedDesign:any;
+  flavourData = {};
+
+  subTotal = 0;
 
   constructor(private route : ActivatedRoute , private router : Router , private apiService : ApiserviceService , private toastr : ToastrService , private notificationService : NotificationManagerService) { }
 
@@ -33,6 +39,54 @@ export class CustomOrderViewComponent implements OnInit {
     this.orderKey = this.route.snapshot.params['orderKey'];
     this.orderType = this.route.snapshot.params['orderType'];
     this.getOrderDetails();
+    this.getFlavours();
+    this.getDesignCategories();
+    
+  }
+
+  getFlavours()
+  {
+    this.apiService.getFlavours().subscribe((flavours)=>{
+      if(flavours == null)
+      {
+        this.flavourData = {};
+        return;
+      }
+      let flavoursArray = Object.values(flavours);
+      for(let i=0;i<flavoursArray.length;i++)
+      {
+        this.flavourData[flavoursArray[i]['flavourName']] = flavoursArray[i]['shopPrice'];
+      }
+    });
+  }
+
+  getDesignCategories()
+  {
+    this.apiService.getDesignCategories().subscribe((designs)=>{
+      if(designs == null)
+      {
+        this.designData = {};
+        this.isLoading = false;
+        return;
+      }
+      this.designData = [{'designName' : "Select Design"},...Object.values(designs)];
+      this.isLoading = false;
+    });
+  }
+
+  calculatePrice(e:any)
+  {
+    let price = 0;
+    let pound = this.pounds;
+    let designPrice = this.pounds * (e.value.shopPrice);
+    let flavourPrice = this.pounds * this.flavourData[this.flavour];
+
+    console.log("DESIGN PRICE = ",designPrice);
+    console.log("FLAVOUR PRICE = ",flavourPrice);
+    price = flavourPrice + designPrice;
+
+    this.subTotal = price;
+    this.showAccept = true;
   }
 
   getOrderDetails()
@@ -48,6 +102,7 @@ export class CustomOrderViewComponent implements OnInit {
         this.orderImgUrl2 = "";
         this.orderDescription = "NO ORDER FOUND WITH THIS KEY IN DB";
         this.neededOnDate = "NO DATA AVAILABLE";
+        return;
       }
       this.orderData = orderDetail;
       this.orderImgUrl = this.orderData['imgUrl'];
