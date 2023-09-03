@@ -76,6 +76,13 @@ export class CustomOrderViewComponent implements OnInit {
 
   calculatePrice(e:any)
   {
+    console.log(e.value['designName'])
+    if(e.value['designName'] === "Select Design")
+    {
+      this.showAccept = false;
+      this.subTotal = 0;
+      return;
+    }
     let price = 0;
     let pound = this.pounds;
     let designPrice = this.pounds * (e.value.shopPrice);
