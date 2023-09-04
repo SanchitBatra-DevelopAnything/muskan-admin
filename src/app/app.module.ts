@@ -162,7 +162,7 @@ const appRoutes : Routes = [
     NgxMaterialTimepickerModule,
     MatRadioModule,
     BadgeModule,
-    DropdownModule,
+    DropdownModule, 
     
     RouterModule.forRoot(appRoutes,{useHash: true}),
   ],

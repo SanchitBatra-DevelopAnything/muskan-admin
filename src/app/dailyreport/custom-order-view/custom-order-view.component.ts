@@ -27,7 +27,9 @@ export class CustomOrderViewComponent implements OnInit {
   flavour:any;
   showAccept:boolean = false;
   designData = {};
+  photoData = [{'type' : "NO PHOTO" , 'price' : 0} , {'type' : "1/4 PHOTO" , 'price' : 150} , {'type' : "1/2 PHOTO" , 'price' : 220} , {'type' : "FULL PHOTO" , 'price' : 300}];
   selectedDesign:any;
+  selectedPhotoOption:any = {'type' : "NO PHOTO" , 'price' : 0};
   flavourData = {};
 
   subTotal = 0;
@@ -77,7 +79,7 @@ export class CustomOrderViewComponent implements OnInit {
   calculatePrice(e:any)
   {
     console.log(e.value['designName'])
-    if(e.value['designName'] === "Select Design")
+    if(this.selectedDesign['designName'] === "Select Design")
     {
       this.showAccept = false;
       this.subTotal = 0;
@@ -85,14 +87,17 @@ export class CustomOrderViewComponent implements OnInit {
     }
     let price = 0;
     let pound = this.pounds;
-    let designPrice = this.pounds * (e.value.shopPrice);
+    let designPrice = this.pounds * (this.selectedDesign.shopPrice);
     let flavourPrice = this.pounds * this.flavourData[this.flavour];
+    let photoPrice = this.selectedPhotoOption.price;
 
     console.log("DESIGN PRICE = ",designPrice);
     console.log("FLAVOUR PRICE = ",flavourPrice);
-    price = flavourPrice + designPrice;
+    console.log("PHOTO PRICE  = ",photoPrice);
+    price = flavourPrice + designPrice + photoPrice;
 
     this.subTotal = price;
+    
     this.showAccept = true;
   }
 
