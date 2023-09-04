@@ -27,7 +27,7 @@ export class CustomOrderViewComponent implements OnInit {
   flavour:any;
   showAccept:boolean = false;
   designData = {};
-  photoData = [{'type' : "NO PHOTO" , 'price' : 0} , {'type' : "1/4 PHOTO" , 'price' : 150} , {'type' : "1/2 PHOTO" , 'price' : 220} , {'type' : "FULL PHOTO" , 'price' : 300}];
+  photoData = [{'type' : "NO PHOTO" , 'price' : 0} , {'type' : "1/4 PHOTO" , 'price' : 120} , {'type' : "1/2 PHOTO" , 'price' : 200} , {'type' : "FULL PHOTO" , 'price' : 350}];
   selectedDesign:any;
   selectedPhotoOption:any = {'type' : "NO PHOTO" , 'price' : 0};
   flavourData = {};
