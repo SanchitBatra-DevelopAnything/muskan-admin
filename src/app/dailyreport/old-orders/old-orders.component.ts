@@ -34,11 +34,17 @@ export class OldOrdersComponent implements OnInit {
     this.totalParchiFor = '';
     this.options = ["Retailers Only" , "Salesmen Only" , "All Mixed"];
     this.appType = this.route.snapshot.params['type'];
+    if(sessionStorage.getItem('selectedDate')!=null || sessionStorage.getItem('selectedDate')!=undefined)
+    {
+      this.selected = new Date(sessionStorage.getItem('selectedDate'));
+      this.changeDate();
+    }
   }
 
   changeDate()
   {
     this.isLoading = true;
+    sessionStorage.setItem('selectedDate' , this.selected.toString());
     let date = this.selected.getDate();
     let month = this.selected.getMonth();
     let year = this.selected.getFullYear();
