@@ -6,15 +6,19 @@
         <p> <span style = "font-weight: bold;">{{orderData['orderTime']}} , {{orderData['orderDate']}}</span></p>
         <p><span style = "font-weight: bold;">{{orderData['customType']}}</span></p>
         <div class="row">
-            <div class="col-xs-6">
-                <p style = "font-weight: bold;">Choose Design : </p>
+            <div class="col-xs-12">
+                <!-- <p style = "font-weight: bold;">Choose Design : </p> -->
         <div class="card flex justify-content-center">
             <p-dropdown [options]="designData" [(ngModel)]="selectedDesign" optionLabel="designName" (onChange) = "calculatePrice($event)"></p-dropdown>
         </div>
             </div>
 
-            <div class="col-xs-6">
-                <p style = "font-weight: bold;">Choose Photo Type : </p>
+            <div class = "col-xs-12">
+                <p></p>
+            </div>
+
+            <div class="col-xs-12">
+                <!-- <p style = "font-weight: bold;">Choose Photo Type : </p> -->
                 <div class="card flex justify-content-center">
                 <p-dropdown [options]="photoData" [(ngModel)]="selectedPhotoOption" optionLabel="type" (onChange) = "calculatePrice($event)"></p-dropdown>
             </div>
@@ -58,13 +62,13 @@
         <div class="row" *ngIf = "orderData['customType'] != 'Photo Cakes'">
             <br>
             <div class="col-xs-12" style = "display: inline-block;">
-                <p>Information about this order : </p>
-                <h3 style = "font-size : 20px; font-weight : bold; word-wrap: break-word;">AMOUNT : {{subTotal}}</h3>
-                <p style = "font-size : 20px; font-weight : bold; word-wrap: break-word;">FLAVOUR : {{flavour}}</p>
-                <p style = "font-size : 20px; font-weight : bold; word-wrap: break-word;">POUNDS : {{pounds}}</p>
-                <p style = "font-size : 20px; font-weight : bold; word-wrap: break-word;">NEEDED BY : {{neededOnDate}}</p>
-                <h2 style = "font-weight: bold; color:blue;">DESCRIPTION: </h2>
-                <h3 style = "font-weight : bold; word-wrap: break-word; width : 400px;">{{orderDescription}}</h3>
+                <!-- <p>Information about this order : </p> -->
+                <h3 style = "font-size : 25px; font-weight : bold; word-wrap: break-word;">AMOUNT : {{subTotal}}</h3>
+                <p style = "font-size : 20px; font-weight : bold; word-wrap: break-word;"> {{flavour}}</p>
+                <p style = "font-size : 20px; font-weight : bold; word-wrap: break-word;">{{pounds}} PD.</p>
+                <p style = "font-size : 20px; font-weight : bold; word-wrap: break-word;">{{neededOnDate}}</p>
+                <h6 style = "font-weight: bold; color:blue;">DESCRIPTION: </h6>
+                <h2 style = "font-weight : bold; word-wrap: break-word; width : 400px;">{{orderDescription}}</h2>
             </div>
     
         </div>
