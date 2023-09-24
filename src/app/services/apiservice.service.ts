@@ -428,4 +428,9 @@ public getAllChefNotificationTokens() : Observable<any>
     return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/notificationTokens/"+shop+"/"+name+".json");
   }
 
+  public updateCustomOrder(orderKey : string , orderData:any)
+  {
+    return this.http.patch("https://muskan-admin-app-default-rtdb.firebaseio.com/activeShopOrders/"+orderKey+".json" , orderData);
+  }
+
 }

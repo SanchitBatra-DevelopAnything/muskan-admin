@@ -26,9 +26,9 @@ export class CustomOrderViewComponent implements OnInit {
   pounds:any;
   flavour:any;
   showAccept:boolean = false;
-  designData = {};
+  designData :any= [{'designName':"Select Design" , 'shopPrice' : 0 , 'customerPrice' : 0}];
   photoData = [{'type' : "NO PHOTO" , 'price' : 0} , {'type' : "1/4 PHOTO" , 'price' : 120} , {'type' : "1/2 PHOTO" , 'price' : 200} , {'type' : "FULL PHOTO" , 'price' : 350}];
-  selectedDesign:any;
+  selectedDesign:any = {'designName':"Select Design" , 'shopPrice' : 0 , 'customerPrice' : 0};
   selectedPhotoOption:any = {'type' : "NO PHOTO" , 'price' : 0};
   flavourData = {};
 
@@ -40,9 +40,10 @@ export class CustomOrderViewComponent implements OnInit {
     this.isLoading = false;
     this.orderKey = this.route.snapshot.params['orderKey'];
     this.orderType = this.route.snapshot.params['orderType'];
-    this.getOrderDetails();
+    
     this.getFlavours();
     this.getDesignCategories();
+    this.getOrderDetails();
     
   }
 
@@ -71,7 +72,8 @@ export class CustomOrderViewComponent implements OnInit {
         this.isLoading = false;
         return;
       }
-      this.designData = [{'designName' : "Select Design"},...Object.values(designs)];
+      this.designData = [...this.designData,...Object.values(designs)];
+      console.log(this.designData);
       this.isLoading = false;
     });
   }
@@ -99,6 +101,14 @@ export class CustomOrderViewComponent implements OnInit {
     this.subTotal = price;
     
     this.showAccept = true;
+    let update_object = {'selectedDesign' : this.selectedDesign['designName'] , 'selectedPhotoOption' : this.selectedPhotoOption['type'] , 'totalAmount' : this.subTotal , 
+  'photoPrice' : photoPrice , 'flavourPrice' : flavourPrice , 'designPrice' : designPrice , 'designCustomerPrice' : this.selectedDesign['customerPrice']};
+
+    this.apiService.updateCustomOrder(this.orderKey , update_object).subscribe((_)=>{
+      console.log("Order updated");
+    });
+    // localStorage.setItem('custom_order_key' , this.orderKey);
+    // localStorage.setItem('custom_order_data' , JSON.stringify(update_object));
   }
 
   getOrderDetails()
@@ -116,7 +126,9 @@ export class CustomOrderViewComponent implements OnInit {
         this.neededOnDate = "NO DATA AVAILABLE";
         return;
       }
+      
       this.orderData = orderDetail;
+      console.log(this.orderData);
       this.orderImgUrl = this.orderData['imgUrl'];
       this.orderImgUrl2 = this.orderData['photoOnCakeUrl'];
       console.log("hello"+this.orderImgUrl2);
@@ -125,7 +137,19 @@ export class CustomOrderViewComponent implements OnInit {
       this.pounds = this.orderData['pounds'];
       this.flavour = this.orderData['flavour'];
       this.neededOnDate = this.formNeededDate(this.orderData['neededOnDate'].split(' ')[0]);
-      this.isLoading = false;
+      
+        let actual_obj = this.orderData;
+        this.subTotal = actual_obj['totalAmount'] == undefined ? 0 : actual_obj['totalAmount'];
+        this.selectedPhotoOption =actual_obj['selectedPhotoOption'] == undefined ? {'type' : "NO PHOTO" , 'price' : 0} : {'type' : actual_obj['selectedPhotoOption'] , 'price' : actual_obj['photoPrice']};
+        setTimeout((()=>{
+          this.selectedDesign = actual_obj['selectedDesign'] == undefined ? {'designName':"Select Design" , 'shopPrice' : 0 , 'customerPrice' : 0} : {'designName' : actual_obj['selectedDesign'] , 'shopPrice' : actual_obj['designPrice']/this.pounds , 'customerPrice' : actual_obj['designCustomerPrice']};
+          if(this.selectedDesign['designName']!="Select Design")
+          {
+            this.showAccept = true;
+          }
+        }),300);
+        
+        this.isLoading = false;
     });
   }
 
