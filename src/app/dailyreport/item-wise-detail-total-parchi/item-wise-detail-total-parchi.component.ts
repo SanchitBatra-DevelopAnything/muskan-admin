@@ -10,6 +10,7 @@ export class ItemWiseDetailTotalParchiComponent implements OnInit {
 
   availableItems:any=[];
   selectedItem:any = {};
+  selected_item_detail:any = [];
 
   constructor(private totalParchiService:TotalParchiService) { }
 
@@ -20,7 +21,9 @@ export class ItemWiseDetailTotalParchiComponent implements OnInit {
 
   seeDetails(e:any)
   {
-
+    this.selected_item_detail = [];
+    this.selected_item_detail = this.totalParchiService.getItemWiseDetail(this.selectedItem.item);
+    console.log("ITEM DETAILS = ",this.selected_item_detail);
   }
 
 }

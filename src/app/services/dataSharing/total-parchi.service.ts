@@ -52,4 +52,20 @@ export class TotalParchiService {
   console.log(items);
   return items;
   }
+
+  getItemWiseDetail(itemName:string)
+  {
+    let answer = [];
+    for(let i=0;i<this.ordersForItemWiseDetail.length;i++)
+    {
+      for(let j=0;j<this.ordersForItemWiseDetail[i].items.length;j++)
+      {
+        if(this.ordersForItemWiseDetail[i].items[j].item.toString().toLowerCase() == itemName.toString().toLowerCase())
+        {
+          answer.push({'item' : itemName , 'qty' : this.ordersForItemWiseDetail[i].items[j].quantity , 'orderedBy' : this.ordersForItemWiseDetail[i].shopAddress});
+        }
+      }
+    }
+    return answer;
+  }
 }
