@@ -20,6 +20,7 @@ export class OldOrdersComponent implements OnInit {
   timeError:boolean;
   options:any;
   totalParchiFor:string;
+  selected_orders_for_item_details:any=[];
 
   appType:string;
 
@@ -142,6 +143,7 @@ export class OldOrdersComponent implements OnInit {
     var endDate = Date.parse("01/01/2011 "+this.toTime);
 
     console.log(startDate , endDate);
+    this.selected_orders_for_item_details = []; //khaali kardo in each try.
     if(startDate>endDate)
     {
       console.log("start big");
@@ -158,6 +160,7 @@ export class OldOrdersComponent implements OnInit {
       {
         if(this.orderTimeFilter(selectedDomainFilteredOrders[i].orderTime,startDate,endDate))
         {
+          this.selected_orders_for_item_details.push(selectedDomainFilteredOrders[i]);
           for(let j=0;j<selectedDomainFilteredOrders[i].items.length;j++)
           {
               // if(selectedDomainFilteredOrders[i].items[j].item.toString().toLowerCase() == "veg patties")
@@ -168,6 +171,7 @@ export class OldOrdersComponent implements OnInit {
           }
         }
       }
+      this.totalParchiService.setOrdersForItemWiseDetails(this.selected_orders_for_item_details);
       console.log(this.totalParchiOrders);
       this.isLoading = false;
     }

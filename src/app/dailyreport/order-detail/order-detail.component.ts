@@ -62,6 +62,7 @@ export class OrderDetailComponent implements OnInit{
   {
     if(this.orderKey == "totalParchi")
     {
+      console.log("FILTERED ORDERS ARE HERE = ",this.totalParchiService.ordersForItemWiseDetail);
       this.orderData = {'items' : this.totalParchiService.makeListFromMap()};
       this.getCategoriesInBill();
       this.formBillData();

@@ -9,12 +9,20 @@ export class TotalParchiService {
   allItems : any = [];
   itemsMap = new Map();
 
+  ordersForItemWiseDetail:any = [];
+
   constructor() { }
 
   setAllItems(timeFilteredItems)
   {
     this.allItems = [];
     this.allItems = [...timeFilteredItems];
+  }
+
+  setOrdersForItemWiseDetails(orders)
+  {
+    this.ordersForItemWiseDetail = [];
+    this.ordersForItemWiseDetail = [...orders];
   }
 
   makeMap()
