@@ -222,6 +222,11 @@ export class OrderDetailComponent implements OnInit{
     }
   }
 
+  seeDetails()
+  {
+    this.router.navigate(['/details']);
+  }
+
   // getDataForPriceColumn(element:any)
   // {
     

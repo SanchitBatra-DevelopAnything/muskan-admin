@@ -63,6 +63,7 @@ import { AddDistributorshipFormComponent } from './add-distributorship-form/add-
 import { DistributorshipsComponent } from './manage-window/distributorships/distributorships.component';
 import { DistributorDailyReportComponent } from './distributor-daily-report/distributor-daily-report.component';
 import { DistributorsComponent } from './manage-window/distributors/distributors.component';
+import { ItemWiseDetailTotalParchiComponent } from './dailyreport/item-wise-detail-total-parchi/item-wise-detail-total-parchi.component';
 
 
 
@@ -96,6 +97,7 @@ const appRoutes : Routes = [
   {path: 'cakes/designCategories' , component : DesignCategoryScreenComponent , canActivate: [AuthGuardService]},
   {path: 'cakes/addNewFlavour/:flavour/:sp/:cp/:type/:flavourKey' , component : AddFlavourFormComponent , canActivate: [AuthGuardService]},
   {path: 'cakes/addNewDesign/:design/:sp/:cp/:type/:designKey' , component : AddDesignCategoryFormComponent , canActivate: [AuthGuardService]},
+  {path : 'details' , component : ItemWiseDetailTotalParchiComponent , canActivate : [AuthGuardService]},
   {path: '' , component:LoginComponent , pathMatch:"full"}
 ];
 
@@ -139,6 +141,7 @@ const appRoutes : Routes = [
     DistributorshipsComponent,
     DistributorDailyReportComponent,
     DistributorsComponent,
+    ItemWiseDetailTotalParchiComponent,
   ],
   imports: [
     BrowserModule,

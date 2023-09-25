@@ -1,0 +1,9 @@
+<div class="container">
+    <h3>Item Wise Details</h3>
+<p>Please select item below : </p>
+
+<p-dropdown [options]="availableItems" [(ngModel)]="selectedItem" optionLabel="item" (onChange) = "seeDetails($event)" [filter] = "true"></p-dropdown>
+
+<hr>  
+</div>
+
