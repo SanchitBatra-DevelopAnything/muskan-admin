@@ -23,6 +23,7 @@
     "@ng-select/ng-select": "^8.1.1",
     "bootstrap": "^3.4.1",
     "firebase": "^9.0.2",
+    "firebase-admin": "^11.11.0",
     "ngx-material-timepicker": "^5.5.3",
     "ngx-toastr": "^14.2.1",
     "primeicons": "^6.0.1",
