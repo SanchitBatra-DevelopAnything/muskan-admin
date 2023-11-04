@@ -3,6 +3,7 @@ import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router'
 import { Subscription } from 'rxjs';
 import { ApiserviceService } from '../services/apiservice.service';
 import { UtilityServiceService } from '../services/utility-service.service';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-item-list',
@@ -193,6 +194,18 @@ export class ItemListComponent implements OnInit , OnDestroy {
   editSubcategory()
   {
     this.router.navigate(['editSubcategory/' + this.categoryKey + "/" + this.categoryName]);
+  }
+
+  exportToExcel()
+  {
+    let fileName = "PRICELIST_"+this.selectedSubcategory+"_"+this.categoryName+".xlsx";
+    let element = document.getElementById("excel-table");
+    const ws : XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
+
+    const wb : XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb,ws,"Sheet 1");
+
+    XLSX.writeFile(wb , fileName);
   }
  
   ngOnDestroy()
