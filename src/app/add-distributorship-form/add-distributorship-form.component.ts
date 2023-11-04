@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { ApiserviceService } from '../services/apiservice.service';
 
@@ -11,14 +11,14 @@ import { ApiserviceService } from '../services/apiservice.service';
 export class AddDistributorshipFormComponent implements OnInit {
 
   isInsertingDistributorship : boolean;
-  addDistributorshipForm: FormGroup;
+  addDistributorshipForm: UntypedFormGroup;
 
   constructor(private apiService : ApiserviceService , private toastr : ToastrService) { }
 
   ngOnInit(): void {
     this.isInsertingDistributorship = false;
-    this.addDistributorshipForm = new FormGroup({
-      'distributorship' : new FormControl(null , [Validators.required]),
+    this.addDistributorshipForm = new UntypedFormGroup({
+      'distributorship' : new UntypedFormControl(null , [Validators.required]),
     });
   }
 

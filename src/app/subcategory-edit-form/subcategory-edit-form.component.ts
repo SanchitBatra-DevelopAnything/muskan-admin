@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiserviceService } from '../services/apiservice.service';
 
@@ -12,7 +12,7 @@ export class SubcategoryEditFormComponent implements OnInit {
 
   categoryKey : string;
   categoryName : string;
-  editSubcategoryForm : FormGroup;
+  editSubcategoryForm : UntypedFormGroup;
   isEdittingSubcategory : boolean;
 
   subcategories : any;
@@ -26,9 +26,9 @@ export class SubcategoryEditFormComponent implements OnInit {
     this.categoryKey = this.route.snapshot.params['categoryKey'];
     this.categoryName = this.route.snapshot.params['categoryName'].toString().toUpperCase();
     this.isEdittingSubcategory = false;
-    this.editSubcategoryForm = new FormGroup({
-      'subcategoryToBeEditted' : new FormControl(null , [Validators.required]), 
-      'subcategoryNewName' : new FormControl(null , [Validators.required]),
+    this.editSubcategoryForm = new UntypedFormGroup({
+      'subcategoryToBeEditted' : new UntypedFormControl(null , [Validators.required]), 
+      'subcategoryNewName' : new UntypedFormControl(null , [Validators.required]),
     });
 
     this.apiService.getSubcategoriesOfCategory(this.categoryKey).subscribe((data)=>{

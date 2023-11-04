@@ -1,7 +1,7 @@
 import { ReturnStatement } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { finalize } from 'rxjs';
@@ -14,7 +14,7 @@ import { ApiserviceService } from '../services/apiservice.service';
 })
 export class AddItemFormComponent implements OnInit {
 
-  itemForm: FormGroup;
+  itemForm: UntypedFormGroup;
   imgSrc:string;
   selectedImage : any;
   isSubmitted:Boolean;
@@ -33,19 +33,19 @@ export class AddItemFormComponent implements OnInit {
   ngOnInit(): void {
     this.showSubcategoryDropdown = true;
     this.parentCategoryData = {categoryName : this.route.snapshot.params['categoryName'] , categoryKey : this.route.snapshot.params['categoryKey']};
-    this.itemForm = new FormGroup({
-      'itemName' : new FormControl('',[Validators.required]), 
-      'imageUrl' : new FormControl('' , [Validators.required]),
-      'subcategoryName' : new FormControl('',[Validators.required]),
-       'shopPrice' : new FormControl(null , [Validators.required]),
-       'customerPrice' : new FormControl('' , [Validators.required]),
-       'offer' : new FormControl('' , [Validators.required]),
-       'directVariety' : new FormControl('0',[Validators.required]),
-       'cakeFlavour' : new FormControl(null,[Validators.required]),
-       'designCategory' : new FormControl(null,[Validators.required]),
-       'minPounds' : new FormControl('1'),
-       'distributorPrice' : new FormControl(null),
-       'distributorItemName' : new FormControl(null)
+    this.itemForm = new UntypedFormGroup({
+      'itemName' : new UntypedFormControl('',[Validators.required]), 
+      'imageUrl' : new UntypedFormControl('' , [Validators.required]),
+      'subcategoryName' : new UntypedFormControl('',[Validators.required]),
+       'shopPrice' : new UntypedFormControl(null , [Validators.required]),
+       'customerPrice' : new UntypedFormControl('' , [Validators.required]),
+       'offer' : new UntypedFormControl('' , [Validators.required]),
+       'directVariety' : new UntypedFormControl('0',[Validators.required]),
+       'cakeFlavour' : new UntypedFormControl(null,[Validators.required]),
+       'designCategory' : new UntypedFormControl(null,[Validators.required]),
+       'minPounds' : new UntypedFormControl('1'),
+       'distributorPrice' : new UntypedFormControl(null),
+       'distributorItemName' : new UntypedFormControl(null)
     });
 
     this.apiService.isCategoryForDistributor(this.parentCategoryData.categoryKey).subscribe((forD)=>{

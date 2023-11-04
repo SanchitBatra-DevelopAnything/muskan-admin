@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {  FormControl, FormGroup, Validators } from '@angular/forms';
+import {  UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ApiserviceService } from '../services/apiservice.service';
@@ -11,7 +11,7 @@ import { ApiserviceService } from '../services/apiservice.service';
 })
 export class AddFlavourFormComponent implements OnInit {
 
-  flavourForm : FormGroup;
+  flavourForm : UntypedFormGroup;
   isInsertingFlavour:boolean;
 
   flavour:string;
@@ -33,18 +33,18 @@ export class AddFlavourFormComponent implements OnInit {
 
     if(this.isEdit)
     {
-      this.flavourForm = new FormGroup({
-        'flavourName' : new FormControl(this.flavour , [Validators.required]),
-        'shopPrice' : new FormControl(this.shopPrice , [Validators.required]),
-        'customerPrice' : new FormControl(this.customerPrice , [Validators.required])
+      this.flavourForm = new UntypedFormGroup({
+        'flavourName' : new UntypedFormControl(this.flavour , [Validators.required]),
+        'shopPrice' : new UntypedFormControl(this.shopPrice , [Validators.required]),
+        'customerPrice' : new UntypedFormControl(this.customerPrice , [Validators.required])
       });
     }
     else
     {
-      this.flavourForm = new FormGroup({
-        'flavourName' : new FormControl(null , [Validators.required]),
-        'shopPrice' : new FormControl(0 , [Validators.required]),
-        'customerPrice' : new FormControl(0 , [Validators.required])
+      this.flavourForm = new UntypedFormGroup({
+        'flavourName' : new UntypedFormControl(null , [Validators.required]),
+        'shopPrice' : new UntypedFormControl(0 , [Validators.required]),
+        'customerPrice' : new UntypedFormControl(0 , [Validators.required])
       });
     }
     

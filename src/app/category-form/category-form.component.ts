@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { finalize, pipe } from 'rxjs';
 import { ImageService } from '../services/image.service';
 
@@ -11,7 +11,7 @@ import { ImageService } from '../services/image.service';
 })
 export class CategoryFormComponent implements OnInit {
 
-  categoryForm : FormGroup;
+  categoryForm : UntypedFormGroup;
   imgSrc:string;
   selectedImage : any;
   isSubmitted:Boolean;
@@ -20,10 +20,10 @@ export class CategoryFormComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.categoryForm = new FormGroup({
-      'categoryName' : new FormControl('',Validators.required), 
-      'imageUrl' : new FormControl('' , Validators.required),
-      'forDistributor' : new FormControl(null,[Validators.required])
+    this.categoryForm = new UntypedFormGroup({
+      'categoryName' : new UntypedFormControl('',Validators.required), 
+      'imageUrl' : new UntypedFormControl('' , Validators.required),
+      'forDistributor' : new UntypedFormControl(null,[Validators.required])
     });
 
     this.resetForm();

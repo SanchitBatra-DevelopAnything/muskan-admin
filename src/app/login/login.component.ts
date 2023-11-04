@@ -1,5 +1,5 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiserviceService } from '../services/apiservice.service';
 import { UtilityServiceService } from '../services/utility-service.service';
@@ -12,7 +12,7 @@ import { UtilityServiceService } from '../services/utility-service.service';
 export class LoginComponent implements OnInit {
 
 
-  loginForm : FormGroup;
+  loginForm : UntypedFormGroup;
   validUsers : {};
   isLoading : Boolean;
   internetProblem : Boolean;
@@ -27,9 +27,9 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.loginForm = new FormGroup({
-      'username' : new FormControl(null), 
-      'password' : new FormControl(null)
+    this.loginForm = new UntypedFormGroup({
+      'username' : new UntypedFormControl(null), 
+      'password' : new UntypedFormControl(null)
     });
 
     this.isLoading = true;

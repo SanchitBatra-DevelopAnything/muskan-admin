@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiserviceService } from '../services/apiservice.service';
 
@@ -12,7 +12,7 @@ export class SubcategoryDeleteFormComponent implements OnInit {
 
   categoryKey : string;
   categoryName : string;
-  deleteSubcategoryForm : FormGroup;
+  deleteSubcategoryForm : UntypedFormGroup;
   isDeletingSubcategory : boolean;
 
   subcategories : any;
@@ -26,8 +26,8 @@ export class SubcategoryDeleteFormComponent implements OnInit {
     this.categoryKey = this.route.snapshot.params['categoryKey'];
     this.categoryName = this.route.snapshot.params['categoryName'].toString().toUpperCase();
     this.isDeletingSubcategory = false;
-    this.deleteSubcategoryForm = new FormGroup({
-      'subcategoryToBeDeleted' : new FormControl(null , [Validators.required]), 
+    this.deleteSubcategoryForm = new UntypedFormGroup({
+      'subcategoryToBeDeleted' : new UntypedFormControl(null , [Validators.required]), 
     });
 
     this.apiService.getSubcategoriesOfCategory(this.categoryKey).subscribe((data)=>{

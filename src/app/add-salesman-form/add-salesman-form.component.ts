@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { ApiserviceService } from '../services/apiservice.service';
 
@@ -10,15 +10,15 @@ import { ApiserviceService } from '../services/apiservice.service';
 })
 export class AddSalesmanFormComponent implements OnInit {
 
-  salesmanForm : FormGroup;
+  salesmanForm : UntypedFormGroup;
   isInsertingSalesman : boolean;
 
   constructor(private apiService : ApiserviceService , private toastr : ToastrService) { }
 
   ngOnInit(): void {
     this.isInsertingSalesman = false;
-    this.salesmanForm = new FormGroup({
-      'salesmanName' : new FormControl('' , [Validators.required])
+    this.salesmanForm = new UntypedFormGroup({
+      'salesmanName' : new UntypedFormControl('' , [Validators.required])
     });
   }
 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ApiserviceService } from '../services/apiservice.service';
@@ -11,7 +11,7 @@ import { ApiserviceService } from '../services/apiservice.service';
 })
 export class AddDesignCategoryFormComponent implements OnInit {
 
-  designCategoryForm: FormGroup;
+  designCategoryForm: UntypedFormGroup;
   isInsertingDesign:boolean;
   design:string;
   shopPrice:number;
@@ -31,18 +31,18 @@ export class AddDesignCategoryFormComponent implements OnInit {
 
     if(this.isEdit)
     {
-      this.designCategoryForm = new FormGroup({
-        'designName' : new FormControl(this.design , [Validators.required]),
-        'shopPrice' : new FormControl(this.shopPrice , [Validators.required]),
-        'customerPrice' : new FormControl(this.customerPrice , [Validators.required])
+      this.designCategoryForm = new UntypedFormGroup({
+        'designName' : new UntypedFormControl(this.design , [Validators.required]),
+        'shopPrice' : new UntypedFormControl(this.shopPrice , [Validators.required]),
+        'customerPrice' : new UntypedFormControl(this.customerPrice , [Validators.required])
       });
     }
     else
     {
-      this.designCategoryForm = new FormGroup({
-        'designName' : new FormControl(null , [Validators.required]),
-        'shopPrice' : new FormControl(0 , [Validators.required]),
-        'customerPrice' : new FormControl(0 , [Validators.required])
+      this.designCategoryForm = new UntypedFormGroup({
+        'designName' : new UntypedFormControl(null , [Validators.required]),
+        'shopPrice' : new UntypedFormControl(0 , [Validators.required]),
+        'customerPrice' : new UntypedFormControl(0 , [Validators.required])
       });
     }
     

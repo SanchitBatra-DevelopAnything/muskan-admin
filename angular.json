@@ -102,5 +102,7 @@
       }
     }
   },
-  "defaultProject": "muskan-admin-app"
+  "cli": {
+    "analytics": false
+  }
 }
