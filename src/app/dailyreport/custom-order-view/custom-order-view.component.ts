@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { ContainerComponent } from 'src/app/container/container.component';
 import { ApiserviceService } from 'src/app/services/apiservice.service';
 import { NotificationManagerService } from 'src/app/services/notifications/notification-manager.service';
 
@@ -34,7 +36,7 @@ export class CustomOrderViewComponent implements OnInit {
 
   subTotal = 0;
 
-  constructor(private route : ActivatedRoute , private router : Router , private apiService : ApiserviceService , private toastr : ToastrService , private notificationService : NotificationManagerService) { }
+  constructor(private route : ActivatedRoute , private router : Router , private apiService : ApiserviceService , private toastr : ToastrService , private notificationService : NotificationManagerService , private dialog:MatDialog) { }
 
   ngOnInit(): void {
     this.isLoading = false;
@@ -193,5 +195,17 @@ export class CustomOrderViewComponent implements OnInit {
       });
      });
     
+     }
+
+     openDialog()
+     {
+       let dialogRef = this.dialog.open(ContainerComponent , {data : {orderAccept : "Accepting Order Password Daaldo"}});
+   
+       dialogRef.afterClosed().subscribe((result)=>{
+         if(result === "yes")
+         {
+           this.sendOrderToChef();
+         }
+       }); 
      }
 }
