@@ -29,11 +29,20 @@ export class HeaderComponent implements OnInit,OnDestroy {
   }
 
   ngOnInit(): void { 
+    
     //in case the app reloads.
     if(sessionStorage.getItem('loggedIn'))
     {
       this.loggedIn = true;
     } 
+    if(sessionStorage.getItem('adminType')=="worker")
+    {
+      this.isSuperAdmin = false;
+    }
+    else
+    {
+      this.isSuperAdmin = true;
+    }
     //change of login when user actually logs in.
     this.logInSub = this.UtilityService.loggedInStatusUpdated.subscribe((loggedIn : boolean)=>{
       this.loggedIn = loggedIn;
