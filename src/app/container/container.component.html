@@ -30,6 +30,17 @@
 
 </div>
 
+<div class="container" *ngIf = "data.subcategoryName!=null">
+    <h4 mat-dialog-title>Are you sure you want to delete ?</h4>
+<mat-dialog-content>{{data.subcategoryName}}
+    <br>
+    <label>Enter Password For Deletion</label>
+    <br>
+    <input type = "text" placeholder="enter passkey to delete" (input) = "onTypingPassword($event)">
+</mat-dialog-content>
+
+</div>
+
 <mat-dialog-actions>
     <div style = "text-align: right;">
         <button class = "btn btn-primary" mat-dialog-close mat-dialog-close = "no" style = "margin-right: 10px;"> NO </button>

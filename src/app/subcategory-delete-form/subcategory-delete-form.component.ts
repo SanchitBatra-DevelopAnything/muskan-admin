@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ContainerComponent } from '../container/container.component';
 import { ApiserviceService } from '../services/apiservice.service';
 
 @Component({
@@ -18,7 +20,7 @@ export class SubcategoryDeleteFormComponent implements OnInit {
   subcategories : any;
   isLoading: boolean;
 
-  constructor(private apiService : ApiserviceService , private route : ActivatedRoute , private router : Router) { }
+  constructor(private apiService : ApiserviceService , private route : ActivatedRoute , private router : Router,private dialog:MatDialog) { }
 
   ngOnInit(): void {
     this.isLoading = true;
@@ -57,6 +59,18 @@ export class SubcategoryDeleteFormComponent implements OnInit {
       this.isDeletingSubcategory = false;
       this.router.navigate(['itemsOf/'+this.categoryKey+"/"+this.categoryName]);
     });
+  }
+
+  openDialog()
+  {
+    let dialogRef = this.dialog.open(ContainerComponent , {data : {subcategoryName : "selected subcategory will be deleted forever."}});
+
+    dialogRef.afterClosed().subscribe((result)=>{
+      if(result === "yes")
+      {
+        this.onSubmit();
+      }
+    }); 
   }
 
 }
