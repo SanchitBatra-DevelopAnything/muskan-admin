@@ -7,6 +7,8 @@ import { ToastrService } from 'ngx-toastr';
 import { TotalParchiService } from 'src/app/services/dataSharing/total-parchi.service';
 import { throws } from 'assert';
 import { NotificationManagerService } from 'src/app/services/notifications/notification-manager.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ContainerComponent } from 'src/app/container/container.component';
 
 @Component({
   selector: 'app-order-detail',
@@ -36,7 +38,7 @@ export class OrderDetailComponent implements OnInit{
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
 
-  constructor(private route : ActivatedRoute , private router : Router,private apiService : ApiserviceService , private toastr : ToastrService , private totalParchiService : TotalParchiService , private notificationService :NotificationManagerService) { }
+  constructor(private route : ActivatedRoute , private router : Router,private apiService : ApiserviceService , private toastr : ToastrService , private totalParchiService : TotalParchiService , private notificationService :NotificationManagerService,private dialog:MatDialog) { }
 
   ngOnInit(): void {
     this.isLoading = false;
@@ -225,6 +227,18 @@ export class OrderDetailComponent implements OnInit{
   seeDetails()
   {
     this.router.navigate(['/details']);
+  }
+
+  openDialog()
+  {
+    let dialogRef = this.dialog.open(ContainerComponent , {data : {orderAccept : "Accepting Order Password Daaldo"}});
+
+    dialogRef.afterClosed().subscribe((result)=>{
+      if(result === "yes")
+      {
+        this.sendOrderToChef();
+      }
+    }); 
   }
 
   // getDataForPriceColumn(element:any)

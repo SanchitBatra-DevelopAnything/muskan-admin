@@ -15,7 +15,7 @@
     <div *ngIf = "!isLoading">
     <h3 style = "display: inline-block;">{{orderData['shopAddress'] | uppercase}}</h3>
     <div class="spaced-button" style = "display: inline-block;">
-        <button class = "btn btn-primary btn-lg" (click) = "sendOrderToChef()" *ngIf = "orderType == 'active'" [disabled] = "hideHeaders">ACCEPT</button>
+        <button class = "btn btn-primary btn-lg" (click) = "openDialog()" *ngIf = "orderType == 'active'" [disabled] = "hideHeaders">ACCEPT</button>
     </div>
     <div *ngIf = "!viewTotalParchi">
     <h3 style = "display:inline-block;">Order Id : <span style = "font-weight: bold;">{{orderKey}} , </span></h3>
