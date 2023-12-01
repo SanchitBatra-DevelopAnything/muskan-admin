@@ -29,7 +29,7 @@
             <p-dropdown [options]="designData" [(ngModel)]="selectedDesign" optionLabel="designName" (onChange) = "calculatePrice($event)"></p-dropdown>
         </div> -->
         
-        <button class = "btn btn-primary" (click) = "openDialog()" *ngIf = "showAccept" style = "margin-top: 10px;;">ACCEPT</button>
+        <button class = "btn btn-primary" (click) = "sendOrderToChef()" *ngIf = "showAccept" style = "margin-top: 10px;;">ACCEPT</button>
     </div>
     <hr>
     <div class = "loader" *ngIf = "isLoading">
