@@ -90,6 +90,11 @@ export class OrderDetailComponent implements OnInit{
     });
   }
 
+  modifyCakeNameWithIntegerPound(itemName)
+  {
+    return itemName.split('.')[0]+" PD."+itemName.split('.')[2]; 
+  }
+
   getCategoriesInBill()
   {
     this.categoriesInBillValues = [];
@@ -98,6 +103,10 @@ export class OrderDetailComponent implements OnInit{
     for(let i=0;i<items.length;i++)
     {
       let item = items[i];
+      if(item.CategoryName.toString().toUpperCase() == "CAKES & PASTRIES")
+      {
+        item['item'] = this.modifyCakeNameWithIntegerPound(item['item']);
+      }
       this.categoriesInBillValues.push(item.CategoryName);
     }
     let arr = this.categoriesInBillValues.filter((v, i, a) => a.indexOf(v) === i); //unique.
