@@ -92,7 +92,7 @@ export class OrderDetailComponent implements OnInit{
 
   modifyCakeNameWithIntegerPound(itemName)
   {
-    return itemName.split('.')[0]+" PD."+itemName.split('.')[2]; 
+    return itemName.split('.')[0]+" PD."+itemName.split('.')[2];
   }
 
   getCategoriesInBill()
@@ -103,9 +103,12 @@ export class OrderDetailComponent implements OnInit{
     for(let i=0;i<items.length;i++)
     {
       let item = items[i];
-      if(item.CategoryName.toString().toUpperCase() == "CAKES & PASTRIES")
+      if(this.orderType.toString().toLowerCase() == "active")
       {
-        item['item'] = this.modifyCakeNameWithIntegerPound(item['item']);
+        if(item.CategoryName.toString().toUpperCase() == "CAKES & PASTRIES")
+        {
+          item['item'] = this.modifyCakeNameWithIntegerPound(item['item']);
+        }
       }
       this.categoriesInBillValues.push(item.CategoryName);
     }
