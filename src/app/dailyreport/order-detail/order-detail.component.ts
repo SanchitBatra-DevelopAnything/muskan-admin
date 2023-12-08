@@ -36,9 +36,11 @@ export class OrderDetailComponent implements OnInit{
   showPrices:boolean = true;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  addCodeVisible:boolean = false;
+  acceptorCode:any;
 
 
-  constructor(private route : ActivatedRoute , private router : Router,private apiService : ApiserviceService , private toastr : ToastrService , private totalParchiService : TotalParchiService , private notificationService :NotificationManagerService,private dialog:MatDialog) { }
+  constructor(private route : ActivatedRoute , private router : Router,private apiService : ApiserviceService , private toastr : ToastrService , private totalParchiService : TotalParchiService , private notificationService :NotificationManagerService) { }
 
   ngOnInit(): void {
     this.isLoading = false;
@@ -243,14 +245,15 @@ export class OrderDetailComponent implements OnInit{
 
   openDialog()
   {
-    let dialogRef = this.dialog.open(ContainerComponent , {data : {orderAccept : "Accepting Order Password Daaldo"}});
+    // let dialogRef = this.dialog.open(ContainerComponent , {data : {orderAccept : "Accepting Order Password Daaldo"}});
 
-    dialogRef.afterClosed().subscribe((result)=>{
-      if(result === "yes")
-      {
-        this.sendOrderToChef();
-      }
-    }); 
+    // dialogRef.afterClosed().subscribe((result)=>{
+    //   if(result === "yes")
+    //   {
+    //     this.sendOrderToChef();
+    //   }
+    // }); 
+    this.addCodeVisible = true;
   }
 
   // getDataForPriceColumn(element:any)

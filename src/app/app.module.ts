@@ -19,6 +19,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatRadioModule} from '@angular/material/radio';
 import {BadgeModule} from 'primeng/badge';
 import { DropdownModule } from 'primeng/dropdown';
+import { DialogModule } from 'primeng/dialog';
 
 import { AppComponent } from './app.component';
 import { CategoryListComponent } from './category-list/category-list.component';
@@ -166,6 +167,7 @@ const appRoutes : Routes = [
     MatRadioModule,
     BadgeModule,
     DropdownModule, 
+    DialogModule,
     
     RouterModule.forRoot(appRoutes,{useHash: true}),
   ],

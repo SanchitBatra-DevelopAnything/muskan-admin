@@ -15,7 +15,7 @@
     <div *ngIf = "!isLoading">
     <h3 style = "display: inline-block;">{{orderData['shopAddress'] | uppercase}}</h3>
     <div class="spaced-button" style = "display: inline-block;">
-        <button class = "btn btn-primary btn-lg" (click) = "sendOrderToChef()" *ngIf = "orderType == 'active'" [disabled] = "hideHeaders">ACCEPT</button>
+        <button class = "btn btn-primary btn-lg" (click) = "openDialog()" *ngIf = "orderType == 'active'" [disabled] = "hideHeaders">ACCEPT</button>
     </div>
     <div *ngIf = "!viewTotalParchi">
     <h3 style = "display:inline-block;">Order Id : <span style = "font-weight: bold;">{{orderKey}} , </span></h3>
@@ -76,3 +76,21 @@
       </div>
       
 </div>
+
+<p-dialog header="Enter Your Code" [(visible)]="addCodeVisible" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
+  
+      <h3>
+          Acceptor Code : <input type = "text" [(ngModel)] = "acceptorCode">
+      </h3>
+      <button style = "float: right;" class = "btn btn-primary" (click) = "sendOrderToChef()" [disabled]="acceptorCode=='' || acceptorCode==undefined">Accept Order</button>
+  
+
+  <!-- <div *ngIf = "isLoadingModal">
+      <div style = "display: block; text-align: center;">
+          
+          <div class="loader" style ="display: inline-block; text-align: center;"></div>
+      </div>
+  </div> -->
+ 
+
+</p-dialog>
