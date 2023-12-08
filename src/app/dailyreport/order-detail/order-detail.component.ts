@@ -171,6 +171,7 @@ export class OrderDetailComponent implements OnInit{
   sendOrderToChef()
   {
     this.isLoading = true;
+    this.addCodeVisible = false;
     let orderInformation = {...this.orderData};
     let modifiedItemList = [];
     for(let i=0;i<orderInformation['items'].length;i++)
