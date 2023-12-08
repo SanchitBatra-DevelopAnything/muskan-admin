@@ -182,6 +182,7 @@ export class OrderDetailComponent implements OnInit{
     }
     orderInformation['items'] = modifiedItemList;
     orderInformation['orderKey'] = this.orderKey;
+    orderInformation['acceptorCode'] = this.acceptorCode;
     
     console.log( " Going to Chef = ",orderInformation);
     this.apiService.makeOrderForChef(orderInformation , this.orderDate , this.orderedBy).subscribe((_)=>{
