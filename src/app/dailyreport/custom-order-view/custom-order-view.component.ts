@@ -35,6 +35,8 @@ export class CustomOrderViewComponent implements OnInit {
   flavourData = {};
 
   subTotal = 0;
+  addCodeVisible:boolean = false;
+  acceptorCode:any;
 
   constructor(private route : ActivatedRoute , private router : Router , private apiService : ApiserviceService , private toastr : ToastrService , private notificationService : NotificationManagerService , private dialog:MatDialog) { }
 
@@ -166,6 +168,7 @@ export class CustomOrderViewComponent implements OnInit {
   
   sendOrderToChef()
   {
+    this.addCodeVisible = false;
     this.isLoading = true;
     let orderInformation = {...this.orderData};
     orderInformation['orderKey'] = this.orderKey;
@@ -199,13 +202,6 @@ export class CustomOrderViewComponent implements OnInit {
 
      openDialog()
      {
-       let dialogRef = this.dialog.open(ContainerComponent , {data : {orderAccept : "Accepting Order Password Daaldo"}});
-   
-       dialogRef.afterClosed().subscribe((result)=>{
-         if(result === "yes")
-         {
-           this.sendOrderToChef();
-         }
-       }); 
+       this.addCodeVisible = true; 
      }
 }

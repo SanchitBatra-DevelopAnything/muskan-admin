@@ -84,14 +84,6 @@
           Acceptor Code : <input type = "text" [(ngModel)] = "acceptorCode">
       </h3>
       <button style = "float: right;" class = "btn btn-primary" (click) = "sendOrderToChef()" [disabled]="acceptorCode=='' || acceptorCode==undefined">Accept Order</button>
-  
-
-  <!-- <div *ngIf = "isLoadingModal">
-      <div style = "display: block; text-align: center;">
-          
-          <div class="loader" style ="display: inline-block; text-align: center;"></div>
-      </div>
-  </div> -->
  
 
 </p-dialog>
