@@ -206,7 +206,6 @@ export class CustomOrderViewComponent implements OnInit {
         });
       });
      });
-    
      }
 
      openDialog()
