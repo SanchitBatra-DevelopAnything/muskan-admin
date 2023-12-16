@@ -165,6 +165,15 @@ export class OrderDetailComponent implements OnInit{
     this.dataSource.paginator = this.paginator;
   }
 
+  sendOrderToChefCheck()
+  {
+    if(this.acceptorCode==="" || this.acceptorCode===undefined || this.acceptorCode===null)
+    {
+      return;
+    }
+    this.sendOrderToChef();
+  }
+
   sendOrderToChef()
   {
     this.isLoading = true;

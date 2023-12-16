@@ -81,7 +81,7 @@
 <p-dialog header="Enter Your Code" [(visible)]="addCodeVisible" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
   
       <h3>
-          Acceptor Code : <input type = "text" [(ngModel)] = "acceptorCode">
+          Acceptor Code : <input type = "text" [(ngModel)] = "acceptorCode" autofocus (keydown.enter)="sendOrderToChefCheck()">
       </h3>
       <button style = "float: right;" class = "btn btn-primary" (click) = "sendOrderToChef()" [disabled]="acceptorCode=='' || acceptorCode==undefined">Accept Order</button>
  

@@ -165,6 +165,15 @@ export class CustomOrderViewComponent implements OnInit {
 
     return day+"-"+month+"-"+year;
   }
+
+  sendOrderToChefCheck()
+  {
+    if(this.acceptorCode==="" || this.acceptorCode===undefined || this.acceptorCode===null)
+    {
+      return;
+    }
+    this.sendOrderToChef();
+  }
   
   sendOrderToChef()
   {
