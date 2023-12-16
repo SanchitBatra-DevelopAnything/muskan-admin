@@ -91,7 +91,8 @@ export class OrderDetailComponent implements OnInit{
 
   modifyCakeNameWithIntegerPound(itemName)
   {
-    return itemName.split('.')[0]+" PD."+itemName.split('.')[2];
+    let temp_name = itemName.split('.')[0]+"P"+itemName.split('.')[2];
+    return temp_name.split("-")[0]+" "+temp_name.split("-")[1];
   }
 
   getCategoriesInBill()
@@ -153,7 +154,7 @@ export class OrderDetailComponent implements OnInit{
       let data = {"Sno" : i+1 , "Item" : item , "Quantity" : items[i].quantity , "Price" : items[i].price};
       if(items[i].CategoryName.toString().toUpperCase() == cat.category.toString().toUpperCase() || (items[i].CategoryName.toString().toUpperCase() == "PASTRIES" && cat.category.toString().toUpperCase() == "CAKES & PASTRIES"))
       {
-        this.billData.push(data); 
+        this.billData.push(data);
       }
     }
     this.dataSource = this.viewTotalParchi ? new MatTableDataSource<TotalParchiBillElement>(this.billData) : new MatTableDataSource<BillElement>(this.billData);
