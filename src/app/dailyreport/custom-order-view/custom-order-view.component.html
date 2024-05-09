@@ -1,7 +1,7 @@
 <div class="container">
     <div *ngIf = "!isLoading">
         <div style = "color:red; font-size: 20px; font-weight: bold;">
-            THIS IS AN ESTIMATE ORDER ,  DISPATCH DATE : One week from {{orderData['orderDate']}}
+            THIS IS AN ESTIMATE ORDER ,  DISPATCH DATE : <input type="text">
           </div>
         <h1 style = "display: inline-block;">{{orderData['shopAddress'] | uppercase}}</h1>
         <p><span style = "font-weight: bold;">{{orderKey}}</span></p>

@@ -19,7 +19,9 @@
     </div>
     <hr>
     <div style = "color:red; font-size: 20px; display: inline-block; font-weight: bold;">
-      THIS IS AN ESTIMATE ORDER ,  DISPATCH DATE : {{dispatchDate}}
+      THIS IS AN ESTIMATE ORDER ,  DISPATCH DATE : <div style = "display: inline-block;">
+       <input type = "text">
+      </div>
     </div>
     <div *ngIf = "!viewTotalParchi">
     <h3 style = "display:inline-block;">Order Id : <span style = "font-weight: bold;">{{orderKey}} , </span></h3>

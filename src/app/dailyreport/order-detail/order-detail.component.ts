@@ -17,7 +17,7 @@ export class OrderDetailComponent implements OnInit{
 
   orderKey : string;
   orderDate:string;
-  dispatchDate:string;
+  
   isLoading : boolean = false;
   orderData : {};
   billData : BillElement[];
@@ -84,7 +84,7 @@ export class OrderDetailComponent implements OnInit{
       }
       this.orderData = orderDetail;
       this.orderDate = this.orderData['orderDate'];
-      this.dispatchDate = "One week from "+this.orderDate;
+      
       this.getCategoriesInBill();
       this.formBillData();
       this.isLoading = false;

@@ -64,6 +64,7 @@ import { AddDistributorshipFormComponent } from './add-distributorship-form/add-
 import { DistributorshipsComponent } from './manage-window/distributorships/distributorships.component';
 import { DistributorDailyReportComponent } from './distributor-daily-report/distributor-daily-report.component';
 import { DistributorsComponent } from './manage-window/distributors/distributors.component';
+
 import { ItemWiseDetailTotalParchiComponent } from './dailyreport/item-wise-detail-total-parchi/item-wise-detail-total-parchi.component';
 
 
@@ -168,6 +169,7 @@ const appRoutes : Routes = [
     BadgeModule,
     DropdownModule, 
     DialogModule,
+    
     
     RouterModule.forRoot(appRoutes,{useHash: true}),
   ],
