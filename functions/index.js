@@ -1,30 +1,52 @@
+const logger = require("firebase-functions/logger");
+
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
+const corsModule = require('cors');
 admin.initializeApp();
 
-exports.deleteTomorrowOrders = functions.pubsub.schedule('every 24 hours').timeZone('Asia/Kolkata').onRun(async () => {
-  try {
-    const tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1);
 
-    const dateKey = tomorrow.getDay()+""+tomorrow.getMonth()+1+""+tomorrow.getFullYear();  // Format: 'datemonthyear'
 
-    const ordersRef = admin.database().ref('ProcessedShopOrders');
-    const snapshot = await ordersRef.once('value');
+const cors = corsModule({ origin: true });
 
-    snapshot.forEach((childSnapshot) => {
-      const orderKey = childSnapshot.key;
 
-      if (orderKey === dateKey) {
-        // Delete tomorrow's order , this is to make sure that [1112023 don't clash up , if we are doing 1 nov , on 31st oct we need to delete all orders of 11 january.]
-        console.log("Found clash on ",dateKey);
-        ordersRef.child(orderKey).remove();
+// Cloud Function to send a push notification with an HTTP trigger
+exports.ringOrderBell = functions.https.onRequest((req, res) => {
+  cors(req, res, async () => {
+    try {
+      const { deviceToken, title, matter , android_channel_id } = req.body;
+      const messaging = admin.messaging();
+
+      if(!messaging)
+      {
+        console.error("Admin SDK Not set up correctly");
+        return;
       }
-    });
 
-    return 'Tomorrow\'s order deleted successfully';
-  } catch (error) {
-    console.error('Error deleting tomorrow\'s order:', error);
-    return null;
-  }
+      const payload = {
+        notification: {
+          title: title,
+          body: matter,
+        },
+        android: {
+          notification: {
+              sound: 'sound.mp3',
+              channel_id : android_channel_id
+          },
+      },
+        token : deviceToken
+      };
+
+      
+      const response = await messaging.send(payload);
+
+      console.log('Notification sent successfully:', response);
+
+      res.status(200).json({ message: 'Notification sent successfully' });
+    } catch (error) {
+      console.error('Error sending notification:', error);
+
+      res.status(500).json({ error: 'Error sending notification'});
+    }
+  });
 });
