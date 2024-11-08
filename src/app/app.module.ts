@@ -20,6 +20,7 @@ import {MatRadioModule} from '@angular/material/radio';
 import {BadgeModule} from 'primeng/badge';
 import { DropdownModule } from 'primeng/dropdown';
 import { DialogModule } from 'primeng/dialog';
+import { CheckboxModule } from 'primeng/checkbox';
 
 import { AppComponent } from './app.component';
 import { CategoryListComponent } from './category-list/category-list.component';
@@ -66,6 +67,7 @@ import { DistributorDailyReportComponent } from './distributor-daily-report/dist
 import { DistributorsComponent } from './manage-window/distributors/distributors.component';
 
 import { ItemWiseDetailTotalParchiComponent } from './dailyreport/item-wise-detail-total-parchi/item-wise-detail-total-parchi.component';
+import { CustomMessageComponent } from './manage-window/custom-message/custom-message.component';
 
 
 
@@ -82,6 +84,7 @@ const appRoutes : Routes = [
     {path : 'salesmen' , component : SalesmenComponent , canActivate : [AuthGuardService]},
     {path : 'distributorships' , component : DistributorshipsComponent , canActivate : [AuthGuardService]},
     {path : 'distributors' , component : DistributorsComponent , canActivate : [AuthGuardService]},
+    {path : 'customMessage' , component : CustomMessageComponent , canActivate : [AuthGuardService]}
   ] ,},
   {path : 'salesman/upload' , component : AddSalesmanFormComponent , canActivate : [AuthGuardService]},
   {path : 'chef/upload' , component : AddChefsFormComponent , canActivate : [AuthGuardService]},
@@ -144,6 +147,7 @@ const appRoutes : Routes = [
     DistributorDailyReportComponent,
     DistributorsComponent,
     ItemWiseDetailTotalParchiComponent,
+    CustomMessageComponent,
   ],
   imports: [
     BrowserModule,
@@ -169,7 +173,7 @@ const appRoutes : Routes = [
     BadgeModule,
     DropdownModule, 
     DialogModule,
-    
+    CheckboxModule,
     
     RouterModule.forRoot(appRoutes,{useHash: true}),
   ],

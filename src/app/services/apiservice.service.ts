@@ -433,4 +433,14 @@ public getAllChefNotificationTokens() : Observable<any>
     return this.http.patch("https://muskan-admin-app-default-rtdb.firebaseio.com/activeShopOrders/"+orderKey+".json" , orderData);
   }
 
+  public getConditionalMessage() : Observable<any>
+  {
+    return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/conditionalMessage.json");
+  }
+
+  public updateConditionalMessage(key:string , body : any) : Observable<any>
+  {
+   return this.http.patch("https://muskan-admin-app-default-rtdb.firebaseio.com/conditionalMessage/" + key + ".json" , body);
+  }
+
 }
