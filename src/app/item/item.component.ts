@@ -28,6 +28,9 @@ export class ItemComponent implements OnInit {
   @Input()
   forDistributor:any;
 
+  @Input()
+  availablityStatus:any;
+
   isDeleting : boolean;
   isBeingUpdated : boolean;
 
@@ -88,6 +91,18 @@ export class ItemComponent implements OnInit {
       if(result === "yes")
       {
         this.deleteItem();
+      }
+    }); 
+  }
+
+  openItemNotAvailableDialog()
+  {
+    let dialogRef = this.dialog.open(ContainerComponent , {data : {itemNotAvailable : this.item.itemName.toUpperCase()}});
+
+    dialogRef.afterClosed().subscribe((result)=>{
+      if(result === "yes")
+      {
+        //this.deleteItem();
       }
     }); 
   }
