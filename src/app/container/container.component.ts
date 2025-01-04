@@ -8,10 +8,27 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class ContainerComponent implements OnInit {
 
+  correctPassword:boolean;
+  actualDeleteKey:string;
+
   constructor(@Inject(MAT_DIALOG_DATA) public data : any) { }
 
   ngOnInit(): void {
+    this.correctPassword = false;
+    this.actualDeleteKey = "gulabjamun123";
+  }
 
+  onTypingPassword(e)
+  {
+    let typedPassword = e.target.value;
+    if(typedPassword.toString() === this.actualDeleteKey)
+    {
+      this.correctPassword = true;
+    }
+    else
+    {
+      this.correctPassword = false;
+    }
   }
 
 }

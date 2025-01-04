@@ -1,0 +1,12 @@
+<div class = "loader" *ngIf = "isLoading"></div>
+<div class="container" *ngIf = "!isLoading">
+    <h3 class = "inline-heading">Distributors</h3>
+    <p>New distributors will be added through the retailer-distributor Muskan app. Please see the <a routerLink = "/notifications">notifications</a>  to add new distributor into the system.</p>
+    <hr>
+    <input type = "text" placeholder = "search by distributorship or distributor name" style = "width: 40%;" (input) = "filterDistributors($event)">
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item" style ="height:50px;" *ngFor = "let distributor of filteredDistributorUsefulData; let i = index;">{{distributor.distributorship | uppercase}} , {{distributor.distributorId | uppercase}} , {{distributor.mobileNumber | uppercase}}
+            <button class = "btn btn-danger" style = "float:right;" (click) = "openDialog(distributor.distributorId , distributor.distributorKey)">Delete</button>
+        </li>
+      </ul>
+</div>

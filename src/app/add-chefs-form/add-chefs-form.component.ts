@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { ApiserviceService } from '../services/apiservice.service';
 import { UtilityServiceService } from '../services/utility-service.service';
@@ -11,7 +11,7 @@ import { UtilityServiceService } from '../services/utility-service.service';
 })
 export class AddChefsFormComponent implements OnInit {
 
-  addChefForm : FormGroup;
+  addChefForm : UntypedFormGroup;
   isInsertingChef : boolean;
   isLoading : boolean;
   categories : {categoryName : string}[];
@@ -42,10 +42,10 @@ export class AddChefsFormComponent implements OnInit {
       this.cantLoadCategories = true;
     };
     this.isInsertingChef = false;
-    this.addChefForm = new FormGroup({
-      'chefName' : new FormControl(null , [Validators.required]), 
-      'password' : new FormControl('muskan012@', [Validators.required]),
-      'manages' : new FormControl(null , [Validators.required])
+    this.addChefForm = new UntypedFormGroup({
+      'chefName' : new UntypedFormControl(null , [Validators.required]), 
+      'password' : new UntypedFormControl('muskan012@', [Validators.required]),
+      'manages' : new UntypedFormControl(null , [Validators.required])
     });
   }
 

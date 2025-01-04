@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { catchError, forkJoin, Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -18,9 +18,14 @@ export class ApiserviceService {
     return this.http.get('https://muskan-admin-app-default-rtdb.firebaseio.com/retailerNotifications.json?shallow=true');
   }
 
+  public getActiveOrdersCount():Observable<any>
+  {
+    return this.http.get('https://muskan-admin-app-default-rtdb.firebaseio.com/activeShopOrders.json?shallow=true');
+  }
+
   public getCategories():Observable<any>
   {
-    return this.http.get('https://muskan-admin-app-default-rtdb.firebaseio.com/Categories.json');
+    return this.http.get('https://muskan-admin-app-default-rtdb.firebaseio.com/onlyCategories.json');
   }
 
   public deleteCategory(key:string) : Observable<any>
@@ -28,12 +33,12 @@ export class ApiserviceService {
     return this.http.delete('https://muskan-admin-app-default-rtdb.firebaseio.com/Categories/'+key+".json");
   }
 
-  public getRetailerNotifications() : Observable<any>
+  public getNotifications() : Observable<any>
   {
     return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/retailerNotifications.json");
   }
 
-  public deleteRetailerNotification(notificationKey : string) : Observable<any>
+  public deleteNotification(notificationKey : string) : Observable<any>
   {
     return this.http.delete("https://muskan-admin-app-default-rtdb.firebaseio.com/retailerNotifications/" + notificationKey + ".json");
   }
@@ -63,9 +68,19 @@ export class ApiserviceService {
     return this.http.get('https://muskan-admin-app-default-rtdb.firebaseio.com/Retailers.json')
   }
 
+  public getDistributors() : Observable<any>
+  {
+    return this.http.get('https://muskan-admin-app-default-rtdb.firebaseio.com/Distributors.json')
+  }
+
   public deleteRetailer(retailerKey : string) : Observable<any>
   {
     return this.http.delete('https://muskan-admin-app-default-rtdb.firebaseio.com/Retailers/' + retailerKey + ".json");
+  }
+
+  public deleteDistributor(distributorKey : string) : Observable<any>
+  {
+    return this.http.delete('https://muskan-admin-app-default-rtdb.firebaseio.com/Distributors/' + distributorKey + ".json");
   }
 
   public addSalesman(salesman : {salesmanName : string}) : Observable<any>
@@ -88,7 +103,7 @@ export class ApiserviceService {
     return this.http.post("https://muskan-admin-app-default-rtdb.firebaseio.com/Categories/"+parentCategoryKey+ "/Subcategories.json", subcategory);
   }
 
-  public addItem(item : {itemName : string , imageUrl : string , subcategoryName : string , directVariety : string , offer: string , shopPrice : string , customerPrice : string} , parentCategoryKey : string , parentSubcategoryKey : string) : Observable<any>
+  public addItem(item : any , parentCategoryKey : string , parentSubcategoryKey : string) : Observable<any>
   {
     if(item.directVariety === "1")
     {
@@ -135,30 +150,48 @@ export class ApiserviceService {
     return this.http.put("https://muskan-admin-app-default-rtdb.firebaseio.com/Categories/"+parentCategoryKey+ "/Subcategories/"+parentSubcategoryKey+"/Items/"+itemKey+".json" , updatedItem);
   }
 
-  public getActiveOrders(todaysDate)
+  public getActiveOrders()
   {
-    return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/activeShopOrders/"+todaysDate+".json");
+    return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/activeShopOrders.json");
   }
 
-  public getOrder(orderDate , orderKey , orderType) : Observable<any>
+  public getOrder(orderDate,orderKey , orderType , orderedBy) : Observable<any>
   {
-    if(orderType.startsWith ("processed"))
+    if(orderType.startsWith ("processed") && !orderedBy.startsWith("distributor"))
     {
       let processedOrderKeyArray = orderType.split("?");
       let processedOrderKey = processedOrderKeyArray[1];
       return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/ProcessedShopOrders/"+orderDate+"/"+processedOrderKey+".json")  
     }
-    return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/activeShopOrders/"+orderDate+"/"+orderKey+".json");
+    if(orderType.startsWith ("processed") && orderedBy.startsWith("distributor"))
+    {
+      let processedOrderKeyArray = orderType.split("?");
+      let processedOrderKey = processedOrderKeyArray[1];
+      return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/ProcessedDistributorOrders/"+orderDate+"/"+processedOrderKey+".json")  
+    }
+    if(orderedBy.startsWith("distributor"))
+    {
+      return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/activeDistributorOrders/"+orderKey+".json");  
+    }
+    return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/activeShopOrders/"+orderKey+".json");
   }
 
-  public makeOrderForChef(orderData : any , orderDate:any) : Observable<any>
+  public makeOrderForChef(orderData : any , orderDate:any , orderedBy:any) : Observable<any>
   {
+    if(orderedBy == "distributor")
+    {
+      return this.http.post("https://muskan-admin-app-default-rtdb.firebaseio.com/ProcessedDistributorOrders/"+orderDate+".json" , orderData);
+    }
     return this.http.post("https://muskan-admin-app-default-rtdb.firebaseio.com/ProcessedShopOrders/"+orderDate+".json" , orderData);
   }
 
-  public deleteActiveOrder(orderKey : string , orderDate : string) : Observable<any>
+  public deleteActiveOrder(orderKey : string , orderedBy:string) : Observable<any>
   {
-    return this.http.delete("https://muskan-admin-app-default-rtdb.firebaseio.com/activeShopOrders/"+orderDate+"/"+orderKey+".json");
+    if(orderedBy == "distributor")
+    {
+      return this.http.delete("https://muskan-admin-app-default-rtdb.firebaseio.com/activeDistributorOrders"+"/"+orderKey+".json");
+    }
+    return this.http.delete("https://muskan-admin-app-default-rtdb.firebaseio.com/activeShopOrders"+"/"+orderKey+".json");
   }
 
   public getProcessedShopOrders(date:string) : Observable<any>
@@ -191,17 +224,18 @@ export class ApiserviceService {
     return this.http.delete("https://muskan-admin-app-default-rtdb.firebaseio.com/chefNotificationTokens/"+chefName+".json");
   }
 
-  public sendNotificationToChefs(regIds : string[]) : Observable<any>
+  public sendNotificationToChefs(regIds : string[],type : string = "normal") : Observable<any>
   {
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': 'key=AAAA1CskWfc:APA91bELCsy-GM2n8hPD3Sc4vaanR3ymcIP8mttKC5rhfg9nU4eDVcxcKOxOICxx5B6zdnGce4bBvPfzOB_NzMUg3iT_hHRQbhIyfTAduQxkkVOYTx0hQd0S1GJaPbmtmJrIKdb4_X1f' });
   let options = { headers: headers };
+  let title = type === "custom" ? "NEW CUSTOM ORDER" : "NEW ORDER";
   let body = {
     "registration_ids": regIds,
     "notification": {
         "body": "Click to check out",
-        "title": "NEW ORDER",
+        "title": title,
         "android_channel_id": "chefnotifications",
         "sound": false
     }
@@ -209,9 +243,213 @@ export class ApiserviceService {
 return this.http.post("https://fcm.googleapis.com/fcm/send" , body , options);
   }
 
-  public getAllChefNotificationTokens() : Observable<any>
+public getAllChefNotificationTokens() : Observable<any>
+{
+  return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/chefNotificationTokens.json");
+}
+
+  public addFlavour(flavour : {flavourName : string , shopPrice : number , customerPrice : number}):Observable<any>
   {
-    return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/chefNotificationTokens.json");
+    flavour.shopPrice = +flavour.shopPrice;
+    flavour.customerPrice = +flavour.customerPrice;
+    return this.http.post("https://muskan-admin-app-default-rtdb.firebaseio.com/cakeFlavours.json" , flavour);
+  }
+
+  public getFlavours() : Observable<any>
+  {
+    return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/cakeFlavours.json");
+  }
+
+  public deleteFlavour(flavourKey:string):Observable<any>
+  {
+    return this.http.delete("https://muskan-admin-app-default-rtdb.firebaseio.com/cakeFlavours/"+flavourKey+".json");
+  }
+
+  public editFlavour(flavour:{flavourName : string , shopPrice : number,customerPrice : number} , flavourKey:string) : Observable<any>
+  {
+    flavour.shopPrice = +flavour.shopPrice;
+    flavour.customerPrice = +flavour.customerPrice;
+    return this.http.patch("https://muskan-admin-app-default-rtdb.firebaseio.com/cakeFlavours/"+flavourKey+".json",flavour);
+  }
+
+  public getDesignCategories():Observable<any>
+  {
+    return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/cakeDesignCategories.json");
+  }
+
+  public deleteDesign(designKey : string) : Observable<any>
+  {
+    return this.http.delete("https://muskan-admin-app-default-rtdb.firebaseio.com/cakeDesignCategories/"+designKey+".json");
+  }
+
+  public addDesign(design : {designName : string , shopPrice : number , customerPrice : number}):Observable<any>
+  {
+    design.customerPrice = +design.customerPrice;
+    design.shopPrice = +design.shopPrice;
+    return this.http.post("https://muskan-admin-app-default-rtdb.firebaseio.com/cakeDesignCategories.json" , design);
+  }
+
+  public editDesign(design:{designName : string , shopPrice : number,customerPrice : number} , designKey:string) : Observable<any>
+  {
+    design.customerPrice = +design.customerPrice;
+    design.shopPrice = +design.shopPrice;
+    return this.http.patch("https://muskan-admin-app-default-rtdb.firebaseio.com/cakeDesignCategories/"+designKey+".json",design);
+  }
+
+  public deleteSubcategoryOfCategory(categoryKey : string , subcategoryKey : string)
+  {
+    return this.http.delete("https://muskan-admin-app-default-rtdb.firebaseio.com/Categories/"+categoryKey+"/Subcategories/"+subcategoryKey+".json");
+  }
+
+  public editSubcategoryOfCategory(categoryKey : string , subcategoryKey : string , newName : string)  : Observable<any>
+  {
+    return this.http.patch("https://muskan-admin-app-default-rtdb.firebaseio.com/Categories/"+categoryKey+"/Subcategories/"+subcategoryKey+".json" , {'subcategoryName' : newName});
+  }
+
+  public sendCustomOrderToChef(orderInformation:any , orderDate : string) : Observable<any>
+  {
+    return this.http.post("https://muskan-admin-app-default-rtdb.firebaseio.com/processedShopCustomOrders/"+orderDate+".json" , orderInformation);
+  }
+
+  public isCategoryForDistributor(categoryKey : string) : Observable<any>
+  {
+    return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/Categories/"+categoryKey+"/forDistributor.json");
+  }
+
+  public addDistributorship(distributorship:{distributorship : string}) : Observable<any>
+  {
+    return this.http.post('https://muskan-admin-app-default-rtdb.firebaseio.com/Distributorships.json' , distributorship);
+  }
+
+  public getDistributorships() : Observable<any>
+  {
+    return this.http.get('https://muskan-admin-app-default-rtdb.firebaseio.com/Distributorships.json');
+  }
+
+  public deleteDistributorship(distributorshipKey) : Observable<any>
+  {
+    return this.http.delete('https://muskan-admin-app-default-rtdb.firebaseio.com/Distributorships/'+distributorshipKey+".json");
+  }
+
+  public approveDistributorNotification(notificationKey : string , notificationData : any) : Observable<any>
+  {
+    return this.http.post('https://muskan-admin-app-default-rtdb.firebaseio.com/Distributors.json' , notificationData);
+  }
+
+  public getActiveOrdersForDistributors() : Observable<any>
+  {
+    return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/activeDistributorOrders.json");
+  }
+
+  public getActiveDistributorOrdersCount():Observable<any>
+  {
+    return this.http.get('https://muskan-admin-app-default-rtdb.firebaseio.com/activeDistributorOrders.json?shallow=true');
+  }
+
+  public uploadOnlyCategory(catKey : string , catData : any) : Observable<any>
+  {
+    return this.http.put('https://muskan-admin-app-default-rtdb.firebaseio.com/onlyCategories/'+catKey+'.json' , catData);
+  }
+
+  public insertCategory(catData:any) : Observable<any>
+  {
+    return this.http.post('https://muskan-admin-app-default-rtdb.firebaseio.com/Categories.json' , catData);
+  }
+
+  public deleteAllDirtyOrders(dirtyOrderKeys) : Observable<any>
+  {
+    // return Observable.create((observer)=>{
+    //   for(let i=0;i<dirtyOrderKeys.length;i++)
+    //   {
+    //     this.http.delete('https://muskan-admin-app-default-rtdb.firebaseio.com/activeShopOrders/'+dirtyOrderKeys[i]+'/.json').subscribe((_)=>{
+    //       observer.next('Completed deleting '+dirtyOrderKeys[i]);
+    //     });
+    //   }
+    //   observer.Completed('Compeleted Deleting');
+    // });
+    const requests = dirtyOrderKeys
+      .map(requestId => this.deleteOrder(requestId));
+    return forkJoin(
+      ...requests
+    );
+  }
+
+  private deleteOrder(key) : Observable<any>
+  {
+    return this.http.delete('https://muskan-admin-app-default-rtdb.firebaseio.com/activeShopOrders/'+key+'/.json');
+  }
+
+  public getProcessedDistributorOrders(date:string) : Observable<any>
+  {
+    return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/ProcessedDistributorOrders/"+date+".json");
+  }
+
+  public getAllNotificationTokens() : Observable<any>
+  {
+    return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/notificationTokens.json");
+  }
+
+  public sendNotification(Nbody:string , title:string , image:string) : Observable<any>
+  {
+    console.log("notification call");
+    const body = {
+      "to" : "/topics/items_2",
+      "notification" : {
+          "body" : Nbody,
+          "title" : title,
+          "android_channel_id" : "Muskan-Admin-App",
+          "image": image,
+          "sound" : true
+      },
+      "topic" : "items"
+  };
+    const headers = { 'Authorization': 'Bearer AAAAaXPIZ2w:APA91bEgPROJFmaweC-pHnP9IMyeVfxBUowqiaiQDQh-WpWUM183m12SEf8uhd-b-u3QnbljavfwKt7riYAKyBZ0pbRMH6KZv1qUiezYocj8Y_lVc8i9zL_ChF6c_ifAQ7ifgn77qJQ4', 'Content-Type': 'application/json' };
+    return this.http.post("https://fcm.googleapis.com/fcm/send" ,body,{headers});
+  }
+
+  public sendNotificationToParticularDevice(Nbody:string , title:string , token:string) : Observable<any>
+  {
+    console.log("notification call");
+    const body = {
+      "to" : token,
+      "notification" : {
+          "body" : Nbody,
+          "title" : title,
+          "android_channel_id" : "Muskan-Admin-App-2",
+          "sound" : "sound.mp3"
+      },
+  };
+    const headers = { 'Authorization': 'key=AAAAaXPIZ2w:APA91bEgPROJFmaweC-pHnP9IMyeVfxBUowqiaiQDQh-WpWUM183m12SEf8uhd-b-u3QnbljavfwKt7riYAKyBZ0pbRMH6KZv1qUiezYocj8Y_lVc8i9zL_ChF6c_ifAQ7ifgn77qJQ4', 'Content-Type': 'application/json' };
+    return this.http.post("https://fcm.googleapis.com/fcm/send" ,body,{headers});
+  }
+
+  public findToken(name,shop)
+  {
+    return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/notificationTokens/"+shop+"/"+name+".json");
+  }
+
+  public updateCustomOrder(orderKey : string , orderData:any)
+  {
+    return this.http.patch("https://muskan-admin-app-default-rtdb.firebaseio.com/activeShopOrders/"+orderKey+".json" , orderData);
+  }
+
+  public getConditionalMessage() : Observable<any>
+  {
+    return this.http.get("https://muskan-admin-app-default-rtdb.firebaseio.com/conditionalMessage.json");
+  }
+
+  public updateConditionalMessage(key:string , body : any) : Observable<any>
+  {
+   return this.http.patch("https://muskan-admin-app-default-rtdb.firebaseio.com/conditionalMessage/" + key + ".json" , body);
+  }
+
+  public changeItemAvailablity(parentCategoryKey : string , parentSubcategoryKey : string , itemKey : string , availablity : boolean) : Observable<any>
+  {
+    if(parentSubcategoryKey === "dv")
+      {
+        return this.http.patch("https://muskan-admin-app-default-rtdb.firebaseio.com/Categories/"+parentCategoryKey+ "/Items/" + itemKey+ ".json" , {'availability' : availablity});
+      }
+      return this.http.patch("https://muskan-admin-app-default-rtdb.firebaseio.com/Categories/"+parentCategoryKey+ "/Subcategories/"+parentSubcategoryKey+"/Items/"+itemKey+".json" , {'availability' : availablity});
   }
 
 }

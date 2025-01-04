@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { throws } from 'assert';
+import { Router } from '@angular/router';
+import { timeStamp } from 'console';
 import { ApiserviceService } from '../services/apiservice.service';
+import { UtilityServiceService } from '../services/utility-service.service';
 
 @Component({
   selector: 'app-dailyreport',
@@ -12,11 +13,13 @@ export class DailyreportComponent implements OnInit {
 
   activeOrders = [];
   activeOrderKeys = [];
+  customOrders = [];
+  customOrderKeys = [];
   isLoading : boolean;
   todaysDate : string;
 
 
-  constructor(private apiService : ApiserviceService , private router : Router) {
+  constructor(private apiService : ApiserviceService , private router : Router , private utilityService:UtilityServiceService) {
 
   }
 
@@ -26,20 +29,85 @@ export class DailyreportComponent implements OnInit {
     let monthIST = istDate.getMonth() + 1;
     let yearIST = istDate.getFullYear();
     this.todaysDate = dateIST + "" + monthIST + "" + yearIST; 
+    this.getActiveOrders();
+  }
+
+  getActiveOrders()
+  {
     this.isLoading = true;
-    this.apiService.getActiveOrders(this.todaysDate).subscribe((orders)=>{
+    this.activeOrders = [];
+    this.activeOrderKeys = [];
+    this.customOrderKeys = [];
+    this.customOrderKeys = [];
+    this.apiService.getActiveOrders().subscribe((orders)=>{
       if(orders == null)
       {
         console.log(null);
         this.isLoading = false;
         this.activeOrderKeys = [];
         this.activeOrders = [];
+        this.customOrderKeys = [];
+        this.customOrders = [];
         return;
       }
-      this.activeOrders = Object.values(orders);
-      this.activeOrderKeys = Object.keys(orders);
+      let temp_activeOrders = Object.values(orders);
+      let temp_activeOrderKeys = Object.keys(orders);
+      for(let i=0;i<temp_activeOrders.length;i++)
+      {
+        if(temp_activeOrders[i].orderType!=null  && temp_activeOrders[i].orderType.toLowerCase() === "custom")
+        {
+          this.customOrders.push(temp_activeOrders[i]);
+          this.customOrderKeys.push(temp_activeOrderKeys[i]);
+        }
+        else
+        {
+          this.activeOrders.push(temp_activeOrders[i]);
+          this.activeOrderKeys.push(temp_activeOrderKeys[i]);
+        }
+      }
+      if(this.customOrders.length!=0)
+      {
+        this.fitTodayTagOnCustomOrders();
+      }
       this.isLoading = false;
     });
+
+    this.utilityService.refreshActiveOrdersCount.next('refresh');
+  }
+
+  fitTodayTagOnCustomOrders()
+  {
+     const today = new Date();
+     let aaj = this.transform(today.getDate()) + "-" +this.transform(today.getMonth()+1) + "-" + today.getFullYear();
+
+
+     for(let i=0;i<this.customOrders.length;i++)
+     {
+        let date = this.customOrders[i]['neededOnDate'].split(' ')[0];
+        let day = date.split('-')[2];
+        let month = date.split('-')[1];
+        let year = date.split('-')[0];
+
+        let formedDate = day+"-"+month+"-"+year;
+
+        if(formedDate == aaj)
+        {
+          this.customOrders[i]['todayTag'] = true;
+        }
+        else
+        {
+          this.customOrders[i]['todayTag'] = false;
+        }
+     }
+  }
+
+  transform(month)
+  {
+    if(month < 10)
+    {
+      return "0"+month;
+    }
+    return month;
   }
 
   getISTDate() : Date
@@ -62,12 +130,37 @@ export class DailyreportComponent implements OnInit {
 
   showBill(orderKey)
   {
-    this.router.navigate(['/orderBill/'+orderKey+"/"+this.todaysDate+"/active"]);
+    this.router.navigate(['/orderBill/'+orderKey+"/active"+"/NODATE/retailer"]);
+  }
+
+  openCustomOrder(orderKey)
+  {
+    console.log("Trying to open");
+        this.router.navigate(['customOrder/'+orderKey+"/active"]);
   }
 
   oldOrderPage()
   {
-    this.router.navigate(['/processedOrders']);
+    this.router.navigate(['/processedOrders/retailer']);
+  }
+
+  deleteDirtyOrders()
+  {
+    this.isLoading = true;
+    let dirtyOrderKeys = [];
+    for(let i=0;i<this.activeOrders.length;i++)
+    {
+      let items = this.activeOrders[i]['items'];
+      if(items == undefined)
+      {
+        dirtyOrderKeys.push(this.activeOrderKeys[i]);
+      }
+    }
+    this.apiService.deleteAllDirtyOrders(dirtyOrderKeys).subscribe(
+      (_)=>{
+        this.getActiveOrders();
+      }
+    );
   }
 
 }

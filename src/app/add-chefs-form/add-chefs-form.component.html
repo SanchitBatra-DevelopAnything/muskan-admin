@@ -36,6 +36,7 @@
                 <p>Please select the category this chef will manage</p>
                 <ng-select [items] = "categories" bindLabel = "categoryName" bindValue = "categoryName" [closeOnSelect] = "true"
                 formControlName = "manages"
+                [multiple] = "true"
                 ngDefaultControl>
                 </ng-select>
             </div>

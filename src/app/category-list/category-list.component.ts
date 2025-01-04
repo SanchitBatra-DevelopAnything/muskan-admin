@@ -39,12 +39,33 @@ export class CategoryListComponent implements OnInit , OnDestroy{
       }
       this.categoryKeys = Object.keys(allCategories);
       this.fetchError = false;
+
+
+      // this.makeCategoryData();
+
       this.isLoading = false;
     }) , (err)=>{
       this.fetchError = true;
       this.isLoading = false;
     };
   }
+
+  // makeCategoryData()
+  // {
+  //   for(let i=0;i<this.categoryList.length;i++)
+  //   {
+  //     let catKey = this.categoryKeys[i];
+  //     let catData = {
+  //       'categoryName' : this.categoryList[i].categoryName,
+  //       'imageUrl' : this.categoryList[i].imageUrl,
+  //       'forDistributor' : this.categoryList[i].forDistributor
+  //     }
+  //     this.apiService.uploadOnlyCategory(catKey , catData).subscribe((_)=>{
+  //       console.log("Inserted cat to DB");
+  //     })
+  //   }
+  //   console.log("Inserted done");
+  // }
 
 
   ngOnDestroy()

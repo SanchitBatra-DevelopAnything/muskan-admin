@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup , FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup , UntypedFormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiserviceService } from '../services/apiservice.service';
 import { ToastrService } from 'ngx-toastr';
@@ -12,7 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 export class AddShopFormComponent implements OnInit {
 
 
-  addShopForm : FormGroup;
+  addShopForm : UntypedFormGroup;
   areas : {id : number , area : string}[];
   isInsertingShop:boolean;
 
@@ -22,15 +22,19 @@ export class AddShopFormComponent implements OnInit {
 
     this.areas = [{id : 1 , area : "Ghaziabad"} , {id : 2 , area : "Noida"} , {id : 3 , area : "Dadri"} , {id : 4 , area : "RK PURAM"}]; 
     this.isInsertingShop = false;
-    this.addShopForm = new FormGroup({
-      'shopName' : new FormControl(null , [Validators.required]), 
-      'areaName' : new FormControl(null , [Validators.required])
+    this.addShopForm = new UntypedFormGroup({
+      'shopName' : new UntypedFormControl(null , [Validators.required]), 
+      'areaName' : new UntypedFormControl(null , [Validators.required])
     });
   }
 
   onSubmit()
   {
     this.isInsertingShop = true;
+    this.addShopForm.patchValue({
+      shopName : this.addShopForm.value.shopName.toUpperCase().trim(),
+      areaName : this.addShopForm.value.areaName,
+    })
     this.apiService.addShop(this.addShopForm.value).subscribe((_)=>{
       this.isInsertingShop = false;
       this.toastr.success('Shop Added Successfully!', 'Notification!' , {

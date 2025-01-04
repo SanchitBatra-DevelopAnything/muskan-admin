@@ -1,0 +1,105 @@
+<div class="container">
+    <div *ngIf = "!isLoading">
+        <div style = "color:red; font-size: 20px; font-weight: bold;">
+            THIS IS AN ESTIMATE ORDER ,  DISPATCH DATE : <input type="text">
+          </div>
+        <h1 style = "display: inline-block;">{{orderData['shopAddress'] | uppercase}}</h1>
+        <p><span style = "font-weight: bold;">{{orderKey}}</span></p>
+        <p><span style = "font-weight: bold;">{{orderData['orderedBy']}}</span></p>
+        <p> <span style = "font-weight: bold;">{{orderData['orderTime']}} , {{orderData['orderDate']}}</span></p>
+        <p><span style = "font-weight: bold;">{{orderData['customType']}}</span></p>
+        <div class="row">
+            <div class="col-xs-12">
+                <!-- <p style = "font-weight: bold;">Choose Design : </p> -->
+        <div class="card flex justify-content-center">
+            <p-dropdown [options]="designData" [(ngModel)]="selectedDesign" optionLabel="designName" (onChange) = "calculatePrice($event)"></p-dropdown>
+        </div>
+            </div>
+
+            <div class = "col-xs-12">
+                <p></p>
+            </div>
+
+
+            <div class="col-xs-12">
+                <!-- <p style = "font-weight: bold;">Choose Photo Type : </p> -->
+                <div class="card flex justify-content-center">
+                <p-dropdown [options]="photoData" [(ngModel)]="selectedPhotoOption" optionLabel="type" (onChange) = "calculatePrice($event)"></p-dropdown>
+            </div>
+            </div>
+        </div>
+        <!-- <p style = "font-weight: bold;">Choose Design : </p>
+        <div class="card flex justify-content-center">
+            <p-dropdown [options]="designData" [(ngModel)]="selectedDesign" optionLabel="designName" (onChange) = "calculatePrice($event)"></p-dropdown>
+        </div> -->
+        
+        <button class = "btn btn-primary" (click) = "openDialog()" *ngIf = "showAccept" style = "margin-top: 10px;;">ACCEPT</button>
+    </div>
+    <hr>
+    <div class = "loader" *ngIf = "isLoading">
+
+    </div>
+
+    <div class="row" *ngIf = "orderData['customType'].toLowerCase() == 'message cakes'">
+        <div class="col-xs-12">
+            <h1>NORMAL {{orderData['flavour']}} CAKE</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12" *ngIf = "orderData['customType'].toLowerCase()!='message cakes'">
+            <div style = "height: 400px; width : 600px;">
+                <img src = {{orderImgUrl}} class = "img-rounded" style = "max-height: 100%; height : auto; width: 80%;">
+            </div>
+            
+        </div>
+        <div class="jumbotoron col-xs-2">
+
+        </div>
+        <div class="col-xs-12" *ngIf = "orderData['customType']=='Photo Cakes'">
+            <div style = "height: 400px; width : 600px;">
+                <img src = {{orderImgUrl2}} class = "img-rounded" style = "max-height: 100%; height : auto; width: 80%;">
+            </div>
+            
+        </div>
+
+        <div class="row" *ngIf = "orderData['customType'] != 'Photo Cakes'">
+            <br>
+            <div class="col-xs-12" style = "display: inline-block;">
+                <!-- <p>Information about this order : </p> -->
+                <h3 style = "font-size : 25px; font-weight : bold; word-wrap: break-word;">Rs. {{subTotal}}</h3>
+                <p style = "font-size : 20px; font-weight : bold; word-wrap: break-word;"> {{flavour}}</p>
+                <p style = "font-size : 20px; font-weight : bold; word-wrap: break-word;">{{pounds}} PD.</p>
+                <p style = "font-size : 20px; font-weight : bold; word-wrap: break-word;">{{neededOnDate}}</p>
+                <h6 style = "font-weight: bold; color:blue;">DESCRIPTION: </h6>
+                <h2 style = "font-weight : bold; word-wrap: break-word; width : 400px;">{{orderDescription}}</h2>
+            </div>
+    
+        </div>
+
+            </div>
+
+
+        <div class="row" *ngIf = "orderData['customType'] == 'Photo Cakes'">
+            <div class="col-xs-4" style = "display: inline-block;">
+                <!-- <p>Information about this order : </p> -->
+                <h3 style = "font-size : 25px; font-weight : bold; word-wrap: break-word;">Rs. {{subTotal}}</h3>
+                <p style = "font-size : 20px; font-weight : bold; word-wrap: break-word;"> {{flavour}}</p>
+                <p style = "font-size : 20px; font-weight : bold; word-wrap: break-word;">{{pounds}} PD.</p>
+                <p style = "font-size : 20px; font-weight : bold; word-wrap: break-word;">{{neededOnDate}}</p>
+                <h6 style = "font-weight: bold; color:blue;">DESCRIPTION: </h6>
+                <h2 style = "font-weight : bold; word-wrap: break-word; width : 400px;">{{orderDescription}}</h2>
+            </div>
+    
+        </div>
+</div>
+
+<p-dialog header="Enter Your Code" [(visible)]="addCodeVisible" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
+  
+    <h3>
+        Acceptor Code : <input type = "text" [(ngModel)] = "acceptorCode" autofocus (keydown.enter)="sendOrderToChefCheck()">
+    </h3>
+    <button style = "float: right;" class = "btn btn-primary" (click) = "sendOrderToChef()" [disabled]="acceptorCode=='' || acceptorCode==undefined">Accept Order</button>
+
+
+</p-dialog>

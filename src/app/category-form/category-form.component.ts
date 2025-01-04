@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { finalize, pipe } from 'rxjs';
 import { ImageService } from '../services/image.service';
 
@@ -11,7 +11,7 @@ import { ImageService } from '../services/image.service';
 })
 export class CategoryFormComponent implements OnInit {
 
-  categoryForm : FormGroup;
+  categoryForm : UntypedFormGroup;
   imgSrc:string;
   selectedImage : any;
   isSubmitted:Boolean;
@@ -20,13 +20,26 @@ export class CategoryFormComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.categoryForm = new FormGroup({
-      'categoryName' : new FormControl('',Validators.required), 
-      'imageUrl' : new FormControl('' , Validators.required)
+    this.categoryForm = new UntypedFormGroup({
+      'categoryName' : new UntypedFormControl('',Validators.required), 
+      'imageUrl' : new UntypedFormControl('' , Validators.required),
+      'forDistributor' : new UntypedFormControl(null,[Validators.required])
     });
 
     this.resetForm();
 
+  }
+
+  checkValue(e:any)
+  {
+    if(e.target.value > 1)
+    {
+      e.target.value = 1;
+    }
+    if(e.target.value < 0)
+    {
+      e.target.value = 0;
+    }
   }
 
   showPreview(event : any)
@@ -72,7 +85,8 @@ export class CategoryFormComponent implements OnInit {
     this.categoryForm.reset();
     this.categoryForm.setValue({
       categoryName : '',
-      imageUrl : ''
+      imageUrl : '',
+      forDistributor : null,
     });
     this.imgSrc = "../../assets/default.png";
     this.isSubmitted = false;

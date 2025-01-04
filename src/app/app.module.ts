@@ -14,6 +14,13 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatCardModule} from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {MatRadioModule} from '@angular/material/radio';
+import {BadgeModule} from 'primeng/badge';
+import { DropdownModule } from 'primeng/dropdown';
+import { DialogModule } from 'primeng/dialog';
+import { CheckboxModule } from 'primeng/checkbox';
 
 import { AppComponent } from './app.component';
 import { CategoryListComponent } from './category-list/category-list.component';
@@ -46,27 +53,56 @@ import { OldOrdersComponent } from './dailyreport/old-orders/old-orders.componen
 import { MatNativeDateModule } from '@angular/material/core';
 import { ChefsComponent } from './manage-window/chefs/chefs.component';
 import { AddChefsFormComponent } from './add-chefs-form/add-chefs-form.component';
+import { FlavoursScreenComponent } from './flavours-screen/flavours-screen.component';
+import { DesignCategoryScreenComponent } from './design-category-screen/design-category-screen.component';
+import { AddFlavourFormComponent } from './add-flavour-form/add-flavour-form.component';
+import { AddDesignCategoryFormComponent } from './add-design-category-form/add-design-category-form.component';
+import { SubcategoryDeleteFormComponent } from './subcategory-delete-form/subcategory-delete-form.component';
+import { SubcategoryEditFormComponent } from './subcategory-edit-form/subcategory-edit-form.component';
+import { CustomOrderViewComponent } from './dailyreport/custom-order-view/custom-order-view.component';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { AddDistributorshipFormComponent } from './add-distributorship-form/add-distributorship-form.component';
+import { DistributorshipsComponent } from './manage-window/distributorships/distributorships.component';
+import { DistributorDailyReportComponent } from './distributor-daily-report/distributor-daily-report.component';
+import { DistributorsComponent } from './manage-window/distributors/distributors.component';
+
+import { ItemWiseDetailTotalParchiComponent } from './dailyreport/item-wise-detail-total-parchi/item-wise-detail-total-parchi.component';
+import { CustomMessageComponent } from './manage-window/custom-message/custom-message.component';
+
 
 
 const appRoutes : Routes = [
   {path : 'notifications' , component : NotificationsComponent , canActivate : [AuthGuardService]},
   {path : 'dailyReport' , component : DailyreportComponent  , canActivate : [AuthGuardService]},
+  {path : 'dailyDistributorReport' , component : DistributorDailyReportComponent , canActivate : [AuthGuardService]},
   {path : 'categories' , component : CategoryListComponent , canActivate : [AuthGuardService]},
   {path : 'category/upload' , component : CategoryFormComponent , canActivate : [AuthGuardService]},
   {path : 'manage' , component : ManageWindowComponent , canActivate : [AuthGuardService] , children:[
     {path : 'shops', component : ShopsComponent  , canActivate : [AuthGuardService]},
     {path : 'retailers' , component : RetailersComponent , canActivate : [AuthGuardService]} ,
     {path : 'chefs' , component : ChefsComponent , canActivate : [AuthGuardService]} , 
-    {path : 'salesmen' , component : SalesmenComponent , canActivate : [AuthGuardService]}
+    {path : 'salesmen' , component : SalesmenComponent , canActivate : [AuthGuardService]},
+    {path : 'distributorships' , component : DistributorshipsComponent , canActivate : [AuthGuardService]},
+    {path : 'distributors' , component : DistributorsComponent , canActivate : [AuthGuardService]},
+    {path : 'customMessage' , component : CustomMessageComponent , canActivate : [AuthGuardService]}
   ] ,},
   {path : 'salesman/upload' , component : AddSalesmanFormComponent , canActivate : [AuthGuardService]},
   {path : 'chef/upload' , component : AddChefsFormComponent , canActivate : [AuthGuardService]},
   {path : 'shop/upload' , component : AddShopFormComponent , canActivate : [AuthGuardService]},
+  {path : 'distributorship/upload' , component : AddDistributorshipFormComponent , canActivate : [AuthGuardService]},
   {path : 'subcategory/upload/:categoryKey/:categoryName' , component : SubcategoryAddFormComponent , canActivate : [AuthGuardService]},
   {path : 'item/upload/:categoryKey/:categoryName' , component : AddItemFormComponent , canActivate: [AuthGuardService]},
   {path : 'itemsOf/:categoryKey/:categoryName' , component : ItemListComponent , canActivate: [AuthGuardService]},
-  {path : 'orderBill/:orderKey/:orderDate/:orderType' , component : OrderDetailComponent , canActivate: [AuthGuardService]},
-  {path : 'processedOrders' , component : OldOrdersComponent , canActivate: [AuthGuardService]},
+  {path : 'orderBill/:orderKey/:orderType/:orderDate/:orderedBy' , component : OrderDetailComponent , canActivate: [AuthGuardService]},
+  {path : 'customOrder/:orderKey/:orderType' , component : CustomOrderViewComponent , canActivate : [AuthGuardService]},
+  {path : 'processedOrders/:type' , component : OldOrdersComponent , canActivate: [AuthGuardService]},
+  {path: 'cakes/flavours' , component : FlavoursScreenComponent , canActivate: [AuthGuardService]},
+  {path : 'deleteSubcategory/:categoryKey/:categoryName' , component : SubcategoryDeleteFormComponent , canActivate : [AuthGuardService]},
+  {path : 'editSubcategory/:categoryKey/:categoryName' , component : SubcategoryEditFormComponent , canActivate : [AuthGuardService]},
+  {path: 'cakes/designCategories' , component : DesignCategoryScreenComponent , canActivate: [AuthGuardService]},
+  {path: 'cakes/addNewFlavour/:flavour/:sp/:cp/:type/:flavourKey' , component : AddFlavourFormComponent , canActivate: [AuthGuardService]},
+  {path: 'cakes/addNewDesign/:design/:sp/:cp/:type/:designKey' , component : AddDesignCategoryFormComponent , canActivate: [AuthGuardService]},
+  {path : 'details' , component : ItemWiseDetailTotalParchiComponent , canActivate : [AuthGuardService]},
   {path: '' , component:LoginComponent , pathMatch:"full"}
 ];
 
@@ -99,6 +135,19 @@ const appRoutes : Routes = [
     OldOrdersComponent,
     ChefsComponent,
     AddChefsFormComponent,
+    FlavoursScreenComponent,
+    DesignCategoryScreenComponent,
+    AddFlavourFormComponent,
+    AddDesignCategoryFormComponent,
+    SubcategoryDeleteFormComponent,
+    SubcategoryEditFormComponent,
+    CustomOrderViewComponent,
+    AddDistributorshipFormComponent,
+    DistributorshipsComponent,
+    DistributorDailyReportComponent,
+    DistributorsComponent,
+    ItemWiseDetailTotalParchiComponent,
+    CustomMessageComponent,
   ],
   imports: [
     BrowserModule,
@@ -117,6 +166,14 @@ const appRoutes : Routes = [
     MatCardModule,
     MatNativeDateModule,
     MatPaginatorModule,
+    MatButtonModule,
+    MatIconModule,
+    NgxMaterialTimepickerModule,
+    MatRadioModule,
+    BadgeModule,
+    DropdownModule, 
+    DialogModule,
+    CheckboxModule,
     
     RouterModule.forRoot(appRoutes,{useHash: true}),
   ],

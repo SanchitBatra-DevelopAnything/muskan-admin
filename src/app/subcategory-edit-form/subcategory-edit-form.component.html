@@ -1,0 +1,38 @@
+<div class="container" style = "text-align:center;">
+    <div class = "jumbotron">
+        <h3>Subcategory EditName -- {{categoryName}}</h3>
+
+        <form [formGroup] = "editSubcategoryForm" (ngSubmit) = "onSubmit()"> 
+            
+            <div class="loader" *ngIf = "isLoading" style = "text-align: center;">
+
+            </div>
+
+            <div class="form-group" *ngIf = "!isLoading">
+                <label for = "subcategoryToBeEditted">Select subcategory to be editted</label>
+                <ng-select [items] = "subcategories" bindLabel = "name" bindValue = "subcategoryKey" [closeOnSelect] = "true"
+                formControlName = "subcategoryToBeEditted"
+                ngDefaultControl>
+                </ng-select>
+            </div>
+
+            <div class="form-group" *ngIf = "!isLoading">
+                <label for = "subcategoryNewName">New Name for selected subcategory</label>
+                    <input type = "text"
+                    id="subcategoryNewName"
+                    class = "form-control"
+                    formControlName="subcategoryNewName">
+            </div>
+
+    
+            <button type = "submit" class = "btn btn-success btn-bold-text" *ngIf = "!isEdittingSubcategory" [disabled] = "editSubcategoryForm.pending|| editSubcategoryForm.invalid">Edit subcategory</button>
+            <button *ngIf = "isEdittingSubcategory" class = "btn btn-danger">
+                <div class="loader loader-button">
+    
+                </div>
+            </button>
+        </form>
+    </div>
+    
+</div>
+

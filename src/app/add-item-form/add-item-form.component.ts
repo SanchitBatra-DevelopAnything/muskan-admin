@@ -1,6 +1,7 @@
+import { ReturnStatement } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { finalize } from 'rxjs';
@@ -13,7 +14,7 @@ import { ApiserviceService } from '../services/apiservice.service';
 })
 export class AddItemFormComponent implements OnInit {
 
-  itemForm: FormGroup;
+  itemForm: UntypedFormGroup;
   imgSrc:string;
   selectedImage : any;
   isSubmitted:Boolean;
@@ -22,27 +23,53 @@ export class AddItemFormComponent implements OnInit {
   availableSubcategoriesKeys : any;
   selectedSubcategoryKey : string;
   showSubcategoryDropdown : boolean;
+  isParentCategoryForDistributor :boolean;
+
+  flavours : any[];
+  designCategories : any[];
 
   constructor(private storage : AngularFireStorage , private apiService: ApiserviceService,private route : ActivatedRoute , private toastr:ToastrService) { }
 
   ngOnInit(): void {
     this.showSubcategoryDropdown = true;
     this.parentCategoryData = {categoryName : this.route.snapshot.params['categoryName'] , categoryKey : this.route.snapshot.params['categoryKey']};
-    this.itemForm = new FormGroup({
-      'itemName' : new FormControl('',[Validators.required]), 
-      'imageUrl' : new FormControl('' , [Validators.required]),
-      'subcategoryName' : new FormControl('',[Validators.required]),
-       'shopPrice' : new FormControl('' , [Validators.required]),
-       'customerPrice' : new FormControl('', [Validators.required]),
-       'offer' : new FormControl('' , [Validators.required]),
-       'directVariety' : new FormControl('0',[Validators.required]),
-       'minPounds' : new FormControl('-1')
+    this.itemForm = new UntypedFormGroup({
+      'itemName' : new UntypedFormControl('',[Validators.required]), 
+      'imageUrl' : new UntypedFormControl('' , [Validators.required]),
+      'subcategoryName' : new UntypedFormControl('',[Validators.required]),
+       'shopPrice' : new UntypedFormControl(null , [Validators.required]),
+       'customerPrice' : new UntypedFormControl('' , [Validators.required]),
+       'offer' : new UntypedFormControl('' , [Validators.required]),
+       'directVariety' : new UntypedFormControl('0',[Validators.required]),
+       'cakeFlavour' : new UntypedFormControl(null,[Validators.required]),
+       'designCategory' : new UntypedFormControl(null,[Validators.required]),
+       'minPounds' : new UntypedFormControl('1'),
+       'distributorPrice' : new UntypedFormControl(null),
+       'distributorItemName' : new UntypedFormControl(null)
     });
+
+    this.apiService.isCategoryForDistributor(this.parentCategoryData.categoryKey).subscribe((forD)=>{
+      this.isParentCategoryForDistributor = forD;
+    });
+
+    this.flavours = [];
+    this.designCategories = [];
+
+    if(this.parentCategoryData.categoryName.toUpperCase() === "CAKES & PASTRIES")
+    {
+      this.fetchFlavours();
+      this.fetchDesignCategories();
+    }
 
     this.resetForm();
 
-    this.fetchAvailableSubcategories();
+    if(this.parentCategoryData.categoryName.toUpperCase() === "CAKES & PASTRIES")
+    {
+      this.setPrices("pineapple","not-decided");
+    }
 
+    this.fetchAvailableSubcategories();
+    
   }
 
   showPreview(event : any)
@@ -76,6 +103,7 @@ export class AddItemFormComponent implements OnInit {
           fileRef.getDownloadURL().subscribe((url)=>{
             formValue['imageUrl']=url;
             this.apiService.addItem(formValue , this.parentCategoryData.categoryKey , this.selectedSubcategoryKey).subscribe((_)=>{
+              this.sendNotification("Added "+formValue['itemName'] , "GO TO "+this.parentCategoryData.categoryName+"--->"+formValue['subcategoryName'],formValue['imageUrl']);
               this.showToasterNotification();
               this.resetForm();
             });
@@ -85,22 +113,122 @@ export class AddItemFormComponent implements OnInit {
     }
   }
 
+  sendNotification(title , body , image) {
+    console.log("function called");
+    this.apiService.sendNotification(body,title,image).subscribe((_)=>{
+      console.log("sent noti");
+    }, (err)=>{
+      console.log(err);
+    })
+  }
+
+  fetchFlavours()
+  {
+    this.apiService.getFlavours().subscribe((allFlavours)=>{
+      if(allFlavours == null)
+      {
+        this.flavours = [];
+        return;
+      }
+      this.flavours = Object.values(allFlavours);
+      this.flavours.push({flavourName : "ALL FLAVOURS"});
+    });
+  }
+
+  fetchDesignCategories()
+  {
+    this.apiService.getDesignCategories().subscribe((allDesigns)=>{
+      if(allDesigns == null)
+      {
+        this.designCategories = [];
+        return;
+      }
+      this.designCategories = Object.values(allDesigns);
+    });
+  }
+
   resetForm()
   {
     this.itemForm.reset();
-    this.itemForm.setValue({
-      itemName : '',
-      imageUrl : '',
-      subcategoryName : '',
-      offer : '',
-      shopPrice : '',
-      customerPrice: '',
-      directVariety : '0',
-      minPounds : '-1',
-    });
+    if(this.parentCategoryData.categoryName === "CAKES & PASTRIES")
+    {
+      this.itemForm.setValue({
+        itemName : '',
+        imageUrl : '',
+        subcategoryName : '',
+        offer : '',
+        shopPrice : '',
+        customerPrice: '',
+        directVariety : '0',
+        minPounds : '1',
+        cakeFlavour : null,
+        designCategory : null,
+        distributorPrice : null,
+        distributorItemName : null,
+      });
+    }
+    else
+    {
+      this.itemForm.setValue({
+        itemName : '',
+        imageUrl : '',
+        subcategoryName : '',
+        offer : '',
+        shopPrice : '',
+        customerPrice: '',
+        directVariety : '0',
+        minPounds : '1',
+        cakeFlavour : "not-valid",
+        designCategory : "not-valid",
+        distributorPrice : null,
+        distributorItemName : null
+      });
+    }
     this.imgSrc = "../../assets/default.png";
     this.isSubmitted = false;
     this.selectedImage = null;
+  }
+
+  setPrices(flavour:string , design:string)
+  {
+    let flavourShopPrice = 0;
+    let flavourCustomerPrice = 0;
+    let designShopPrice = 0;
+    let designCustomerPrice= 0;
+    if(flavour.toUpperCase() === "ALL FLAVOURS")
+    {
+      flavour = "pineapple"; //sets the default price to pineapple.
+    }
+    for(let i=0;i<this.flavours.length;i++)
+    {
+      if(this.flavours[i].flavourName.toLowerCase() === flavour.toLowerCase())
+      {
+        flavourShopPrice = this.flavours[i].shopPrice;
+        flavourCustomerPrice = this.flavours[i].customerPrice;
+        break;
+      }
+    }
+    if(design === "not-decided")
+    {
+      designCustomerPrice = 0;
+      designShopPrice = 0;
+      this.itemForm.controls["shopPrice"].setValue(+flavourShopPrice + +designShopPrice);
+      this.itemForm.controls['customerPrice'].setValue(+flavourCustomerPrice + +designCustomerPrice);
+    }
+    else
+    {
+      for(let i=0;i<this.designCategories.length;i++)
+      {
+        if(this.designCategories[i].designName.toLowerCase() === design.toLowerCase())
+        { 
+           designShopPrice = this.designCategories[i].shopPrice;
+           designCustomerPrice = this.designCategories[i].customerPrice;
+          break;
+        }
+      }
+      this.itemForm.controls["shopPrice"].setValue(+flavourShopPrice + +designShopPrice);
+      this.itemForm.controls['customerPrice'].setValue(+flavourCustomerPrice + +designCustomerPrice);
+    }
   }
 
   fetchAvailableSubcategories()
@@ -143,6 +271,32 @@ export class AddItemFormComponent implements OnInit {
       closeButton : true , 
       positionClass : 'toast-bottom-right'
     });
+  }
+
+  flavourChanged(e)
+  {
+    let selectedDesign = this.itemForm.controls["designCategory"].value;
+    if(selectedDesign == null)
+    {
+      this.setPrices(e.flavourName , "not-decided");
+    }
+    else
+    {
+      this.setPrices(e.flavourName , selectedDesign);
+    }
+  }
+
+  designChanged(e)
+  {
+    let selectedFlavour = this.itemForm.controls["cakeFlavour"].value;
+    if(selectedFlavour == null)
+    {
+      this.setPrices("pineapple",e.designName);
+    }
+    else
+    {
+      this.setPrices(selectedFlavour , e.designName);
+    }
   }
 
 }

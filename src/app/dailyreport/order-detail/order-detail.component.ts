@@ -4,7 +4,8 @@ import { ApiserviceService } from 'src/app/services/apiservice.service';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
-import { UtilityServiceService } from 'src/app/services/utility-service.service';
+import { TotalParchiService } from 'src/app/services/dataSharing/total-parchi.service';
+import { NotificationManagerService } from 'src/app/services/notifications/notification-manager.service';
 
 @Component({
   selector: 'app-order-detail',
@@ -16,51 +17,113 @@ export class OrderDetailComponent implements OnInit{
 
   orderKey : string;
   orderDate:string;
+  
   isLoading : boolean = false;
   orderData : {};
   billData : BillElement[];
   orderType : string;
+  orderedBy : string;
 
-  displayedColumns: string[] = ['Sno', 'Item', 'Quantity', 'Price'];
+  displayedColumns : string[];
   dataSource:any;
+  categoriesInBillValues:any;
+  categoriesToShow:any;
+  hideHeaders:boolean = false;
+  viewTotalParchi : boolean = false;
+
+  showPrices:boolean = true;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  addCodeVisible:boolean = false;
+  acceptorCode:any;
 
 
-  constructor(private route : ActivatedRoute , private router : Router,private apiService : ApiserviceService , private toastr : ToastrService) { }
+  constructor(private route : ActivatedRoute , private router : Router,private apiService : ApiserviceService , private toastr : ToastrService , private totalParchiService : TotalParchiService , private notificationService :NotificationManagerService) { }
 
   ngOnInit(): void {
     this.isLoading = false;
     this.orderKey = this.route.snapshot.params['orderKey'];
-    this.orderDate = this.route.snapshot.params['orderDate'];
     this.orderType = this.route.snapshot.params['orderType'];
+    this.orderDate = this.route.snapshot.params['orderDate'];
+    this.orderedBy = this.route.snapshot.params['orderedBy'];
+    this.displayedColumns = this.orderKey == "totalParchi" ? ['Sno' , 'Item' , 'Quantity'] : ['Sno', 'Item', 'Quantity', 'Price'];
     this.getOrderItems();
   }
 
   goBackToOrders()
   {
+    if(this.orderedBy == "distributor")
+    {
+      this.router.navigate(['/dailyDistributorReport']); 
+      return; //go to distributor orders.
+    }
     this.router.navigate(['/dailyReport']);
   }
 
   getOrderItems()
   {
+    if(this.orderKey == "totalParchi")
+    {
+      console.log("FILTERED ORDERS ARE HERE = ",this.totalParchiService.ordersForItemWiseDetail);
+      this.orderData = {'items' : this.totalParchiService.makeListFromMap()};
+      this.getCategoriesInBill();
+      this.formBillData();
+      this.viewTotalParchi = true;
+      return;
+    }
+    this.viewTotalParchi = false;
     this.isLoading = true;
-    this.apiService.getOrder(this.orderDate , this.orderKey , this.orderType).subscribe((orderDetail)=>{
+    this.apiService.getOrder(this.orderDate,this.orderKey , this.orderType, this.orderedBy).subscribe((orderDetail)=>{
       if(orderDetail == null)
       {
         this.orderData = {};
         this.isLoading = false;
+        this.categoriesInBillValues = [];
         this.billData = [];
         return;
       }
       this.orderData = orderDetail;
+      this.orderDate = this.orderData['orderDate'];
+      
+      this.getCategoriesInBill();
       this.formBillData();
       this.isLoading = false;
     });
   }
 
+
+  modifyCakeNameWithIntegerPound(itemName)
+  {
+    let temp_name = itemName.split('.')[0]+"P"+itemName.split('.')[2];
+    return temp_name.split("-")[0]+" "+temp_name.split("-")[1];
+  }
+
+  getCategoriesInBill()
+  {
+    this.categoriesInBillValues = [];
+    this.categoriesToShow = [{category : "ALL"}];
+    let items = this.orderData['items'];
+    for(let i=0;i<items.length;i++)
+    {
+      let item = items[i];
+      if(this.orderType.toString().toLowerCase() == "active")
+      {
+        if(item.CategoryName.toString().toUpperCase() == "CAKES & PASTRIES")
+        {
+          item['item'] = this.modifyCakeNameWithIntegerPound(item['item']);
+        }
+      }
+      this.categoriesInBillValues.push(item.CategoryName);
+    }
+    let arr = this.categoriesInBillValues.filter((v, i, a) => a.indexOf(v) === i); //unique.
+    arr.forEach(element => {
+      this.categoriesToShow.push({category : element});
+    });
+  }
+
   formBillData()
   {
+    this.hideHeaders = false;
     let items = this.orderData['items'];
     this.billData = [];
     for(let i=0;i<items.length;i++)
@@ -71,9 +134,33 @@ export class OrderDetailComponent implements OnInit{
         item = item + "-" + items[i].weight;
       }
       let data = {"Sno" : i+1 , "Item" : item , "Quantity" : items[i].quantity , "Price" : items[i].price};
-      this.billData.push(data); 
+      this.billData.push(data);
+
     }
-    this.dataSource = new MatTableDataSource<BillElement>(this.billData);
+    this.dataSource = this.viewTotalParchi ? new MatTableDataSource<TotalParchiBillElement>(this.billData) : new MatTableDataSource<BillElement>(this.billData);
+    this.setPaginator();
+  }
+
+  getCategoryWiseBill(cat : {category : string})
+  {
+    if(cat.category=="ALL")
+    {
+      this.formBillData();
+      return;
+    }
+    this.hideHeaders = true;
+    let items = this.orderData['items'];
+    this.billData = [];
+    for(let i=0;i<items.length;i++)
+    {
+      let item = items[i].item;
+      let data = {"Sno" : i+1 , "Item" : item , "Quantity" : items[i].quantity , "Price" : items[i].price};
+      if(items[i].CategoryName.toString().toUpperCase() == cat.category.toString().toUpperCase() || (items[i].CategoryName.toString().toUpperCase() == "PASTRIES" && cat.category.toString().toUpperCase() == "CAKES & PASTRIES"))
+      {
+        this.billData.push(data);
+      }
+    }
+    this.dataSource = this.viewTotalParchi ? new MatTableDataSource<TotalParchiBillElement>(this.billData) : new MatTableDataSource<BillElement>(this.billData);
     this.setPaginator();
   }
 
@@ -82,9 +169,19 @@ export class OrderDetailComponent implements OnInit{
     this.dataSource.paginator = this.paginator;
   }
 
+  sendOrderToChefCheck()
+  {
+    if(this.acceptorCode==="" || this.acceptorCode===undefined || this.acceptorCode===null)
+    {
+      return;
+    }
+    this.sendOrderToChef();
+  }
+
   sendOrderToChef()
   {
     this.isLoading = true;
+    this.addCodeVisible = false;
     let orderInformation = {...this.orderData};
     let modifiedItemList = [];
     for(let i=0;i<orderInformation['items'].length;i++)
@@ -96,39 +193,85 @@ export class OrderDetailComponent implements OnInit{
     }
     orderInformation['items'] = modifiedItemList;
     orderInformation['orderKey'] = this.orderKey;
+    orderInformation['acceptorCode'] = this.acceptorCode;
     
     console.log( " Going to Chef = ",orderInformation);
-    this.apiService.makeOrderForChef(orderInformation , this.orderDate).subscribe((_)=>{
-      this.apiService.deleteActiveOrder(this.orderKey , this.orderDate).subscribe((_)=>{
+    this.apiService.makeOrderForChef(orderInformation , this.orderDate , this.orderedBy).subscribe((_)=>{
+      this.apiService.deleteActiveOrder(this.orderKey , this.orderedBy).subscribe((_)=>{
         this.toastr.success('Order Given To Chefs Successfully', 'Notification!' , {
           timeOut : 4000 ,
           closeButton : true , 
           positionClass : 'toast-bottom-right'
         });
-        this.router.navigate(['/dailyReport']);
+        if(this.orderedBy == "retailer")
+        {
+          this.router.navigate(['/dailyReport']);
+        }
+        else
+        {
+          this.router.navigate(['/dailyDistributorReport']);
+        }
+        
         this.isLoading = false;
       });
     });
-    console.log("STARTING CHEF NOTIS");
-    this.apiService.getAllChefNotificationTokens().subscribe((tokens)=>{
-      var regIds = [];
-      if(tokens!=null)
-      {
-        regIds = Object.values(tokens);
-        var onlyTokens = regIds.map((chefToken)=>{
-          return chefToken.chefToken;
-        })
-      }
-      this.apiService.sendNotificationToChefs(onlyTokens).subscribe((_)=>{
-        this.toastr.success('Sent notifications to chefs', 'Notification!' , {
+    let deviceToken = "";
+    console.log("FINDING TOKEN");
+    let shopAddress = orderInformation['shopAddress'];
+    if(this.orderedBy.toLowerCase() == "distributor")
+    {
+      shopAddress = "DISTRIBUTOR-"+shopAddress;
+    }
+    this.apiService.findToken(orderInformation['orderedBy'],shopAddress).subscribe((token)=>{
+      console.log("FOUND TOKEN = "+token['token']);
+      deviceToken = token['token'];  
+      this.apiService.sendNotificationToParticularDevice("Check details in my orders.","REGULAR ORDER ACCEPTED!",deviceToken).subscribe((_)=>{
+        console.log("SENT NOTIFICATION");
+        this.toastr.success('Sent notification successfull!', 'Notification!' , {
           timeOut : 4000 ,
           closeButton : true , 
           positionClass : 'toast-bottom-right'
         });
       });
-      console.log("SENT NOTIS COMPLETE");
     });
+    
   }
+
+  togglePricesView()
+  {
+    this.showPrices = !this.showPrices;
+    if(this.showPrices)
+    {
+      this.displayedColumns = ['Sno', 'Item', 'Quantity', 'Price'];
+    }
+    else
+    {
+      this.displayedColumns = ['Sno', 'Item', 'Quantity'];
+    }
+  }
+
+  seeDetails()
+  {
+    this.router.navigate(['/details']);
+  }
+
+  openDialog()
+  {
+    // let dialogRef = this.dialog.open(ContainerComponent , {data : {orderAccept : "Accepting Order Password Daaldo"}});
+
+    // dialogRef.afterClosed().subscribe((result)=>{
+    //   if(result === "yes")
+    //   {
+    //     this.sendOrderToChef();
+    //   }
+    // }); 
+    this.addCodeVisible = true;
+  }
+
+  // getDataForPriceColumn(element:any)
+  // {
+    
+  // }
 
 }
 
@@ -137,4 +280,10 @@ export interface BillElement {
   'Sno': number;
   'Quantity': number;
   'Price': string;
+}
+
+export interface TotalParchiBillElement {
+  'Item' : string , 
+  'Sno' : number , 
+  'Quantity' : number
 }

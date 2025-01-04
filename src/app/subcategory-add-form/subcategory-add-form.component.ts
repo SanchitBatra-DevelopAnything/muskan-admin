@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ApiserviceService } from '../services/apiservice.service';
@@ -11,7 +11,7 @@ import { ApiserviceService } from '../services/apiservice.service';
 })
 export class SubcategoryAddFormComponent implements OnInit {
 
-  subcategoryForm : FormGroup;
+  subcategoryForm : UntypedFormGroup;
   isInsertingSubcategory : boolean;
   parentCategoryData : {parentCategoryId : string, parentCategoryName: string};
 
@@ -20,7 +20,7 @@ export class SubcategoryAddFormComponent implements OnInit {
   ngOnInit(): void {
     this.parentCategoryData = {parentCategoryId : this.route.snapshot.params['categoryKey'] , parentCategoryName : this.route.snapshot.params['categoryName']};
     this.isInsertingSubcategory = false;
-    this.subcategoryForm = new FormGroup({subcategoryName : new FormControl(null , [Validators.required])});
+    this.subcategoryForm = new UntypedFormGroup({subcategoryName : new UntypedFormControl(null , [Validators.required])});
   }
 
   onSubmit()

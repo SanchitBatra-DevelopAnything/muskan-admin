@@ -19,3 +19,10 @@
 img {
     width : 200px;
 }
+
+.bdy {
+    background-image: url('https://static.vecteezy.com/system/resources/thumbnails/001/428/611/small/rustic-bread-and-bakery-banner-vector.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;  
+    background-size: cover;
+}

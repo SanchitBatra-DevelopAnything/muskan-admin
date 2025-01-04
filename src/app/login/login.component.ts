@@ -1,5 +1,5 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiserviceService } from '../services/apiservice.service';
 import { UtilityServiceService } from '../services/utility-service.service';
@@ -12,7 +12,7 @@ import { UtilityServiceService } from '../services/utility-service.service';
 export class LoginComponent implements OnInit {
 
 
-  loginForm : FormGroup;
+  loginForm : UntypedFormGroup;
   validUsers : {};
   isLoading : Boolean;
   internetProblem : Boolean;
@@ -27,9 +27,9 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.loginForm = new FormGroup({
-      'username' : new FormControl(null), 
-      'password' : new FormControl(null)
+    this.loginForm = new UntypedFormGroup({
+      'username' : new UntypedFormControl(null), 
+      'password' : new UntypedFormControl(null)
     });
 
     this.isLoading = true;
@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
         alert('invalid password');
         return;
       }
-      this.loginSuccessfull();
+      this.loginSuccessfull(adminIndex);
     }
     else
     {
@@ -72,14 +72,23 @@ export class LoginComponent implements OnInit {
     return -1;
   }
 
-  loginSuccessfull() : void 
+  loginSuccessfull(index) : void 
   {
+    console.log(this.validUsers);
     sessionStorage.setItem('user' , this.loginForm.value.username);
     sessionStorage.setItem('loggedIn' , "true");
-    this.UtilityService.loggedInStatusUpdated.next(true); //inform header for the same.
+    sessionStorage.setItem('adminType' , Object.values(this.validUsers)[index]['type']);
+    this.UtilityService.loggedInStatusUpdated.next(true);
 
     // this.isLoggedIn.emit(true);
-    this.router.navigate(['/categories']);
+    if(sessionStorage.getItem('adminType') == "super-admin")
+    {
+      this.router.navigate(['/categories']);
+    }
+    else if(sessionStorage.getItem('adminType') == "worker")
+    {
+      this.router.navigate(['/dailyReport']);
+    }
   }
 
   fetchAdmins()
