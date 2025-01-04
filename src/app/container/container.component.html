@@ -52,6 +52,17 @@
 
 </div>
 
+<div class="container" *ngIf = "data.itemNotAvailable!=null">
+    <h4 mat-dialog-title>Are you sure you want to make {{data.itemNotAvailable}} unavailable ?</h4>
+<mat-dialog-content>Users won't be able to order this item from the Muskan Retailer/Distributor Application.
+    <br>
+    <label>Enter Password For Making this unavailable.</label>
+    <br>
+    <input type = "text" placeholder="enter passkey to delete" (input) = "onTypingPassword($event)">
+</mat-dialog-content>
+
+</div>
+
 <mat-dialog-actions>
     <div style = "text-align: right;">
         <button class = "btn btn-primary" mat-dialog-close mat-dialog-close = "no" style = "margin-right: 10px;"> NO </button>

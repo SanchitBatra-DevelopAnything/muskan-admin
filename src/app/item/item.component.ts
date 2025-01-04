@@ -33,6 +33,9 @@ export class ItemComponent implements OnInit {
 
   isEditMode:boolean;
 
+  @Input()
+  isAvailable:boolean;
+
   editItemName : string;
   editItemOffer : any;
   editItemShopPrice:any;
@@ -88,6 +91,18 @@ export class ItemComponent implements OnInit {
       if(result === "yes")
       {
         this.deleteItem();
+      }
+    }); 
+  }
+
+  openItemNotAvailableDialog()
+  {
+    let dialogRef = this.dialog.open(ContainerComponent , {data : {itemNotAvailable : this.item.itemName.toUpperCase()}});
+
+    dialogRef.afterClosed().subscribe((result)=>{
+      if(result === "yes")
+      {
+        this.changeAvailability(false);
       }
     }); 
   }
@@ -262,5 +277,16 @@ export class ItemComponent implements OnInit {
     this.editItemShopPrice = +flavourShopPrice + +designShopPrice;
     this.editItemCustomerPrice = +flavourCustomerPrice + +designCustomerPrice;
   }
+
+  changeAvailability(status:boolean)
+  {
+    this.isBeingUpdated=true;
+    this.apiService.changeItemAvailablity(this.parentCategoryKey , this.parentSubcategoryKey , this.item.key , status).subscribe(()=>{
+      this.utilityService.itemUpdated.next(this.item.key);
+      this.isBeingUpdated = false;
+    });
+  }
+
+
 
 }
