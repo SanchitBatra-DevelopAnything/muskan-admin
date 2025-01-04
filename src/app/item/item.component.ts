@@ -28,13 +28,13 @@ export class ItemComponent implements OnInit {
   @Input()
   forDistributor:any;
 
-  @Input()
-  availablityStatus:any;
-
   isDeleting : boolean;
   isBeingUpdated : boolean;
 
   isEditMode:boolean;
+
+  @Input()
+  isAvailable:boolean;
 
   editItemName : string;
   editItemOffer : any;
@@ -102,7 +102,7 @@ export class ItemComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result)=>{
       if(result === "yes")
       {
-        //this.deleteItem();
+        this.changeAvailability(false);
       }
     }); 
   }
@@ -277,5 +277,16 @@ export class ItemComponent implements OnInit {
     this.editItemShopPrice = +flavourShopPrice + +designShopPrice;
     this.editItemCustomerPrice = +flavourCustomerPrice + +designCustomerPrice;
   }
+
+  changeAvailability(status:boolean)
+  {
+    this.isBeingUpdated=true;
+    this.apiService.changeItemAvailablity(this.parentCategoryKey , this.parentSubcategoryKey , this.item.key , status).subscribe(()=>{
+      this.utilityService.itemUpdated.next(this.item.key);
+      this.isBeingUpdated = false;
+    });
+  }
+
+
 
 }

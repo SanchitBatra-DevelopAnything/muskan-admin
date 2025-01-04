@@ -443,4 +443,13 @@ public getAllChefNotificationTokens() : Observable<any>
    return this.http.patch("https://muskan-admin-app-default-rtdb.firebaseio.com/conditionalMessage/" + key + ".json" , body);
   }
 
+  public changeItemAvailablity(parentCategoryKey : string , parentSubcategoryKey : string , itemKey : string , availablity : boolean) : Observable<any>
+  {
+    if(parentSubcategoryKey === "dv")
+      {
+        return this.http.patch("https://muskan-admin-app-default-rtdb.firebaseio.com/Categories/"+parentCategoryKey+ "/Items/" + itemKey+ ".json" , {'availability' : availablity});
+      }
+      return this.http.patch("https://muskan-admin-app-default-rtdb.firebaseio.com/Categories/"+parentCategoryKey+ "/Subcategories/"+parentSubcategoryKey+"/Items/"+itemKey+".json" , {'availability' : availablity});
+  }
+
 }

@@ -69,6 +69,8 @@
         </button>
         <br>
         <hr>
-        <button class = "btn btn-primary" *ngIf="!isEditMode" (click)="openItemNotAvailableDialog()">Not Available</button>
+        <button class = "btn btn-danger" *ngIf="!isEditMode && !isBeingUpdated && isAvailable" (click)="openItemNotAvailableDialog()"><span style = "font-weight:bold">Make it unavailable</span></button>
+        <button class = "btn btn-primary" *ngIf = "!isEditMode && !isBeingUpdated && !isAvailable" (click) = "changeAvailability(true)"><span style = "font-weight:bold">Make it available</span></button>
+        <p *ngIf = "!isEditMode && isBeingUpdated">Changing availablity of this item..</p>
     </div>
 </div>
