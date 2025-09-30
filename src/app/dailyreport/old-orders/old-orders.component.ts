@@ -103,11 +103,13 @@ export class OldOrdersComponent implements OnInit {
   setFromTime(value)
   {
     this.fromTime = value.toString();
+    console.log("From Time : "+this.fromTime);
   }
 
   setToTime(value)
   {
     this.toTime = value.toString();
+    console.log("To time : "+this.toTime);
   }
 
   getTotalParchi()
@@ -142,7 +144,6 @@ export class OldOrdersComponent implements OnInit {
     var startDate = Date.parse("01/01/2011 "+this.fromTime);
     var endDate = Date.parse("01/01/2011 "+this.toTime);
 
-    console.log(startDate , endDate);
     this.selected_orders_for_item_details = []; //khaali kardo in each try.
     if(startDate>endDate)
     {
@@ -208,14 +209,24 @@ export class OldOrdersComponent implements OnInit {
     }
   }
 
-  orderTimeFilter(orderTime , startDate,endDate)
-  {
-    var orderTimeDate = Date.parse("01/01/2011 "+orderTime);
-    if(orderTimeDate > startDate && orderTimeDate < endDate)
-    {
-      return true;
-    }
-    return false;
+  orderTimeFilter(orderTime, startDate, endDate) {
+    // Extract the time part — supports both "11:30:29PM" and "11:30:29 PM"
+    const timeMatch = orderTime.match(/(\d{1,2}:\d{2}:\d{2})\s*[APMapm]{2}/);
+    
+    if (!timeMatch) return false; // invalid format fallback
+  
+    // Extract the time portion properly
+    let timePart = orderTime.match(/\d{1,2}:\d{2}:\d{2}/)?.[0] || "";
+    let ampmPart = orderTime.match(/(AM|PM|am|pm)/)?.[0] || "";
+  
+    // Build normalized time string like "11:30:29 PM"
+    let normalizedTime = `${timePart} ${ampmPart}`;
+  
+    // Create comparable date using dummy date
+    let orderTimeDate = Date.parse("01/01/2011 " + normalizedTime);
+  
+    return orderTimeDate >= startDate && orderTimeDate <= endDate;
   }
+  
 
 }
